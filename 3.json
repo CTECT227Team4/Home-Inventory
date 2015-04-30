@@ -23,11 +23,13 @@
             },
             {
                 "id": 3,
-                "text": "Jewelry"
+                "text": "Jewelry",
+				"icon": "./img/jewel.png"
             },
             {
                 "id": 13,
-                "text": "LCD TV"
+                "text": "LCD TV",
+				"icon": "./img/screen.png"
             },
             {
                 "id": 4,
