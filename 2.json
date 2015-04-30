@@ -1,1 +1,58 @@
-[{"id":1,"text":"Some Other Families Properties","children":[{"id":2,"text":"Home","children":[{"id":5,"text":"Living Room"},{"id":6,"text":"Master Bed Room"},{"id":7,"text":"Kitchen"}]},{"id":3,"text":"Vacation House"},{"id":4,"text":"Perfectly Normal Shed in Backyard","children":[{"id":"8","text":"Lawn Mower"},{"id":"9","text":"Cabinet","children":[{"id":"10","text":"Rake"},{"id":"11","text":"Nothing Suspicious"}]}]}]}]
+[
+    {
+        "id": 1,
+        "text": "Some Other Families Properties",
+		"icon": "./img/appraisal.png",
+        "children": [
+            {
+                "id": 2,
+                "text": "Home",
+				"icon": "./img/house.png",
+                "children": [
+                    {
+                        "id": 5,
+                        "text": "Living Room"
+                    },
+                    {
+                        "id": 6,
+                        "text": "Master Bed Room"
+                    },
+                    {
+                        "id": 7,
+                        "text": "Kitchen"
+                    }
+                ]
+            },
+            {
+                "id": 3,
+                "text": "Vacation House",
+				"icon": "./img/house.png"
+            },
+            {
+                "id": 4,
+                "text": "Perfectly Normal Shed in Backyard",
+				"icon": "./img/house.png",
+                "children": [
+                    {
+                        "id": "8",
+                        "text": "Lawn Mower"
+                    },
+                    {
+                        "id": "9",
+                        "text": "Cabinet",
+                        "children": [
+                            {
+                                "id": "10",
+                                "text": "Rake"
+                            },
+                            {
+                                "id": "11",
+                                "text": "Nothing Suspicious"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]

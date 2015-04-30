@@ -2,10 +2,12 @@
     {
         "id": 1,
         "text": "Family With Unassigned Items",
+		"icon": "./img/appraisal.png",
         "children": [
             {
                 "id": "12",
                 "text": "Vacation House",
+				"icon": "./img/house.png",
                 "children": [
                     {
                         "id": 5,
@@ -34,6 +36,7 @@
             {
                 "id": 4,
                 "text": "Shed",
+				"icon": "./img/house.png",
                 "children": [
                     {
                         "id": "8",

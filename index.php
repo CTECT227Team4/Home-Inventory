@@ -15,6 +15,7 @@
 </style><link rel="stylesheet" href="jquery/themes/default/style.min.css" /><link rel="shortcut icon" href="./img/favicon.ico"></head>
 <body>
 	<div id="maintree" class="demo"></div>
+	<p><a href="index.php?id=1">Page 1</a>&nbsp;<a href="index.php?id=2">Page 2</a>&nbsp;<a href="index.php?id=3">Page 3</a></p>
 	<script src="./jquery/jquery.2.min.js"></script>
 	<script src="./jquery/jstree.min.js"></script>
 <script>
