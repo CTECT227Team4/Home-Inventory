@@ -1,0 +1,58 @@
+[
+    {
+        "id": 1,
+        "text": "Family With Unassigned Items",
+        "children": [
+            {
+                "id": "12",
+                "text": "Vacation House",
+                "children": [
+                    {
+                        "id": 5,
+                        "text": "Living Room"
+                    },
+                    {
+                        "id": 6,
+                        "text": "Master Bed Room"
+                    },
+                    {
+                        "id": 7,
+                        "text": "Kitchen"
+                    }
+                ]
+            },
+            {
+                "id": 3,
+                "text": "Jewelry"
+            },
+            {
+                "id": 13,
+                "text": "LCD TV"
+            },
+            {
+                "id": 4,
+                "text": "Shed",
+                "children": [
+                    {
+                        "id": "8",
+                        "text": "Lawn Mower"
+                    },
+                    {
+                        "id": "9",
+                        "text": "Cabinet",
+                        "children": [
+                            {
+                                "id": "10",
+                                "text": "Rake"
+                            },
+                            {
+                                "id": "11",
+                                "text": "Weed Eater"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]
