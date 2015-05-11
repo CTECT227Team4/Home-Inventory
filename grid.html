@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>DataTables example - Zero configuration</title><meta charset="utf-8">
+	
+	
+	<link rel="stylesheet" type="text/css" href="./jquery/jquery.dataTables.css">
+	<script type="text/javascript" language="javascript" src="./jquery/jquery.2.min.js"></script>
+	<script type="text/javascript" language="javascript" src="./jquery/jquery.dataTables.js"></script>
+
+	
+<script type="text/javascript" language="javascript" class="init">
+$(document).ready(function() {
+	$('#example').DataTable();
+} );
+</script></head>
+
+<body class="dt-example">
+	<div class="container">
+		<section>
+			<table id="example" class="display" cellspacing="0" width="100%">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Position</th>
+						<th>Office</th>
+						<th>Age</th>
+						<th>Start date</th>
+						<th>Salary</th>
+					</tr>
+				</thead>
+
+				<tfoot>
+					<tr>
+						<th>Name</th>
+						<th>Position</th>
+						<th>Office</th>
+						<th>Age</th>
+						<th>Start date</th>
+						<th>Salary</th>
+					</tr>
+				</tfoot>
+
+				<tbody>
+					<tr>
+						<td>Adam</td>
+						<td>System Architect</td>
+						<td>Edinburgh</td>
+						<td>61</td>
+						<td>2011/04/25</td>
+						<td>$320,800</td>
+					</tr>
+					<tr>
+						<td>Rosemary</td>
+						<td>Accountant</td>
+						<td>Tokyo</td>
+						<td>63</td>
+						<td>2011/07/25</td>
+						<td>$170,750</td>
+					</tr>
+					<tr>
+						<td>Lynne</td>
+						<td>Junior Technical Author</td>
+						<td>San Francisco</td>
+						<td>66</td>
+						<td>2009/01/12</td>
+						<td>$86,000</td>
+					</tr>
+
+				</tbody>
+			</table>
+
+
+</body>
+</html>

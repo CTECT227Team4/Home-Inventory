@@ -2,12 +2,12 @@
     {
         "id": 1,
         "text": "Some Other Families Properties",
-		"icon": "./img/appraisal.png",
+		"icon": "./images/appraisal.png",
         "children": [
             {
                 "id": 2,
                 "text": "Home",
-				"icon": "./img/house.png",
+				"icon": "./images/house.png",
                 "children": [
                     {
                         "id": 5,
@@ -26,12 +26,12 @@
             {
                 "id": 3,
                 "text": "Vacation House",
-				"icon": "./img/house.png"
+				"icon": "./images/house.png"
             },
             {
                 "id": 4,
                 "text": "Perfectly Normal Shed in Backyard",
-				"icon": "./img/house.png",
+				"icon": "./images/house.png",
                 "children": [
                     {
                         "id": "8",

@@ -2,12 +2,12 @@
     {
         "id": 1,
         "text": "Family With Unassigned Items",
-		"icon": "./img/appraisal.png",
+		"icon": "./images/appraisal.png",
         "children": [
             {
                 "id": "12",
                 "text": "Vacation House",
-				"icon": "./img/house.png",
+				"icon": "./images/house.png",
                 "children": [
                     {
                         "id": 5,
@@ -26,17 +26,17 @@
             {
                 "id": 3,
                 "text": "Jewelry",
-				"icon": "./img/jewel.png"
+				"icon": "./images/jewel.png"
             },
             {
                 "id": 13,
                 "text": "LCD TV",
-				"icon": "./img/screen.png"
+				"icon": "./images/screen.png"
             },
             {
                 "id": 4,
                 "text": "Shed",
-				"icon": "./img/house.png",
+				"icon": "./images/house.png",
                 "children": [
                     {
                         "id": "8",
