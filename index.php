@@ -21,9 +21,13 @@
 	    top: 318px;
 		left: 590px;
 	}
+	.viewwidget {
+		padding: 0px 15px 0px 15px;
+	}
 </style>
 <link rel="stylesheet" type="text/css" href="./jquery/jquery.dataTables.css">
-<link rel="stylesheet" href="jquery/themes/default/style.min.css" /><link rel="shortcut icon" href="./images/favicon.ico"></head>
+<link rel="stylesheet" href="jquery/themes/default/style.min.css" />
+<link rel="shortcut icon" href="./images/favicon.ico"></head>
 <body>
 
 <script src="./jquery/jquery.2.min.js"></script>
@@ -37,14 +41,17 @@
 <p><button id="toggler" onclick="toggleView()">Grid View</button></p>
 
 <div id="treemain" class="dispwindow">
+<div id="treeviewwidget" class="viewwidget">
 <p><button onclick="$('.jstree').jstree('open_all');">Open All</button><button onclick="$('.jstree').jstree('close_all');">Close All</button></p>
-<div id="treeview"></div>
-</div>
+<div id="treeview" class="viewwidget"></div>
+</div></div>
 
 <div id="gridmain" class="dispwindow">
+<div id="gridviewwidget" class="viewwidget">
 <p><button onclick="">Properties</button><button onclick="">Rooms</button><button onclick="">Sections</button><button onclick="">Items</button></p>
 <div id="gridview">
-<table id="grid-basic" class="table table-condensed table-hover table-striped">
+
+<table id="grid-basic" class="display" cellspacing="0" width="100%">
     <thead>
         <tr>
             <th data-column-id="id" data-type="numeric">ID</th>
@@ -70,8 +77,7 @@
         </tr>
     </tbody>
 </table>
-</div></div>
-
+</div></div></div>
 
 <!-- Page init -->
 <!--<script src="./jquery/az.js"></script>-->
