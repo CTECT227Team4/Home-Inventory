@@ -1,0 +1,123 @@
+/*   CSS for Home Inventory Demo */  
+@font-face {
+    font-family: Futura-Normal;
+    src: url("../fonts/futuraNormal.ttf");
+}
+
+@font-face {
+    font-family: boldFutura;
+    src: url(../fonts/Futura-Bold.ttf);
+}
+
+html { 
+	margin:0; 
+	padding:0; 
+	color: #387929; 
+	font-family: Futura-Normal; 
+	font-size: 18px;
+}
+
+body { 	
+	background-image: url("../images/header.jpg");
+	background-repeat: no-repeat;
+    background-color: #FAFCFB;
+	max-width:800px; 
+	min-width:300px; 
+	margin:0 auto; 
+	padding:20px 10px; 
+	font-family: Futura-Normal; 
+	font-size: 18px; 
+	font-size:1.4em; 
+}
+
+h1 { 
+	font-family: boldFutura; 
+	font-size:1.8em; 
+}
+
+.wrapper {
+	position: relative;
+	width: 100%;
+}
+
+.dispwindow {
+		position: absolute;
+		margin: 325px auto;
+		padding: 0 20px;
+		overflow:auto;
+		border:4px solid #90C32E;
+		min-height:400px;
+		min-width:500px;
+}
+
+.pageNumbers {
+	margin-right: 10px;
+}
+
+#gridmain {
+		display:none;
+		width: 100%;
+}
+
+#gridview {
+
+	margin: 0 auto;
+}
+
+#toggler {
+	position: absolute;
+	font-family: Futura-Normal;
+	font-size: 32px;
+	padding: 0px 25px;
+	color: #004800;
+	background-color: #FAFCFB;
+	border: 5px solid #90C32E;	
+    top: 263px;
+	left: 185px;
+}
+td a {
+	text-decoration: none;
+	color: #004800;
+}
+
+#toggler:enabled {
+	font-family: Futura-Normal;
+	font-size: 32px;
+	padding: 0px 25px;
+	color: #004800;
+	background-color: #FAFCFB;	
+	border: 5px solid #90C32E;	
+}
+
+.viewwidget {
+		padding: 0px 15px 0px 15px;
+}
+
+
+.allButtons {
+	font-family: Futura-Normal;
+	color: #004800;
+	border: 3px solid #90C32E;
+	font-size: 24px;
+	background-color: #FAFCFB;
+}
+
+.gridMainButton {
+	font-family: Futura-Normal;
+	color: #004800;
+	border: 3px solid #90C32E;
+	font-size: 24px;
+	background-color: #FAFCFB;
+}
+
+.table-images {
+	width: 90px;
+}
+
+.table-name {
+	width: 250px;
+}
+
+.table-width {
+	width: 250px;
+}
