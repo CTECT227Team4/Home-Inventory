@@ -37,14 +37,15 @@
 <!-- Tree init -->
 <script src="./jquery/jstree.min.js"></script>
 
+<button>Test</button>
 <p><a href="index.php?id=1">Page 1</a>&nbsp;<a href="index.php?id=2">Page 2</a>&nbsp;<a href="index.php?id=3">Page 3</a></p>
 <p><button id="toggler" onclick="toggleView()">Grid View</button></p>
 
 <div id="treemain" class="dispwindow">
 <div id="treeviewwidget" class="viewwidget">
 <p><button onclick="$('.jstree').jstree('open_all');">Open All</button><button onclick="$('.jstree').jstree('close_all');">Close All</button></p>
-<div id="treeview"></div></div></div>
 
+<div id="treeview"></div></div></div>
 <div id="gridmain" class="dispwindow">
 <div id="gridviewwidget" class="viewwidget">
 <p><button onclick="gridHeader(1)">Properties</button><button onclick="gridHeader(2)">Rooms</button><button onclick="gridHeader(3)">Sections</button><button onclick="gridHeader(4)">Items</button></p>

@@ -1,0 +1,27 @@
+[
+    {
+        "id": "U2",
+        "text": "The Addams Family Properties",
+        "icon": "./images/appraisal.png",
+        "state": {
+            "opened": "true"
+        },
+        "children": [
+            {
+                "id": "P1",
+                "text": "Main House",
+                "icon": "./images/house.png"
+            },
+            {
+                "id": "P2",
+                "text": "Vacation House",
+                "icon": "./images/house.png"
+            },
+            {
+                "id": "P3",
+                "text": "Shed",
+                "icon": null
+            }
+        ]
+    }
+]
