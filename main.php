@@ -10,6 +10,7 @@ $userid = 0;
 
 if (isset($_GET['F'])) $webfunction = $_GET['F'];
 if (isset($_GET['userid'])) $userid = $_GET['userid'];
+if (isset($_GET['propertyid'])) $propertyid = $_GET['propertyid'];
 
 header('Content-Type: application/json');
 
@@ -43,7 +44,28 @@ try {
 				echo "}]"; // End the whole tree
 				break;
 			case 2: // GetRooms
-				echo '{"error":"1","text":"Rosemary hasn\'t finished coding this yet."}';
+				// locahost/az/main.php?F=2&propertyid=1
+				$sql = "SELECT CONCAT('R', r.id) AS id, name AS text FROM room r WHERE r.propertyID = ?";
+
+				$rs = getRecordset($con, $sql, $propertyid);
+
+				echo '[{"id":"P' . $propertyid . '","text": "Main House","icon": "./images/appraisal.png","state": {"opened" : "true"},"children":';
+				echo "["; // The recordset is being returned as an array, so start the array
+				
+				$firstTime = true;
+				
+				while ($row = $rs->fetch()) {
+				//foreach ($rs as $row) {
+					if ($firstTime) $firstTime = !$firstTime; // Don't echo a comma on the first line, only when added a new one
+					else echo ",";
+
+					print json_encode($row, JSON_UNESCAPED_SLASHES);
+				}
+				echo "]"; // End the array
+				echo "}]"; // End the whole tree
+				break;
+
+				// echo '{"error":"1","text":"Rosemary hasn\'t finished coding this yet."}';
 				break;
 			case 3: // GetSections
 				echo '{"error":"1","text":"Rosemary hasn\'t finished coding this yet."}';
