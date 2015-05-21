@@ -45,7 +45,7 @@ try {
 				break;
 			case 2: // GetRooms
 				// locahost/az/main.php?F=2&propertyid=1
-				$sql = "SELECT CONCAT('R', r.id) AS id, name AS text FROM room r WHERE r.propertyID = ?";
+				$sql = "SELECT CONCAT('R', r.id) AS id, name AS text, CONCAT ('$imageslocation', icon) AS icon FROM room r LEFT OUTER JOIN category c ON c.ID = r.CategoryID WHERE r.propertyID = ?";
 
 				$rs = getRecordset($con, $sql, $propertyid);
 
@@ -65,10 +65,27 @@ try {
 				echo "}]"; // End the whole tree
 				break;
 
-				// echo '{"error":"1","text":"Rosemary hasn\'t finished coding this yet."}';
-				break;
 			case 3: // GetSections
-				echo '{"error":"1","text":"Rosemary hasn\'t finished coding this yet."}';
+				// locahost/az/main.php?F=2&propertyid=1
+				$sql = "SELECT CONCAT('S', s.id) AS id, name AS text, CONCAT ('$imageslocation', icon) AS icon FROM section s LEFT OUTER JOIN category c ON c.ID = s.CategoryID WHERE s.propertyID = ?";
+
+				$rs = getRecordset($con, $sql, $propertyid);
+
+				echo '[{"id":"P' . $propertyid . '","text": "Main House","icon": "./images/appraisal.png","state": {"opened" : "true"},"children":';
+				echo "["; // The recordset is being returned as an array, so start the array
+				
+				$firstTime = true;
+				
+				while ($row = $rs->fetch()) {
+				//foreach ($rs as $row) {
+					if ($firstTime) $firstTime = !$firstTime; // Don't echo a comma on the first line, only when added a new one
+					else echo ",";
+
+					print json_encode($row, JSON_UNESCAPED_SLASHES);
+				}
+				echo "]"; // End the array
+				echo "}]"; // End the whole tree
+				// ** in progress ** //
 				break;
 			case 4: // GetItems
 				echo '{"error":"1","text":"Rosemary hasn\'t finished coding this yet."}';
