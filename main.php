@@ -11,6 +11,7 @@ $userid = 0;
 if (isset($_GET['F'])) $webfunction = $_GET['F'];
 if (isset($_GET['userid'])) $userid = $_GET['userid'];
 if (isset($_GET['propertyid'])) $propertyid = $_GET['propertyid'];
+if (isset($_GET['roomid'])) $roomid = $_GET['roomid'];
 
 header('Content-Type: application/json');
 
@@ -66,12 +67,23 @@ try {
 				break;
 
 			case 3: // GetSections
-				// locahost/az/main.php?F=2&propertyid=1
-				$sql = "SELECT CONCAT('S', s.id) AS id, name AS text, CONCAT ('$imageslocation', icon) AS icon FROM section s LEFT OUTER JOIN category c ON c.ID = s.CategoryID WHERE s.propertyID = ?";
+				// locahost/az/main.php?F=3&propertyid=1 OR localhost/az/main.php?F=3&roomid=2
 
-				$rs = getRecordset($con, $sql, $propertyid);
+				//check whether to select sections in a room or a property
+				if (isset($roomid)) {
+					$sql = "SELECT CONCAT ('S', s.id) AS id, name AS text, CONCAT ('$imageslocation', icon) AS icon FROM section s LEFT OUTER JOIN category c ON c.ID = s.CategoryID WHERE s.roomID = ?";
+					//creates variable for correct node (R) to be echoed with result
+					$parent = "\"id\":\"R" . $roomid;
+				} else {
+					$sql = "SELECT CONCAT('S', s.id) AS id, name AS text, CONCAT ('$imageslocation', icon) AS icon FROM section s LEFT OUTER JOIN category c ON c.ID = s.CategoryID WHERE s.propertyID = ?";
+					//creates variable for correct node (P) to be echoed with result
+					$parent = "\"id\":\"P" . $propertyid;
+				}
 
-				echo '[{"id":"P' . $propertyid . '","text": "Main House","icon": "./images/appraisal.png","state": {"opened" : "true"},"children":';
+				//if $roomid is set, get records for $roomid, otherwise get records for $propertyid
+				isset($roomid) ? $rs = getRecordset($con, $sql, $roomid) : $rs = getRecordset($con, $sql, $propertyid);
+
+				echo '[{' . $parent . '",text": "Main House","icon": "./images/appraisal.png","state": {"opened" : "true"},"children":';
 				echo "["; // The recordset is being returned as an array, so start the array
 				
 				$firstTime = true;
@@ -85,7 +97,6 @@ try {
 				}
 				echo "]"; // End the array
 				echo "}]"; // End the whole tree
-				// ** in progress ** //
 				break;
 			case 4: // GetItems
 				echo '{"error":"1","text":"Rosemary hasn\'t finished coding this yet."}';
