@@ -37,7 +37,7 @@
 <!-- Tree init -->
 <script src="./jquery/jstree.min.js"></script>
 
-<button>Test</button>
+<button onclick='testfun(2)'>Test</button>
 <p><a href="index.php?id=1">Page 1</a>&nbsp;<a href="index.php?id=2">Page 2</a>&nbsp;<a href="index.php?id=3">Page 3</a></p>
 <p><button id="toggler" onclick="toggleView()">Grid View</button></p>
 
@@ -69,17 +69,27 @@ $(function () {
 	$('#grid-basic').DataTable({
         "ajax": 'grid1.json'
     });
+	
 	$('#treeview').jstree({
 		'core' : {
 			'data' : {
 				"url" : <?php
 					$json = $_GET['id'];
-					if ($json == null) $json = '1';
-					echo "\"./$json.json\""; 
+					if ($json == null) $json = '2';
+					echo "\"./main.php?F=1&userid=$json\""; 
 			?>,	"dataType" : "json" // needed only if you do not supply JSON headers
+			}
+		},
+		callback : {
+			onopen_all : function(TREE_OBJ) { 
+				alert ("Opened all!");
 			}
 		}, "plugins" : ["contextmenu", "dnd"]
 	});
+});
+
+$('#treeview').on("changed.jstree", function (e, data) {
+  console.log(data.selected);
 });
 </script>
 </body></html>

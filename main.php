@@ -5,11 +5,20 @@ $jsonmsg = "";
 $imageslocation = "./images/";  // The relative location to the icon images for the tree control
 $webfunction = 0;
 $userid = 0;
+$propertyid = 0;
+$sectionid = 0;
+$roomid = 0;
+$itemid = 0;
+
 // This should work if you use the URL:  http://localhost/az/main.php?F=1&userid=2
 // with the copy of the database I had on Saturday.
 
 if (isset($_GET['F'])) $webfunction = $_GET['F'];
 if (isset($_GET['userid'])) $userid = $_GET['userid'];
+if (isset($_GET['propertyid'])) $propertyid = $_GET['propertyid'];
+if (isset($_GET['sectionid'])) $sectionid = $_GET['sectionid'];
+if (isset($_GET['roomid'])) $roomid = $_GET['roomid'];
+if (isset($_GET['itemid'])) $itemid = $_GET['itemid'];
 
 header('Content-Type: application/json');
 
@@ -25,7 +34,7 @@ try {
 				
 				// The jstree control requires unique ID's for each node.  Not exactly sure how we want to handle this.
 				// For now I put "U" for the user node, "P" for property, so we'll have "S"=section, "R"=room, "I"=item
-				echo '[{"id":"U' . $userid . '","text": "The Addams Family Properties","icon": "./images/appraisal.png","state": {"opened" : "true"},"children":';
+				echo '[{"id":"U' . $userid . '","text": "The Addams Family Properties","children":"true","icon": "./images/appraisal.png","state": {"opened" : "true"},"children":';
 				echo "["; // The recordset is being returned as an array, so start the array
 				
 				$firstTime = true;
@@ -49,7 +58,25 @@ try {
 				echo '{"error":"1","text":"Rosemary hasn\'t finished coding this yet."}';
 				break;
 			case 4: // GetItems
-				echo '{"error":"1","text":"Rosemary hasn\'t finished coding this yet."}';
+				$sql = "SELECT CONCAT('P', p.id) AS id, name AS text, CONCAT ('$imageslocation', icon) AS icon FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN user u ON u.ID = up.userID LEFT OUTER JOIN category c ON c.ID = p.CategoryID WHERE up.userID = ?";
+				$rs = getRecordset($con, $sql, $userid);
+				
+				echo '[{"id":"U' . $userid . '","text": "The Addams Family Properties","children":"true","icon": "./images/appraisal.png","state": {"opened" : "true"},"children":';
+				echo "["; // The recordset is being returned as an array, so start the array
+				
+				$firstTime = true;
+				
+				while ($row = $rs->fetch()) {
+				//foreach ($rs as $row) {
+					if ($firstTime) $firstTime = !$firstTime; // Don't echo a comma on the first line, only when added a new one
+					else echo ",";
+
+					print json_encode($row, JSON_UNESCAPED_SLASHES);
+					// If we want to load the children (rooms) here, we could make a second call here
+					// Maybe an option to pass in?  Or just load them with a separate call to GetRooms?
+				}
+				echo "]"; // End the array
+				echo "}]"; // End the whole tree
 				break;
 			case 5: // CheckLogin
 				echo '{"error":"1","text":"Rosemary hasn\'t finished coding this yet."}';

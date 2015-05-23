@@ -13,6 +13,25 @@ function toggleView() { // Toggle tree vs grid views
 	}
 }
 
+function testfun(user) {
+	//$('#treeview').jstree.core;
+	//var tv = $('#treeview');
+	//tv[0].baseURI = "./main.php?F=1&userid=" + user;
+	
+	
+	///*
+	$('#treeview').jstree({
+		'core' : {
+			'data' : {
+				"url" : "./main.php?F=1&userid=2"
+			, "dataType" : "json"
+			}
+		}, "plugins" : ["contextmenu", "dnd"]
+	});
+	//*/
+	$('#treeview').jstree('refresh');
+}
+
 function gridHeader(gridType) {
 	var header =  document.getElementById('grid-headers');
 	var newHeader = "<tr>";
