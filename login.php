@@ -1,8 +1,44 @@
 <?php # login.php ?>
-<?php 
+<?php require_once("/inc/session.php"); ?>
+<?php require_once("/inc/functions.php") ?>
 
-	session_start();
+<?php 
+$userName = "";
+
+	if ($_SERVER['REQUEST_METHOD'] == "POST") {
+			echo "Posted";
+
+			$userName = $_POST["userName"];
+			$password = $_POST["password"];
+			echo $password . "<br>";
+
+		    //$required_fields = array("username", "password");
+			//validate_presences($required_fields);
+
+			//if (empty($errors)) {
+
+				$found_user = attempt_login($userName, $password);
+
+				if ($found_user) {
+				    // Success
+				    $_SESSION["user_id"] = $found_user["id"];
+				    $_SESSION["userName"] = $found_user["userName"];
+				    redirect_to("landing.php");
+				} else{
+					//failure
+					$_SESSION["message"] = "Username/password not found";
+					echo "Username/password not found";
+				    redirect_to("login.php");
+				}
+			//} else {
+			//	$_SESSION["errors"] = $errors;
+			//	redirect_to("login.php");
+
+	} //end ($_SERVER['REQUEST_METHOD'] == "POST")
+
+
  ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,41 +73,41 @@
 <body>
 	<div class="page_wrapper">
 	<?php 
-		include "includes/mysqli_connect.inc.php";   //    connects to the MySQL Database
-		include "includes/header1.inc.php";      // adds Header #2 to the page
+		//include "includes/mysqli_connect.inc.php";   //    connects to the MySQL Database
+		//include "inc/header1.inc.php";      // adds Header #2 to the page
 	 ?>
 	<?php 
-		if ($_SERVER['REQUEST_METHOD'] == "POST") {
+		// if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
-			#  checks to see if the fields are filled out		
-	   		if(!empty($_POST['firstName'] && $_POST['lastName'] && $_POST['email'] && $_POST['userName'] && $_POST['password'] )) {
+		// 	#  checks to see if the fields are filled out		
+	 //   		if(!empty($_POST['firstName'] && $_POST['lastName'] && $_POST['email'] && $_POST['userName'] && $_POST['password'] )) {
 
-				# get the variable names from the login form
-				$username = $_POST['userName'];
-				$password = $_POST['password'];
+		// 		# get the variable names from the login form
+		// 		$username = $_POST['userName'];
+		// 		$password = $_POST['password'];
 
-				# Now query the database to see if you get a match for username/password
-				$sql = "SELECT * FROM user WHERE userName ='$userName' AND password=SHA1('$password')";
+		// 		# Now query the database to see if you get a match for username/password
+		// 		$sql = "SELECT * FROM user WHERE userName ='$userName' AND password=SHA1('$password')";
 
-				# perform the query
-				$result = mysqli_query($dbc,$sql);
+		// 		# perform the query
+		// 		$result = mysqli_query($dbc,$sql);
 
 
-				if (mysqli_num_rows($result) == 1) {
-					# checks that username and password match
-					# Now set session variables
-					$_SESSION['loggedin'] = 1;
-					$_SESSION['user'] = $userName;
-					echo "You are now logged in!";
-					#redirects to a new page that says "thanks for registering and directs them to the login page"
-					  header("Location: landing.php");
-					  exit;
-				}	else {
-						echo "<p>I'm sorry but your login info was not correct.</p>";
-						echo "<p><a href=\"login.php\">Try Again Please</a></p>";
-				}   // end if 
-			}  // end if !empty
-		}	#  INSERT THE FORM  ends processing of the form
+		// 		if (mysqli_num_rows($result) == 1) {
+		// 			# checks that username and password match
+		// 			# Now set session variables
+		// 			$_SESSION['loggedin'] = 1;
+		// 			$_SESSION['user'] = $userName;
+		// 			echo "You are now logged in!";
+		// 			#redirects to a new page that says "thanks for registering and directs them to the login page"
+		// 			  header("Location: landing.php");
+		// 			  exit;
+		// 		}	else {
+		// 				echo "<p>I'm sorry but your login info was not correct.</p>";
+		// 				echo "<p><a href=\"login.php\">Try Again Please</a></p>";
+		// 		}   // end if 
+		// 	}  // end if !empty
+		// }	#  INSERT THE FORM  ends processing of the form
  ?>
 	<section class="content">
 		<div class="login_wrapper">
@@ -82,7 +118,7 @@
 				?>
 			</h2>
 			<h2>or Please sign-in:</h2>
-			<form method="Post" action="login.php" id="login">
+			<form action="login.php" method="post" id="login">
 				<p>
 					<label for="userName">Username:</label>
 					<input id="userName" type="text" name="userName">
@@ -95,7 +131,7 @@
 					<a href="#">Forgotten your password or username?</a>
 				</p>
 				<p>
-					<input type="submit" value="Submit" class="centered_button" id="submit">
+					<input type="submit" value="Submit" class="centered_button" id="submit" name="submit">
 				</p>
 
 

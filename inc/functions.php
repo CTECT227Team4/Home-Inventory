@@ -71,81 +71,49 @@
 		$sql .= "LIMIT 1";
 
 		$user_set = getRecordset($con, $sql, $safe_user_id);
-		//I think this part will need rewritten
-		if ($user = mysqli_fetch_assoc($user_set)) {
+		
+		if ($user = $user_set->fetch(PDO::FETCH_ASSOC)) {
 			return $user;
 		} else {
 			return null;
 		}
+
 	} //end find_user_by_id
 
-	function find_user_by_username($username) {
+	function find_user_by_userName($userName) {
 		global $con;
 
-		$safe_username = mysqli_real_escape_string($con, $username);
+		//$safe_userName = mysqli_real_escape_string($con, $userName);
 
 		$sql = "SELECT * ";
 		$sql .= "FROM user ";
-		$sql .= "WHERE userName = '{$safe_username}' ";
+		// $sql .= "WHERE userName = '{$safe_userName}' ";
+		$sql .= "WHERE userName = '{$userName}' ";
 		$sql .= "LIMIT 1";
 
-		$user_set = getRecordset($con, $sql, $safe_username);
+		// $user_set = getRecordset($con, $sql, $safe_userName);
+		$user_set = getRecordset($con, $sql, $userName);
 		//I think this part will need rewritten
-		if ($user = mysqli_fetch_assoc($user_set)) {
+		if ($user = $user_set->fetch(PDO::FETCH_ASSOC)) {
 			return $user;
 		} else {
 			return null;
 		}
-	} //end find_user_by_username
+	} //end find_user_by_userName
 
-	function password_encrypt($password) {
-		$hash_format = "$2y$10$"; //Tells PHP to use Blowfish with a "cost" of 10
-		$salt_length = 22; //Blowfish salts should be 22 characters or more
-
-		$salt = generate_salt($salt_length);
-		$format_and_salt = $hash_format . $salt;
-		$hash = crypt($password, $format_and_salt);
-		return $hash;
-	} //end password_encrypt
-
-	function generate_salt($length) {
-		// Not 100% unique, not 100% random, but good enough for salt
-		//MD5 returns 32 characters
-		$unique_random_string = md5(uniqid(mt_rand(), true));
-
-		//Valid characters for a salt are [a-zA-Z0-9./]
-		$base64_string = base64_encode($unique_random_string);
-
-		//But not '+' which is valid in base64 encoding
-		$modified_base64_string = str_replace('+', '.', $base64_string);
-
-		//Truncate string to the correct length
-		$salt = substr($modified_base64_string, 0, $length);
-
-		return $salt;
-	} //end generate_salt
-
-	function password_check($password, $existing_hash) {
-		// existing hash contains format and salt at start
-		$hash = crypt($password, $existing_hash);
-		if ($hash === $existing_hash) {
-			return true;
-		} else {
-			return false;
-		}
-	} //end password_check
-
-	function attempt_login($username, $password) {
+	function attempt_login($userName, $password) {
 		//find user, then password
-		$user = find_user_by_username($username);
-
+		$user = find_user_by_userName($userName);
+		echo "This is working";
+		print_r($user);
 		if ($user) {
 			//found admin, check password
-			if (password_check($password, $user["password"])) {
+			if (password_verify($password, $user["password"])) {
 				//password matches
 				return $user;
 			} else {
 				//password doesn't match
+				echo "bad password<br>";
 				return false;
 			}
 		} else {
