@@ -1,123 +1,391 @@
-/*   CSS for Home Inventory Demo */  
+/*   Template CSS for Home Inventory     */  
+* {
+   margin: 0;
+   padding: 0;
+   -webkit-box-sizing: border-box;
+   -moz-box-sizing: border-box;
+   box-sizing: border-box;
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+	display:block;
+}
+
+img, embed, object, video {
+  max-width: 100%;
+}
+
+html, body {
+	background-color: #FFFFFF;	/* white */
+	font-size: 18px;			/* used as the basis for all font sizes, margins, paddings, widths, etc.) */
+	line-height: 1.4;			/* one and a half times the font height */
+	font-family: 'Futura-Normal'; 
+	font-weight: 400;			/* normal */
+
+	color: #333333;				/* dk. grey specified by client  */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	max-width: 1500px;
+}
+
+::selection {
+  background: #90C32E;
+  color: #FFFFFF;
+  text-shadow: none;
+}
+
+/*  ----------------    COLOR PALLETTE    ---------------- */
+
+/*#004800 Used for headings
+#90C32E Used for panel backgrounds
+#333333 Used for text
+#387929 Available for use as applicable*/
+
+
+/*  ----------------    TYPOGRAPHY        ----------------*/
+
+/*   Loading TTF fonts specified by client FUTURA Normal and Futura Bold   */
+
 @font-face {
     font-family: Futura-Normal;
-    src: url("../fonts/futuraNormal.ttf");
+    src: url("../fonts/Futura-Normal.ttf");
 }
 
 @font-face {
-    font-family: boldFutura;
-    src: url(../fonts/Futura-Bold.ttf);
+    font-family: Futura;
+    src: url("../fonts/futura.ttf");
 }
 
-html { 
-	margin:0; 
-	padding:0; 
-	color: #387929; 
-	font-family: Futura-Normal; 
-	font-size: 18px;
+@font-face {
+    font-family: futuraItalic;
+    src: url("../fonts/futuraItalic.ttf");
 }
 
-body { 	
-	background-image: url("../images/header.jpg");
-	background-repeat: no-repeat;
-    background-color: #FAFCFB;
-	max-width:800px; 
-	min-width:300px; 
-	margin:0 auto; 
-	padding:20px 10px; 
-	font-family: Futura-Normal; 
-	font-size: 18px; 
-	font-size:1.4em; 
+/*  ----------------    STANDARD SETTINGS     ---------------- */
+
+h1 {
+	font-size: 1.8rem;		/* 40px/18px */
+	font-family: Futura; 
+	color: #004800;     /*  Dark green specified by client   */
+	text-align: center;
+	margin-bottom: 2%;
 }
 
-h1 { 
-	font-family: boldFutura; 
-	font-size:1.8em; 
+h2 {
+	font-size: 1.5rem;
+	margin-bottom: 2%;
+	font-family: Futura; 
+	color: #004800;     /*  Dark green specified by client   */
+	text-align: center;	
 }
 
-.wrapper {
+p {
+	font-size: 1.4rem;
+	color: #333333;     /*Dark grey specified by client     */
+}
+a {
+	color: inherit;
+	text-decoration: none;
+}
+
+/*  ----------------    BODY     ---------------- */
+
+.page_wrapper {
 	position: relative;
 	width: 100%;
+	margin-bottom: 50px;
 }
 
-.dispwindow {
-		position: absolute;
-		margin: 325px auto;
-		padding: 0 20px;
-		overflow:auto;
-		border:4px solid #90C32E;
-		min-height:400px;
-		min-width:500px;
+.content {
+	clear: both;
+	width: 100%;
+	position: relative;
 }
 
-.pageNumbers {
-	margin-right: 10px;
+/* -----------------------     HEADERS  & UPPER NAV    ----------------------------*/
+
+.header1 {
+	width: 60%;
+	margin: 0 auto 3% auto;
+	position: relative;
 }
 
-#gridmain {
-		display:none;
-		width: 100%;
+.header2 {
+	width: 90%;
+	margin: 2% auto 0 auto;
 }
 
-#gridview {
+.header3 {
+	width: 90%;
+	margin: 2% auto 0 auto;
+	position: relative;
+}
 
+.side_logo {
+	width: 40%;
+	float: left;
+}
+
+.header_welcome {
+	width: 50%;
+	margin: 100px auto 0 auto;
+	float: left;
+}
+.header_welcome h1 {
+	margin-bottom: 0px;
+    text-transform: uppercase;
+}
+
+.header_welcome h1:last-child {
+	margin-bottom: 40px;
+}
+
+nav {
+	width: 100%;
+	clear: both;
+	display: block;
+	margin-bottom: 5%;
+}
+
+.upper_buttons {	
+	width: 80%;
 	margin: 0 auto;
+	list-style: none;
+	position: relative;
 }
 
-#toggler {
-	position: absolute;
-	font-family: Futura-Normal;
-	font-size: 32px;
-	padding: 0px 25px;
-	color: #004800;
-	background-color: #FAFCFB;
-	border: 5px solid #90C32E;	
-    top: 263px;
-	left: 185px;
+.upper_buttons li {
+	list-style: none;
+	width: 22%;
+	margin-right: 3%;
+	float: left;
+	font-size: 1.2rem;
 }
-td a {
+
+.upper_buttons li a:link, .upper_buttons li a:visited {
+	display: block;
 	text-decoration: none;
-	color: #004800;
+	text-align: center;
+	padding: 5px 0;
+	margin: 0;
+	border: 4px solid #90C32E;     /* Medium Green */ 
+	color: #333333;
 }
 
-#toggler:enabled {
-	font-family: Futura-Normal;
-	font-size: 32px;
-	padding: 0px 25px;
-	color: #004800;
-	background-color: #FAFCFB;	
-	border: 5px solid #90C32E;	
+.upper_buttons li a:hover {
+	background-color: #90C32E;      /* Medium Green */	
+	color: #FFFFFF;
 }
 
-.viewwidget {
-		padding: 0px 15px 0px 15px;
+/*style the sub menu*/
+.upper_buttons li ul {
+	position: absolute;
+	visibility: hidden;
+	margin: 0;
+	padding: 0;
+	width: 22%;
+	border: 0 4px 4px 4px;  
+}
+
+.upper_buttons li ul li {
+	display: inline;
+	float: none;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+.upper_buttons li ul li a:link, .upper_buttons li ul li a:visited {
+	width:auto;
+	border: 0 4px 4px 4px;  
+}
+
+.upper_buttons li ul li a:hover {
+	background-color: #90C32E;     /* Medium Green */
+	color: #FFFFFF;	
+	border: 0 4px 4px 4px;  
 }
 
 
-.allButtons {
-	font-family: Futura-Normal;
-	color: #004800;
-	border: 3px solid #90C32E;
-	font-size: 24px;
-	background-color: #FAFCFB;
+
+/* ----------------------    LOGIN AND REGISTRATION --------------------- */
+
+.login_wrapper {
+	width: 60%;
+	margin: 0 auto;
+	border: 4px solid #90C32E;     /* Medium Green */  
+	padding: 2%;
+}
+#login p {
+	font-size: 1.8rem;
+	text-align: center;
 }
 
-.gridMainButton {
-	font-family: Futura-Normal;
-	color: #004800;
-	border: 3px solid #90C32E;
-	font-size: 24px;
-	background-color: #FAFCFB;
+a#register_link {
+	color: #ad102a;     /*   Dark Red color for :link pseudo;  */
 }
 
-.table-images {
-	width: 90px;
+.forgot {
+	font-size: 1.2rem;
+	font-family: futuraItalic;
+	color: #ad102a;     /*   Dark Red color for :link  */;
+	margin: 1% 0;
+	text-align: center;
 }
 
-.table-name {
-	width: 250px;
+.registration_wrapper {
+	width: 90%;
+	margin: 0 auto;
+	border: 4px solid #90C32E;     /* Medium Green */  
+	padding: 1.5%;
+	position: relative;	
 }
 
-.table-width {
-	width: 250px;
+#registration p {
+	font-size: 1.2rem;
+	text-align: left;
+	margin-bottom: 10px;
 }
+
+#registration p:last-child {
+	clear: both;
+	text-align: center;
+}
+.two_wide, .two_long_wide {
+	width: 46%;
+	margin-right: 3%;
+	float: left;
+	position: relative;	
+}
+
+.two_wide label {
+    float: left;
+    padding-right: 5px;
+    width: 25%;
+    text-align: right;
+}
+
+.two_wide input {
+  	float: left;
+  	width: 75%;
+}
+
+.two_long_wide label {
+    float: left;
+    padding-right: 5px;
+    width: 35%;
+    text-align: right;
+}
+
+.two_long_wide input {
+  	float: left;
+  	width: 65%;
+}
+
+.one_wide {
+	position: relative;
+	width: 100%;
+	clear: both;
+}
+.space {
+	margin-bottom: 40px;
+}
+.one_wide label{
+    float: left;
+    padding-right: 5px;
+    width: 11.5%;
+    text-align: right;
+}
+
+.one_wide input {
+  	float: left;
+  	width: 70%;
+  	margin-bottom: 10px
+}
+
+input, select, textarea {
+	font-size: 1.4rem;
+	line-height: 1.8rem;
+	border: 2px solid #90C32E;        /* Medium Green */  
+}
+
+input[type=submit] {
+	background-color: #90C32E;     /* Medium Green */
+	color: #FFFFFF;                 /* White text */
+	padding: 5px 25px;
+	cursor: pointer;
+	outline: none;
+} 
+
+input:focus {
+	border: 2px solid #004800;     /*  Dark green specified by client   */
+}
+
+/* ----------------------    LANDING --------------------- */
+
+.property_wrapper {
+	display: block;
+	width: 100%;
+	position: relative;
+	clear: both;
+	margin-top: 5%;
+	overflow: hidden;
+}
+
+.property_box {
+	width: 40%;
+	height: 150px;
+	margin-left: 10%;
+	background-color: #90C32E;     /* Medium Green */
+	position: relative;
+	float: left;
+	padding: 10px;
+	overflow: hidden;
+}
+
+.property_box p {
+	color: #FFFFFF;
+	width: 68%;
+	float: left;
+	line-height: 1.3rem;
+	margin-top: 2%;
+}
+
+.property_box img {
+	width: 28%;
+	float: left;
+	margin: 2%;
+}
+
+.add_new_property {
+	width: 40%;
+	height: 150px;
+	margin-left: 10%;
+	background-color: #90C32E;     /* Medium Green */
+	position: relative;
+	clear: both;
+	margin-top: 25px;
+	padding: 10px;
+}
+
+.add_new_property p {
+	color: #FFFFFF;
+	width: 90%;
+	float: left;
+	line-height: 1.3rem;
+	margin: 2%;
+}
+
+/* ----------------------    TABBED FORMS   --------------------- */
+
+
+.tabbed_forms_header {
+	border: 4px solid #90C32E;     /* Medium Green */ 
+	color: #333333;
+
+}
+#tabs {
+	position: relative;
+	padding: .2em;
+}
+

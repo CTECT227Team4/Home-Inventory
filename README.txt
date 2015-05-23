@@ -13,7 +13,3 @@ http://localhost/az/index.php?id=2
 http://localhost/az/index.php?id=3
 
 It will pull from the corresponding #.json file.
-
-Lynne Was HERE!
-
-So was Rosemary! I edited this again.
