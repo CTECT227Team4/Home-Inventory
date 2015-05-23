@@ -8,7 +8,7 @@
 <body>
 
 	<?php 
-		include "includes/mysqli_connect.inc.php";   //    connects to the MySQL Database
+		include "inc/mysqli_connect.inc.php";   //    connects to the MySQL Database
 
 		if ($_SERVER['REQUEST_METHOD'] == "POST") {
 			#  checks to see if the fields are filled out		

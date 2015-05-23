@@ -11,8 +11,7 @@
 </head>
 <body>
 	<?php 
-		include "includes/mysqli_connect.inc.php";   //    connects to the MySQL Database
-		include "includes/header2.inc.php";      // adds Header #2 to the page
+		include "inc/header2.inc.php";      // adds Header #2 to the page
 	 ?>
 
 	<div class="page_wrapper">

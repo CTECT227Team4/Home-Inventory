@@ -14,8 +14,7 @@
 	<div class="page_wrapper">
 
 	<?php 
-		include "includes/mysqli_connect.inc.php";   //    connects to the MySQL Database
-		include "includes/header3.inc.php";      // adds Header #2 to the page
+		include "inc/header3.inc.php";      // adds Header #2 to the page
 	 ?>
 
 
