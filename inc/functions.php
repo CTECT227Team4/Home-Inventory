@@ -32,7 +32,7 @@
     	}
     } //end getRecordset
 
-	function form_errors($errors=array()) {
+	function form_errors($errors) {
 	    $output = "";
 	    if (!empty($errors)) {
 	        $output = "<div class=\"error\">";

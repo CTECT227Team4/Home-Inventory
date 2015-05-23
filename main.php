@@ -16,13 +16,13 @@ $itemid = 0;
 if (isset($_GET['F'])) $webfunction = $_GET['F'];
 if (isset($_GET['userid'])) $userid = $_GET['userid'];
 if (isset($_GET['propertyid'])) $propertyid = $_GET['propertyid'];
-<<<<<<< HEAD
+//<<<<<<< HEAD
 if (isset($_GET['sectionid'])) $sectionid = $_GET['sectionid'];
 if (isset($_GET['roomid'])) $roomid = $_GET['roomid'];
 if (isset($_GET['itemid'])) $itemid = $_GET['itemid'];
-=======
+//=======
 if (isset($_GET['roomid'])) $roomid = $_GET['roomid'];
->>>>>>> origin/master
+//>>>>>>> origin/master
 
 header('Content-Type: application/json');
 

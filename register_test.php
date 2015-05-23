@@ -11,7 +11,7 @@
 			$lastName = $_POST["lastName"];
 			$email = $_POST["email"];
 
-			//to be used with validation functions - skipping for now
+			//to be used with validation functions
 			 	$required_fields = array("username", "password", "firstName", "lastName", "email");
 				validate_presences($required_fields);
 				$fields_with_max_lengths = array("username" => 40, "password" => 50, "firstName" => 50, "lastName" => 50, "email" => 100);
