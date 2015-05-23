@@ -16,9 +16,13 @@ $itemid = 0;
 if (isset($_GET['F'])) $webfunction = $_GET['F'];
 if (isset($_GET['userid'])) $userid = $_GET['userid'];
 if (isset($_GET['propertyid'])) $propertyid = $_GET['propertyid'];
+<<<<<<< HEAD
 if (isset($_GET['sectionid'])) $sectionid = $_GET['sectionid'];
 if (isset($_GET['roomid'])) $roomid = $_GET['roomid'];
 if (isset($_GET['itemid'])) $itemid = $_GET['itemid'];
+=======
+if (isset($_GET['roomid'])) $roomid = $_GET['roomid'];
+>>>>>>> origin/master
 
 header('Content-Type: application/json');
 
@@ -52,10 +56,58 @@ try {
 				echo "}]"; // End the whole tree
 				break;
 			case 2: // GetRooms
-				echo '{"error":"1","text":"Rosemary hasn\'t finished coding this yet."}';
+				// locahost/az/main.php?F=2&propertyid=1
+				$sql = "SELECT CONCAT('R', r.id) AS id, name AS text, CONCAT ('$imageslocation', icon) AS icon FROM room r LEFT OUTER JOIN category c ON c.ID = r.CategoryID WHERE r.propertyID = ?";
+
+				$rs = getRecordset($con, $sql, $propertyid);
+
+				echo '[{"id":"P' . $propertyid . '","text": "Main House","icon": "./images/appraisal.png","state": {"opened" : "true"},"children":';
+				echo "["; // The recordset is being returned as an array, so start the array
+				
+				$firstTime = true;
+				
+				while ($row = $rs->fetch()) {
+				//foreach ($rs as $row) {
+					if ($firstTime) $firstTime = !$firstTime; // Don't echo a comma on the first line, only when added a new one
+					else echo ",";
+
+					print json_encode($row, JSON_UNESCAPED_SLASHES);
+				}
+				echo "]"; // End the array
+				echo "}]"; // End the whole tree
 				break;
+
 			case 3: // GetSections
-				echo '{"error":"1","text":"Rosemary hasn\'t finished coding this yet."}';
+				// locahost/az/main.php?F=3&propertyid=1 OR localhost/az/main.php?F=3&roomid=2
+
+				//check whether to select sections in a room or a property
+				if (isset($roomid)) {
+					$sql = "SELECT CONCAT ('S', s.id) AS id, name AS text, CONCAT ('$imageslocation', icon) AS icon FROM section s LEFT OUTER JOIN category c ON c.ID = s.CategoryID WHERE s.roomID = ?";
+					//creates variable for correct node (R) to be echoed with result
+					$parent = "\"id\":\"R" . $roomid;
+				} else {
+					$sql = "SELECT CONCAT('S', s.id) AS id, name AS text, CONCAT ('$imageslocation', icon) AS icon FROM section s LEFT OUTER JOIN category c ON c.ID = s.CategoryID WHERE s.propertyID = ?";
+					//creates variable for correct node (P) to be echoed with result
+					$parent = "\"id\":\"P" . $propertyid;
+				}
+
+				//if $roomid is set, get records for $roomid, otherwise get records for $propertyid
+				isset($roomid) ? $rs = getRecordset($con, $sql, $roomid) : $rs = getRecordset($con, $sql, $propertyid);
+
+				echo '[{' . $parent . '",text": "Main House","icon": "./images/appraisal.png","state": {"opened" : "true"},"children":';
+				echo "["; // The recordset is being returned as an array, so start the array
+				
+				$firstTime = true;
+				
+				while ($row = $rs->fetch()) {
+				//foreach ($rs as $row) {
+					if ($firstTime) $firstTime = !$firstTime; // Don't echo a comma on the first line, only when added a new one
+					else echo ",";
+
+					print json_encode($row, JSON_UNESCAPED_SLASHES);
+				}
+				echo "]"; // End the array
+				echo "}]"; // End the whole tree
 				break;
 			case 4: // GetItems
 				$sql = "SELECT CONCAT('P', p.id) AS id, name AS text, CONCAT ('$imageslocation', icon) AS icon FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN user u ON u.ID = up.userID LEFT OUTER JOIN category c ON c.ID = p.CategoryID WHERE up.userID = ?";
