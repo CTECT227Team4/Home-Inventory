@@ -110,7 +110,7 @@
 
 	function generate_salt($length) {
 		// Not 100% unique, not 100% random, but good enough for salt
-		//MD5 returns 32 caracters
+		//MD5 returns 32 characters
 		$unique_random_string = md5(uniqid(mt_rand(), true));
 
 		//Valid characters for a salt are [a-zA-Z0-9./]

@@ -71,48 +71,46 @@ function upload($user, $pwd) { // handle file upload and inserting into database
 
 			$image_thumb = ob_get_contents(); // stick the image content in a variable
 			ob_end_clean(); // clean up a little
-			$dbh = new PDO("mysql:host=localhost;dbname=testblob", $user, $pwd); // connect to db
+			$dbh = new PDO("mysql:host=localhost;dbname=az", $user, $pwd); // connect to db
 			$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // set the error mode
 
 			/*** prepare the sql ***/
 			$array = array(null, PDO::PARAM_LOB, PDO::PARAM_INT, PDO::PARAM_INT, PDO::PARAM_LOB, PDO::PARAM_INT, null, null);
-			print "<pre>";
-			print_r($array);
-			print "</pre>";
-
 
 			$ID = 1;
 			$parentType = 4;
 			$description = "Test description";
 			
-			
-			
-			//$dbh->beginTransaction();
-			$item = 1;
-			
-
-			//$stmt = $dbh->prepare("INSERT INTO testblob (image_type ,image, image_height, image_width, image_thumb, thumb_height, thumb_width, image_ctgy, image_name) VALUES (? ,?, ?, ?, ?, ?, ?, ?, ?)");
-			$sql = "INSERT INTO attachment (ID, parentType, item, image_type, attachment, height, width, thumbnail, thumbHeight, thumbWidth, name, description) VALUES (? ,?, ?, ?, ?, ?, ?, ?, ?)";
-		
-			exit;
-
-			//$stmt = $dbh->prepare($sql);
+			$dbh->beginTransaction();
+			$stmt = $dbh->prepare("SELECT IFNULL(MAX(item), 0) + 1 AS item FROM attachment WHERE ID = ? AND parentType = ?");
 			$stmt->bindParam(1, $ID, PDO::PARAM_INT);
 			$stmt->bindParam(2, $parentType, PDO::PARAM_INT);
-			$stmt->bindParam(3, $item, PDO::PARAM_INT);
-			$stmt->bindParam(4, $image_type, PDO::PARAM_STR); // mime type
-			$stmt->bindParam(5, $imgfp, PDO::PARAM_LOB); // binary attachment
-			$stmt->bindParam(6, $image_height, PDO::PARAM_INT);
-			$stmt->bindParam(7, $image_width, PDO::PARAM_INT);
-			$stmt->bindParam(8, $image_thumb, PDO::PARAM_LOB); // binary thumbnail, if available
-			$stmt->bindParam(9, $thumb_height, PDO::PARAM_INT);
-			$stmt->bindParam(10, $thumb_width, PDO::PARAM_INT);
-			$stmt->bindParam(11, $image_name, PDO::PARAM_STR);
-			$stmt->bindParam(12, $description, PDO::PARAM_STR);
+			$stmt->execute();
+			if ($row = $stmt->fetch()) {
+				$item = $row["item"];
+				$sql = "INSERT INTO attachment (ID, parentType, item, mimeType, attachment, height, width, thumbnail, thumbHeight, thumbWidth, name, description) VALUES (? ,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-			//$stmt->execute();
-			//$dbh->commit();
-			//dbh->rollBack();
+				echo $sql . "<br>";
+				$stmt = $dbh->prepare($sql);
+				$stmt->bindParam(1, $ID, PDO::PARAM_INT);
+				$stmt->bindParam(2, $parentType, PDO::PARAM_INT);
+				$stmt->bindParam(3, $item, PDO::PARAM_INT);
+				$stmt->bindParam(4, $image_type, PDO::PARAM_STR); // mime type
+				$stmt->bindParam(5, $imgfp, PDO::PARAM_LOB); // binary attachment
+				$stmt->bindParam(6, $image_height, PDO::PARAM_INT);
+				$stmt->bindParam(7, $image_width, PDO::PARAM_INT);
+				$stmt->bindParam(8, $image_thumb, PDO::PARAM_LOB); // binary thumbnail, if available
+				$stmt->bindParam(9, $thumb_height, PDO::PARAM_INT);
+				$stmt->bindParam(10, $thumb_width, PDO::PARAM_INT);
+				$stmt->bindParam(11, $image_name, PDO::PARAM_STR);
+				$stmt->bindParam(12, $description, PDO::PARAM_STR);
+			} else {
+				$dbh->rollBack();
+				echo "Something went wrong getting the item number.<pre>";
+				print_r($dbh->errorInfo());
+				echo "</pre>";				
+				exit;
+			}
 		} else { // throw an exception is image is not of type
 			throw new Exception("File Size Error.  Picture is too large.");
 		}
