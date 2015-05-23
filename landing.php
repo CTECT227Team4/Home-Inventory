@@ -1,3 +1,4 @@
+<?php require_once("/inc/session.php"); ?>
 <?php # landing.php ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,7 +17,6 @@
 	<?php 
 		include "inc/header3.inc.php";      // adds Header #2 to the page
 	 ?>
-
 
 	<div class="content">
 		<div class="property_wrapper">
