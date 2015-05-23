@@ -148,9 +148,11 @@ try {
 			case 10: // WriteItem
 				echo '{"error":"1","text":"Rosemary hasn\'t finished coding this yet."}';
 				break;
-			case 11: // Whatever other stuff we need
+			case 11: // GetCategories
 				echo '{"error":"1","text":"Rosemary hasn\'t finished coding this yet."}';
 				break;
+			case 12: // Whatever other stuff we need
+				echo '{"error":"1","text":"This still needs to be coded"}';
 			default: 
 				echo '{"error":"1","text":"Unknown function."}';
 		}
