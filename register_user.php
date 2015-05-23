@@ -1,4 +1,48 @@
 <?php # register_user.php ?>
+<?php require_once("/inc/session.php"); ?>
+<?php require_once("/inc/functions.php") ?>
+<?php require_once("../azconfig.php"); ?>
+<?php //require_once("/inc/validation_functions.php") ?>
+<?php
+	if ($_SERVER['REQUEST_METHOD'] == "POST") {
+
+			$username = $_POST["userName"];
+			$password = password_encrypt($_POST["password"]);
+			$firstName = $_POST["firstName"];
+			$lastName = $_POST["lastName"];
+			$email = $_POST["email"];
+
+			//to be used with PHP validation functions if desired - see inc/validation_functions.php
+			 	//$required_fields = array("username", "password", "firstName", "lastName", "email");
+				//validate_presences($required_fields);
+				//$fields_with_max_lengths = array("username" => 40, "password" => 50, "firstName" => 50, "lastName" => 50, "email" => 100);
+				//validate_max_lengths($fields_with_max_lengths);
+			//will need function to verify that password === verify_password
+			//will need to check if username/email already exists
+
+
+			//if (empty($errors)) {
+
+				try {
+					$sql = "INSERT INTO user (userName, password, firstName, lastName, email, usertypeID) VALUES ('{$username}', '{$password}', '{$firstName}', '{$lastName}', '{$email}', 1)";
+					$stmt = $con->prepare($sql);
+					$stmt->execute();
+					$_SESSION["message"] = "User created.";
+					redirect_to("login.php");
+					echo "User <em>" . $username . "</em> created.";
+				} catch(PDOException $e) {
+				    echo $sql . "<br>" . $e->getMessage();
+				    $_SESSION["message"] = "User creation failed.";
+				    redirect_to("register_user.php");
+				} //end try catch
+
+			//} else {
+			//	$_SESSION["errors"] = $errors;
+			//	redirect_to("register_user.php");
+			//}
+	} //end if ($_SERVER['REQUEST_METHOD'] == "POST")
+
+ ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,7 +64,7 @@
 		<div class="registration_wrapper">
 			<h2>Please Enter Your Registration Information:</h2>
 
-			<form method="Post" action="process_user.php" id="registration">
+			<form action="register_user.php" method="post" name="register" id="registration">
 				<p class="two_wide">     <!--  makes two inputs on one line -->
 					<label for="firstName">First Name:</label>
 					<input id="firstName" type="text" name="firstName">    
@@ -39,11 +83,11 @@
 				</p>
 				<p class="two_wide">          <!--  makes two inputs on one line -->
 					<label for="password">Password:</label>
-					<input id="password" type="password" name="password">        
+					<input id="password" type="password" name="password">
 				</p>
 				<p class="two_long_wide">             <!--  makes two inputs on one line, one with a long label -->
 					<label for="password">Verify Password:</label>
-					<input id="verify_password" type="password" name="password">        
+					<input id="verify_password" type="password" name="password">
 				</p>
 				<p>
 					<input type="submit" value="Register" class="centered_button" id="register">
