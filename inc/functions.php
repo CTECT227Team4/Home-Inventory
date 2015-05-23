@@ -1,5 +1,7 @@
-<?php 
-	$con = @new PDO("mysql:host=localhost;dbname=" . $db, $user, $pwd);  //move this to its own file? connect.php?
+<?php
+	//Connect to database
+	require_once('../azconfig.php');
+	$con = @new PDO("mysql:host=localhost;dbname=" . $db, $user, $pwd);
 
 	function redirect_to($new_location) {
         header("Location: " . $new_location);
@@ -29,12 +31,6 @@
     		exit;
     	}
     } //end getRecordset
-
-	// function confirm_query($result_set) {
-	// 	if (!$result_set) {
- //        	die("Database query failed.");
-	// 	}
-	// }
 
 	function form_errors($errors=array()) {
 	    $output = "";
@@ -145,7 +141,7 @@
 
 		if ($user) {
 			//found admin, check password
-			if (password_check($password, $user["hashed_password"])) {
+			if (password_check($password, $user["password"])) {
 				//password matches
 				return $user;
 			} else {
@@ -161,11 +157,11 @@
 	function logged_in() {
 		return isset($_SESSION['admin_id']);
 		//check
-	} end //logged_in
+	} //logged_in
 
 	function confirm_logged_in() {
 		if(!logged_in()) {
-			redirect_to("login.php");
+	// 		redirect_to("login.php");
 		}
-		//enforce
-	} //end confirm_logged_in
+	 } 
+?>
