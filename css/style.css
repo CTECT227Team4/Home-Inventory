@@ -19,7 +19,7 @@ html, body {
 	background-color: #FFFFFF;	/* white */
 	font-size: 18px;			/* used as the basis for all font sizes, margins, paddings, widths, etc.) */
 	line-height: 1.4;			/* one and a half times the font height */
-	font-family: 'Futura-Normal'; 
+	font-family: 'futura-normal', arial; 
 	font-weight: 400;			/* normal */
 
 	color: #333333;				/* dk. grey specified by client  */
@@ -34,22 +34,28 @@ html, body {
   text-shadow: none;
 }
 
+input.middle:focus {
+    outline-width: 0;
+}
+
+input:focus, select:focus, textarea:focus, button:focus {
+    outline: #90C32E;
+}
+
 /*  ----------------    COLOR PALLETTE    ---------------- */
 
 /*#004800 Used for headings
 #90C32E Used for panel backgrounds
 #333333 Used for text
-#387929 Available for use as applicable*/
+#387929 Available for use as applicable
+#ad102a For Errors   */
 
 
 /*  ----------------    TYPOGRAPHY        ----------------*/
 
 /*   Loading TTF fonts specified by client FUTURA Normal and Futura Bold   */
 
-@font-face {
-    font-family: Futura-Normal;
-    src: url("../fonts/Futura-Normal.ttf");
-}
+@import url(http://allfont.net/css/?fonts=futura-normal);
 
 @font-face {
     font-family: Futura;
@@ -65,7 +71,7 @@ html, body {
 
 h1 {
 	font-size: 1.8rem;		/* 40px/18px */
-	font-family: Futura; 
+	font-family: 'Futura', arial;
 	color: #004800;     /*  Dark green specified by client   */
 	text-align: center;
 	margin-bottom: 2%;
@@ -74,7 +80,7 @@ h1 {
 h2 {
 	font-size: 1.5rem;
 	margin-bottom: 2%;
-	font-family: Futura; 
+	font-family: 'Futura', arial; 
 	color: #004800;     /*  Dark green specified by client   */
 	text-align: center;	
 }
@@ -100,6 +106,7 @@ a {
 	clear: both;
 	width: 100%;
 	position: relative;
+	margin-top: 30px;
 }
 
 /* -----------------------     HEADERS  & UPPER NAV    ----------------------------*/
@@ -152,6 +159,7 @@ nav {
 	margin: 0 auto;
 	list-style: none;
 	position: relative;
+	z-index: 10;
 }
 
 .upper_buttons li {
@@ -184,26 +192,30 @@ nav {
 	margin: 0;
 	padding: 0;
 	width: 22%;
-	border: 0 4px 4px 4px;  
+	border: 1px solid #90C32E;
+ 
 }
 
 .upper_buttons li ul li {
 	display: inline;
-	float: none;
+	float: right;
 	width: 100%;
 	margin: 0;
 	padding: 0;
+	background-color: #d7fe8b;
+	border: 0;
 }
 
 .upper_buttons li ul li a:link, .upper_buttons li ul li a:visited {
 	width:auto;
-	border: 0 4px 4px 4px;  
+	border-bottom: 1px;  
 }
 
 .upper_buttons li ul li a:hover {
 	background-color: #90C32E;     /* Medium Green */
 	color: #FFFFFF;	
-	border: 0 4px 4px 4px;  
+	border: 0;  
+	border-bottom: 1px;
 }
 
 
@@ -376,16 +388,119 @@ input:focus {
 	margin: 2%;
 }
 
+
 /* ----------------------    TABBED FORMS   --------------------- */
 
-
-.tabbed_forms_header {
-	border: 4px solid #90C32E;     /* Medium Green */ 
-	color: #333333;
-
+#add_item {
+	font-size: 1.3rem;
 }
+#add_property {
+	font-size: 1.3rem;
+}
+
 #tabs {
-	position: relative;
-	padding: .2em;
+	width: 90%;
+	margin: 0 auto 100px auto;
+	font-size: 1.3rem;
 }
 
+#tabs:focus {
+	outline: #90C32E;
+}
+#tabs p {
+	font-size: 1.1rem;
+}
+
+.item_tabs {
+	height: 1000px;
+}
+
+.property_tab {
+	height: 550px;
+}
+
+.blank_space {
+	color: #FFFFFF;
+	border: #FFFFFF;
+}
+
+.blank_space:hover {
+	color: #FFFFFF;
+	border: #FFFFFF;
+	background-color: #FFFFFF;
+}
+
+.tab_two_wide, .tab_two_long_wide {
+	width: 46%;
+	margin-right: 3%;
+	float: left;
+	position: relative;	
+	margin-bottom: 10px;
+}
+
+.tab_two_wide label {
+    float: left;
+    padding-right: 5px;
+    width: 35%;
+    text-align: right;
+    margin-bottom: 10px;
+}
+
+.tab_two_wide select, .tab_one_wide select {
+	height: 35px;
+} 
+
+.tab_two_wide input, .tab_two_wide select {
+  	float: left;
+  	width: 65%;
+  	margin-bottom: 10px;
+}
+
+.tab_two_long_wide label {
+    float: left;
+    padding-right: 5px;
+    width: 35%;
+    text-align: right;
+    margin-bottom: 10px;
+}
+
+.tab_two_long_wide input {
+  	float: left;
+  	width: 65%;
+  	margin-bottom: 10px;
+}
+
+.tab_one_wide .tab_one_wide_text {
+	position: relative;
+	width: 100%;
+	clear: both;
+	margin-bottom: 10px;
+}
+
+.tab_one_wide label, .tab_one_wide_text label {
+    float: left;
+    padding-right: 5px;
+    width: 16%;
+    text-align: right;
+    margin-bottom: 10px;
+}
+
+.tab_one_wide input, .tab_one_wide select, .tab_one_wide_text textarea {
+  	float: left;
+  	width: 79%;
+  	margin-bottom: 10px;
+}
+
+.tab_one_wide_text textarea {
+	width: 900px;
+	height:90px;
+}
+
+.centered_button {
+	display: block;
+	text-align: center;
+}
+
+.wide_textarea {
+	margin-top: 10px;
+}
