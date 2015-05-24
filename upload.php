@@ -1,39 +1,52 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-<head><title>Storing Images in DB</title></head><body>
-<h2>Basic upload of image to a database</h2>
-<p><a href="view.php">View Thumbnails</a></p>
-<form method="post" action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data">Select Image File:
+<head><title>A-Z Upload File</title></head><body>
+<h2>A-Z Upload File</h2>
+<h3>Lynn, make me pretty!</h3>
+<form method="post" action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data">
+<p>Select Image File</p>
 <input type="file" name="userfile"  size="40">
-<input type="hidden" name="MAX_FILE_SIZE" value="10000000">
-<select name="image_ctgy">
-<option value="animals">Animals</option>
-<option value="vegetables">Vegetables</option>
-<option value="minerals">Minerals</option>
-</select><br /><input type="submit" value="submit"></form>
+
 <?php
 include_once("../azconfig.php");
 
-if(!isset($_FILES['userfile'], $_POST['image_ctgy'])) { // check if a file was submitted
-	echo '<p>Please select a file</p>';
+// Variables that need to be passed in
+$id = 0;
+$parentType = 0;
+if (isset($_GET['ID'])) $id = $_GET['ID'];
+if (isset($_GET['parentType'])) $parentType = $_GET['parentType'];
+?>
+
+<input type="hidden" name="ID" value="<?=$id?>">
+<input type="hidden" name="parentType" value="<?=$parentType?>">
+<p>Description</p><textarea></textarea>
+<br /><input type="submit" value="Submit"><button onclick="self.close()">Close</button></form>
+<?php
+$description = "";
+
+if(!isset($_FILES['userfile'])) { // check if a file was submitted
+	echo '<p>Please select a file to upload.</p>';
+} else if(!isset($_POST['ID'], $_POST['parentType'])) { // check if enough info was submitted
+	echo "<p>Error, not enough information about file.</p>";
 } else {
+	if (isset($_POST['ID'])) $id = $_POST['ID'];
+	if (isset($_POST['parentType'])) $parentType = $_POST['parentType'];
+	if (isset($_POST['description'])) $description = $_POST['description'];
+
 	try {
-		upload($user, $pwd);
+		if ($id == 0 || $parentType == 0 ) {
+			echo "You must supply the ID and parentType of the file.";
+			exit;
+		}
+		upload($driver, $db, $server, $user, $pwd, $id, $parentType, $description);
 		echo '<p>Thank you for submitting</p>';
 	} catch(Exception $e) {
 		echo '<h4>' . $e->getMessage() . '</h4>';
 	}
 }
 
-function upload($user, $pwd) { // handle file upload and inserting into database
+function upload($driver, $db, $server, $user, $pwd, $id, $parentType, $description) { // handle file upload and inserting into database
 	if(is_uploaded_file($_FILES['userfile']['tmp_name']) && getimagesize($_FILES['userfile']['tmp_name']) != false) {
-		/*** an array of allowed categories ***/
-		$cat_array = array("animals", "vegetables", "minerals");
-		if(filter_has_var(INPUT_POST, "notset") !== false || in_array($_POST['image_ctgy'], $cat_array) !== false) {
-			$image_ctgy = filter_input(INPUT_POST, "image_ctgy", FILTER_SANITIZE_STRING);
-		} else {
-			throw new Exception("Invalid Category");
-		}
 		//  get the image info
 		$size = getimagesize($_FILES['userfile']['tmp_name']);
 
@@ -46,8 +59,8 @@ function upload($user, $pwd) { // handle file upload and inserting into database
 		$image_name   = $_FILES['userfile']['name'];
 		$maxsize      = 99999999;
 
-		/*  check the file is less than the maximum file size */
-		if($_FILES['userfile']['size'] < $maxsize ) {
+		// check the file is less than the maximum file size
+		if($_FILES['userfile']['size'] < $maxsize) {
 			$thumb_data = $_FILES['userfile']['tmp_name']; // create a second variable for the thumbnail
 			$aspectRatio=(float)($size[0] / $size[1]); // get the aspect ratio (height / width)
 			$thumb_height = 100; // height of the thumbnail
@@ -71,28 +84,26 @@ function upload($user, $pwd) { // handle file upload and inserting into database
 
 			$image_thumb = ob_get_contents(); // stick the image content in a variable
 			ob_end_clean(); // clean up a little
-			$dbh = new PDO("mysql:host=localhost;dbname=az", $user, $pwd); // connect to db
+
+			$dbh = new PDO("$driver:host=$server;dbname=$db", $user, $pwd); // connect to db
 			$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // set the error mode
 
 			/*** prepare the sql ***/
 			$array = array(null, PDO::PARAM_LOB, PDO::PARAM_INT, PDO::PARAM_INT, PDO::PARAM_LOB, PDO::PARAM_INT, null, null);
-
-			$ID = 1;
-			$parentType = 4;
-			$description = "Test description";
 			
 			$dbh->beginTransaction();
 			$stmt = $dbh->prepare("SELECT IFNULL(MAX(item), 0) + 1 AS item FROM attachment WHERE ID = ? AND parentType = ?");
-			$stmt->bindParam(1, $ID, PDO::PARAM_INT);
+			$stmt->bindParam(1, $id, PDO::PARAM_INT);
 			$stmt->bindParam(2, $parentType, PDO::PARAM_INT);
 			$stmt->execute();
+			
 			if ($row = $stmt->fetch()) {
 				$item = $row["item"];
 				$sql = "INSERT INTO attachment (ID, parentType, item, mimeType, attachment, height, width, thumbnail, thumbHeight, thumbWidth, name, description) VALUES (? ,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-				echo $sql . "<br>";
+				//echo $sql . "<br>$item<br>";
 				$stmt = $dbh->prepare($sql);
-				$stmt->bindParam(1, $ID, PDO::PARAM_INT);
+				$stmt->bindParam(1, $id, PDO::PARAM_INT);
 				$stmt->bindParam(2, $parentType, PDO::PARAM_INT);
 				$stmt->bindParam(3, $item, PDO::PARAM_INT);
 				$stmt->bindParam(4, $image_type, PDO::PARAM_STR); // mime type
@@ -104,6 +115,8 @@ function upload($user, $pwd) { // handle file upload and inserting into database
 				$stmt->bindParam(10, $thumb_width, PDO::PARAM_INT);
 				$stmt->bindParam(11, $image_name, PDO::PARAM_STR);
 				$stmt->bindParam(12, $description, PDO::PARAM_STR);
+				$stmt->execute();
+				$dbh->commit();
 			} else {
 				$dbh->rollBack();
 				echo "Something went wrong getting the item number.<pre>";
