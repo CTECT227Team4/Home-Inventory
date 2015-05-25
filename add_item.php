@@ -52,7 +52,7 @@
 				    <li><a href="#tabs-2">Value</a></li>
 				    <li><a href="#tabs-3">Multimedia</a></li>
 				    <li><a href="#tabs-4">Documents</a></li>
-				    <li><a href="#tabs-5">Warrenty</a></li>
+				    <li><a href="#tabs-5">Warranty</a></li>
 				    <li><a href="#tabs-6">Repair</a></li>		    
 				    <li><a href="#tabs-7">Notes</a></li>
 
@@ -188,27 +188,27 @@
 			 			<p> Add the documents grid </p>
 				</div>    <!-- end of tabs4 -->
 
-				<div id="tabs-5" class="warrenty_tab tabs_nav">
+				<div id="tabs-5" class="warranty_tab tabs_nav">
 						<p class="tab_two_wide">     <!--  makes two inputs on one line -->
-						<label for="warrenty_question">Warrenty:</label>
-							<select name="warrenty_question" id="warrenty_question">
-								<option value="-">-Is a Warrenty in Effect Now?-</option>
+						<label for="warranty_question">Warranty:</label>
+							<select name="warranty_question" id="warranty_question">
+								<option value="-">-Is a Warranty in Effect Now?-</option>
 								<option value="Yes">Yes</option>
 								<option value="No">No</option>
 							</select>
 						</p>
 						<p class="tab_two_long_wide">      <!--  makes two inputs on one line -->
-							<label for="warrenty_expiration">Expiration Date:</label>
-							<input id="warrenty_expiration" type="text" name="warrenty_expiration">       
+							<label for="warranty_expiration">Expiration Date:</label>
+							<input id="warranty_expiration" type="text" name="warranty_expiration">       
 						</p>
 						<p class="tab_one_wide">      <!--  makes two inputs on one line -->
-							<label for="warrenty_type">Type of Warrenty:</label>
-							<input id="warrenty_type" type="text" name="warrenty_type">       
+							<label for="warranty_type">Type of Warranty:</label>
+							<input id="warranty_type" type="text" name="warranty_type">       
 						</p>
 						<p class="tab_one_wide">     <!--  makes two inputs on one line -->
-						<label for="warrenty_attached">Warrenty Documents:</label>
-							<select name="warrenty_attached" id="warrenty_attached">
-								<option value="-">-Is a Copy of the Warrenty Attached in Documents?-</option>
+						<label for="warranty_attached">Warranty Documents:</label>
+							<select name="warranty_attached" id="warranty_attached">
+								<option value="-">-Is a Copy of the Warranty Attached in Documents?-</option>
 								<option value="Yes">Yes</option>
 								<option value="No">No</option>
 							</select>
