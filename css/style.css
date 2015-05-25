@@ -391,10 +391,7 @@ input:focus {
 
 /* ----------------------    TABBED FORMS   --------------------- */
 
-#add_item {
-	font-size: 1.3rem;
-}
-#add_property {
+#add_item, #add_property, #add_room {
 	font-size: 1.3rem;
 }
 
@@ -415,7 +412,7 @@ input:focus {
 	height: 1000px;
 }
 
-.property_tab {
+.add_room .add_section .property_tab {
 	height: 550px;
 }
 
