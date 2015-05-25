@@ -9,6 +9,8 @@
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>     <!-- jQuery CDN -->
 	<script src="jquery-ui-1.11.4.custom/jquery-ui.js"></script>
 	<link rel="stylesheet" href="jquery-ui-1.11.4.custom/jquery-ui.css">
+	<script type="text/javascript" src="tipped-4.2.8-light/tipped-4.2.8-light/js/tipped/tipped.js"></script>    <!-- Tooltip plugin -->
+	<link rel="stylesheet" type="text/css" href="tipped-4.2.8-light/tipped-4.2.8-light/css/tipped/tipped.css"/>    <!-- Tooltip plugin -->
 	<script src="jquery/nav_mouse.js">	</script>           <!--  Navigation Mouseover Script -->
   	<script>
   		$(function() {
@@ -47,7 +49,7 @@
 	  	<div id="tabs-1" class="property_tab tabs_nav">
 			<form method="Post" action="process_add_property.php" id="add_property">
 				<p class="tab_one_wide">     
-					<label for="name">Property Name:</label>
+					<label for="name">Property Name:  <span class="simple-tooltip" title="This can be anything that is a meaningful name to you."><img src="images/info.png"></span></label>
 					<input id="name" type="text" name="name">    
 				</p>
 				<p class="tab_one_wide" class="space">
@@ -59,11 +61,11 @@
 					<input id="address2" type="text" name="address2">
 				</p>
 				<p class="tab_two_wide">     <!--  makes two inputs on one line -->
-					<label for="zip">Zipcode:</label>
+					<label for="zip">Zipcode:  <span class="simple-tooltip" title="The City and State will propagate from the zipcode."><img src="images/info.png"></span></label>
 					<input id="zip" type="text" name="zip">    
 				</p>
 				<p class="tab_two_long_wide">      <!--  makes two inputs on one line -->
-					<label for="county">Property County:</label>
+					<label for="county">  <span class="simple-tooltip" title="This can be helpful when gathering property tax information."><img src="images/info.png"></span>Property County:</label>
 					<input id="county" type="text" name="county">       
 				</p>
 				<p class="tab_two_wide">     <!--  makes two inputs on one line -->
@@ -94,11 +96,11 @@
 
 		<div id="tabs-2" class="taxes_tab tabs_nav">
 				<p class="tab_one_wide">     
-					<label for="property_taxID">Property Tax ID No.:</label>
+					<label for="property_taxID">Property Tax ID No.:  <span class="simple-tooltip" title="???"><img src="images/info.png"></span></label>
 					<input id="property_taxID" type="text" name="property_taxID">    
 				</p>
 				<p class="tab_one_wide">
-					<label for="gis_url">Prop. Tax GIS URL:</label>
+					<label for="gis_url">Prop. Tax GIS URL:  <span class="simple-tooltip" title="???"><img src="images/info.png"></span></label>
 					<input id="gis_url" type="text" name="gis_url">
 				</p>
  

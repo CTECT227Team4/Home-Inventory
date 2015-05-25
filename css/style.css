@@ -489,7 +489,7 @@ input:focus {
 }
 
 .tab_one_wide_text textarea {
-	width: 900px;
+	width: 79%;
 	height:90px;
 }
 
@@ -500,4 +500,13 @@ input:focus {
 
 .wide_textarea {
 	margin-top: 10px;
+}
+
+.simple_tooltip i{
+	width: 6px;
+	color: red;
+}
+
+span img {
+	width: 18px;
 }

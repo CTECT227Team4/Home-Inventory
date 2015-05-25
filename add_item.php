@@ -9,8 +9,14 @@
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>     <!-- jQuery CDN -->
 	<script src="jquery-ui-1.11.4.custom/jquery-ui.js"></script>
 	<link rel="stylesheet" href="jquery-ui-1.11.4.custom/jquery-ui.css">
+	<script type="text/javascript" src="tipped-4.2.8-light/tipped-4.2.8-light/js/tipped/tipped.js"></script>    <!-- Tooltip plugin -->
+	<link rel="stylesheet" type="text/css" href="tipped-4.2.8-light/tipped-4.2.8-light/css/tipped/tipped.css"/>    <!-- Tooltip plugin -->
+
 	<script src="jquery/nav_mouse.js">	</script>           <!--  Navigation Mouseover Script -->
   	<script>
+  		$(document).ready(function() {
+  			Tipped.create('#demo-tooltip', 'Some tooltip text');
+		});
   		$(function() {
     		$( "#tabs" ).tabs();
   		});
@@ -60,11 +66,11 @@
 			  	<div id="tabs-1" class="item_tab tabs_nav">
 
 		  			<p class="tab_one_wide">
-						<label for="name">Item Name:</label>
+						<label for="name">Item Name: <span class="simple-tooltip" title="This can be anything that is a meaningful name to you."><img src="images/info.png"></span></label> 
 						<input id="name" type="text" name="name">    
 					</p>
 					<p class="tab_one_wide">
-						<label for="property_name">Property:</label>
+						<label for="property_name">Property:  <span class="simple-tooltip" title="The property where the item is located."><img src="images/info.png"></span></label>
 						<select name="property_name" id="property_name">
 							<option value="-">-Select a Property-</option>
 							<option value="property1">This needs to propagate from database</option>
@@ -80,7 +86,7 @@
 						</select>
 					</p>
 					<p class="tab_two_wide">
-						<label for="room_name">Room:</label>
+						<label for="room_name">Room:  <span class="simple-tooltip" title="The room where the item is located."><img src="images/info.png"></span></label>
 						<select name="room_name" id="room_name">
 							<option value="-">-Select a Room-</option>
 							<option value="room1">This needs to propagate from database</option>
@@ -88,7 +94,7 @@
 						</select>
 					</p>					
 					<p class="tab_one_wide">     <!--  makes two inputs on one line -->
-						<label for="category">Category:</label>
+						<label for="category">Category:  </label>
 						<select name="category" id="category">
 							<option value="-">-Select a Category-</option>
 							<option value="Category1">Category 1</option>
@@ -146,7 +152,7 @@
 							<input id="purchased_from" type="text" name="purchased_from">       
 						</p>
 						<p class="tab_two_wide">      <!--  makes two inputs on one line -->
-							<label for="paid_with">Paid for With:</label>
+							<label for="paid_with">Paid for With:  <span class="simple-tooltip" title="The method which you paid for the item, i.e., credit card, etc."><img src="images/info.png"></span></label>
 							<input id="paid_with" type="text" name="paid_with">       
 						</p>
 						<p class="two_long_wide">      <!--  makes two inputs on one line -->
@@ -202,7 +208,7 @@
 							<input id="warranty_expiration" type="text" name="warranty_expiration">       
 						</p>
 						<p class="tab_one_wide">      <!--  makes two inputs on one line -->
-							<label for="warranty_type">Type of Warranty:</label>
+							<label for="warranty_type">Type of Warranty:  <span class="simple-tooltip" title="Examples -- lifetime, extended, etc."><img src="images/info.png"></span></label>
 							<input id="warranty_type" type="text" name="warranty_type">       
 						</p>
 						<p class="tab_one_wide">     <!--  makes two inputs on one line -->
