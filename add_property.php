@@ -13,19 +13,15 @@
 	<link rel="stylesheet" type="text/css" href="tipped-4.2.8-light/tipped-4.2.8-light/css/tipped/tipped.css"/>    <!-- Tooltip plugin -->
 	<script src="jquery/nav_mouse.js">	</script>           <!--  Navigation Mouseover Script -->
   	<script>
-  		$(function() {
+  		$(document).ready(function() {
     		$( "#tabs" ).tabs();
+			$(function() {
+	    		$( "#resizable_description resizable_general_notes" ).resizable({
+	      			handles: "se"
+	   			 });
+	  		});
   		});
- 		$(function() {
-    		$( "#resizable_description" ).resizable({
-      			handles: "se"
-   			 });
-  		});
-		$(function() {
-			$( "#resizable_general_notes" ).resizable({
-	  			handles: "se"
-			 });
-		});
+ 
   	</script>
 
 </head>

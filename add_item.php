@@ -11,35 +11,10 @@
 	<link rel="stylesheet" href="jquery-ui-1.11.4.custom/jquery-ui.css">
 	<script type="text/javascript" src="tipped-4.2.8-light/tipped-4.2.8-light/js/tipped/tipped.js"></script>    <!-- Tooltip plugin -->
 	<link rel="stylesheet" type="text/css" href="tipped-4.2.8-light/tipped-4.2.8-light/css/tipped/tipped.css"/>    <!-- Tooltip plugin -->
-
 	<script src="jquery/nav_mouse.js">	</script>           <!--  Navigation Mouseover Script -->
   	<script>
   		$(document).ready(function() {
   			Tipped.create('#demo-tooltip', 'Some tooltip text');
-		});
-  		$(function() {
-    		$( "#tabs" ).tabs();
-  		});
-  		$(function() {
-    		$( "#resizable" ).resizable({
-      			handles: "se"
-   			 });
-  		});
- 		$(function() {
-    		$( "#resizable2" ).resizable({
-      			handles: "se"
-   			 });
-  		});
-  		$(function() {
-    		$( "#resizable3" ).resizable({
-      			handles: "se"
-   			 });
-  		});
-		$(function() {
-			$( "#resizable4" ).resizable({
-	  			handles: "se"
-			 });
-		});
   	</script>
 
 </head>

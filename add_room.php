@@ -11,19 +11,14 @@
 	<link rel="stylesheet" href="jquery-ui-1.11.4.custom/jquery-ui.css">
 	<script src="jquery/nav_mouse.js">	</script>           <!--  Navigation Mouseover Script -->
   	<script>
-  		$(function() {
+  		$(document).ready(function() {
     		$( "#tabs" ).tabs();
-  		});
-  		$(function() {
-    		$( "#resizable" ).resizable({
-      			handles: "se"
-   			 });
-  		});
- 		$(function() {
-    		$( "#resizable2" ).resizable({
-      			handles: "se"
-   			 });
-   		});   		
+	  		$(function() {
+	    		$( "#resizable resizable2" ).resizable({
+	      			handles: "se"
+	   			 });
+	  		});
+   		}); 		
   	</script>
 
 </head>
