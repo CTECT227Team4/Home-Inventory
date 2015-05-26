@@ -131,7 +131,11 @@ try {
 				echo "}]"; // End the whole tree
 				break;
 			case 5: // CheckLogin
-				echo '{"error":"1","text":"Rosemary hasn\'t finished coding this yet."}';
+				if (isset($_SESSION['user_id']) {
+					//user is logged in
+				} else {
+					redirect_to('login.php');
+				} //endif
 				break;
 			case 6: // CheckAccessLevel
 				echo '{"error":"1","text":"Rosemary hasn\'t finished coding this yet."}';

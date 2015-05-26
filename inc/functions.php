@@ -123,7 +123,7 @@
 	} //end attempt_login
 
 	function logged_in() {
-		return isset($_SESSION['admin_id']);
+		return isset($_SESSION['user_id']);
 		//check
 	} //logged_in
 
