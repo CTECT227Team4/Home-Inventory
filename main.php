@@ -141,7 +141,43 @@ try {
 				echo '{"error":"1","text":"Rosemary hasn\'t finished coding this yet."}';
 				break;
 			case 7: // WriteProperty
-				echo '{"error":"1","text":"Rosemary hasn\'t finished coding this yet."}';
+
+				if (isset($_POST["name"])) $name = $_POST["name"];
+				if (isset($_POST["address"])) $address = $_POST["address"];
+				if (isset($_POST["zip"])) $zip = $_POST["zip"];
+				if (isset($_POST["description"])) $description = $_POST["description"];
+				$categoryID = 1;
+				$userid = 10;
+
+				function writeRecordset($con, $sql, ...$parameters) {
+					try {
+						$paramcount = 1;
+						$stmt = $con->prepare($sql);
+					
+						// $parameters is passed in as an array, go through it and add them all
+						foreach ($parameters as $parameter) { 
+							$stmt->bindParam($paramcount++, $parameter);
+						}
+						
+						$stmt->execute();
+						print_r($stmt);
+						return $stmt;
+					} catch (Exception $e) { // Echo the message in JSON and exit
+						echo '"error":"' . $e->getCode() . '","text":"' . $e->getMessage() . '"';
+						exit;
+					}
+				} //end writeRecordset
+				//add the property
+				$sql = "INSERT INTO property (name, address, zip, description, categoryID) VALUES ('{$name}', '{$address}', $zip, '{$description}', '{$categoryID}')";
+				$wProperty = writeRecordset($con, $sql, $name, $address, $zip, $description, $categoryID);
+
+				// add userID and propertyID (created in previous function) to user_property
+				$sql = "INSERT INTO user_property (userID, propertyID) VALUES ({$userid}, (SELECT ID FROM property WHERE name = '{$name}' AND address = '{$address}' LIMIT 1))";
+				$wUser_Property = writeRecordset($con, $sql, $userid, $name, $address);
+
+				$_SESSION["message"] = "Property created";
+				// redirect_to("landing.php");
+				// echo '{"error":"1","text":"Rosemary hasn\'t finished coding this yet."}';
 				break;
 			case 8: // WriteRoom
 				echo '{"error":"1","text":"Rosemary hasn\'t finished coding this yet."}';
