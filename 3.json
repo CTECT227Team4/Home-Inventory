@@ -26,17 +26,20 @@
             {
                 "id": 3,
                 "text": "Jewelry",
-				"icon": "./images/jewel.png"
+				"icon": "./images/jewel.png",
+				"valid_children": [],
             },
             {
                 "id": 13,
                 "text": "LCD TV",
-				"icon": "./images/screen.png"
+				"icon": "./images/screen.png",
+				"valid_children": []
             },
             {
                 "id": 4,
                 "text": "Shed",
 				"icon": "./images/house.png",
+				"valid_children": [],
                 "children": [
                     {
                         "id": "8",

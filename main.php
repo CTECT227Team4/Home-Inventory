@@ -24,8 +24,9 @@ if (isset($_GET['itemid'])) $itemid = $_GET['itemid'];
 if (isset($_GET['roomid'])) $roomid = $_GET['roomid'];
 //>>>>>>> origin/master
 
-header('Content-Type: application/json');
-
+//header('Content-Type: application/json');
+// Moved $firstTime initialization to the top
+$firstTime = true;
 try {
 	$con = @new PDO("mysql:host=localhost;dbname=" . $db, $user, $pwd);
 	if ($con) {
@@ -41,7 +42,8 @@ try {
 				echo '[{"id":"U' . $userid . '","text": "The Addams Family Properties","children":"true","icon": "./images/appraisal.png","state": {"opened" : "true"},"children":';
 				echo "["; // The recordset is being returned as an array, so start the array
 				
-				$firstTime = true;
+				// Moved $firstTime initialization to the top
+				//$firstTime = true;
 				
 				while ($row = $rs->fetch()) {
 				//foreach ($rs as $row) {
@@ -64,7 +66,8 @@ try {
 				echo '[{"id":"P' . $propertyid . '","text": "Main House","icon": "./images/appraisal.png","state": {"opened" : "true"},"children":';
 				echo "["; // The recordset is being returned as an array, so start the array
 				
-				$firstTime = true;
+				// Moved $firstTime initialization to the top
+				//$firstTime = true;
 				
 				while ($row = $rs->fetch()) {
 				//foreach ($rs as $row) {
@@ -97,7 +100,7 @@ try {
 				echo '[{' . $parent . '",text": "Main House","icon": "./images/appraisal.png","state": {"opened" : "true"},"children":';
 				echo "["; // The recordset is being returned as an array, so start the array
 				
-				$firstTime = true;
+				//$firstTime = true;
 				
 				while ($row = $rs->fetch()) {
 				//foreach ($rs as $row) {
@@ -116,7 +119,8 @@ try {
 				echo '[{"id":"U' . $userid . '","text": "The Addams Family Properties","children":"true","icon": "./images/appraisal.png","state": {"opened" : "true"},"children":';
 				echo "["; // The recordset is being returned as an array, so start the array
 				
-				$firstTime = true;
+				// Moved $firstTime initialization to the top
+				//$firstTime = true;
 				
 				while ($row = $rs->fetch()) {
 				//foreach ($rs as $row) {
@@ -131,11 +135,7 @@ try {
 				echo "}]"; // End the whole tree
 				break;
 			case 5: // CheckLogin
-				if (isset($_SESSION['user_id']) {
-					//user is logged in
-				} else {
-					redirect_to('login.php');
-				} //endif
+				echo '{"error":"1","text":"Rosemary hasn\'t finished coding this yet."}';
 				break;
 			case 6: // CheckAccessLevel
 				echo '{"error":"1","text":"Rosemary hasn\'t finished coding this yet."}';
@@ -155,8 +155,32 @@ try {
 			case 11: // GetCategories
 				echo '{"error":"1","text":"Rosemary hasn\'t finished coding this yet."}';
 				break;
-			case 12: // Whatever other stuff we need
-				echo '{"error":"1","text":"This still needs to be coded"}';
+			case 12: // Get list of properties for drop down
+				// Messing with putting the description in the list too.  And blank, if there's no description.
+				//$sql = "SELECT ID, CONCAT (name, ' - ', description) FROM property p INNER JOIN user_property up ON p.ID = up.propertyID WHERE up.userID = ?";
+				$sql = "SELECT ID, name FROM property p INNER JOIN user_property up ON p.ID = up.propertyID WHERE up.userID = ?";
+				$rs = getRecordset($con, $sql, $userid);
+				echo "{";
+				foreach ($rs as $row) {
+					if ($firstTime) $firstTime = !$firstTime;
+					else echo ",";
+					echo '"' . $row["ID"] . '":"' . $row["name"] . '"';
+				}
+				echo "}";
+				break;
+			case 13: // Get list of sections for drop down
+				$sql = "SELECT s.ID AS ID, s.name AS name FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN section s ON p.ID = s.propertyID WHERE p.ID = 1 AND up.userID = ?";
+				//$rs = getRecordset($con, $sql, 1, $userid);
+				//$rs = getRecordset($con, $sql, $propertyid, $userid);
+				$rs = getRecordset($con, $sql, $userid);
+				echo "{";
+				foreach ($rs as $row) {
+					if ($firstTime) $firstTime = !$firstTime;
+					else echo ",";
+					echo '"' . $row["ID"] . '":"' . $row["name"] . '"';
+				}
+				echo "}";
+				break;
 			default: 
 				echo '{"error":"1","text":"Unknown function."}';
 		}
@@ -172,7 +196,7 @@ function getRecordset($con, $sql, ...$parameters) {
 	try {
 		$paramcount = 1;
 		$stmt = $con->prepare($sql);
-	
+		
 		// $parameters is passed in as an array, go through it and add them all
 		foreach ($parameters as $parameter) { 
 			$stmt->bindParam($paramcount++, $parameter);
@@ -184,5 +208,11 @@ function getRecordset($con, $sql, ...$parameters) {
 		echo '"error":"' . $e->getCode() . '","text":"' . $e->getMessage() . '"';
 		exit;
 	}
+}
+
+function echo_r($data) {
+	echo "<pre>";
+	print_r($data);
+	echo "</pre>";
 }
 ?>
