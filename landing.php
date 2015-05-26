@@ -1,21 +1,25 @@
-<?php require_once("/inc/session.php"); ?>
 <?php # landing.php ?>
-<!DOCTYPE html>
+
+<?php $page_title = "A-Z Home Inventory"; ?>
+<?php $page_heading = "Home Inventory" ?>
+<?php require_once "inc/header.inc.php"; ?>
+
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Home Inventory</title>
-	<link rel="shortcut icon" href="images/az-icon.ico">
-	<link rel="stylesheet" type="text/css" href="css/style.css">
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>     <!-- jQuery CDN -->
-	<script src="jquery/nav_mouse.js">	</script>           <!--  Navigation Mouseover Script -->
+	<title>Home Inventory</title> -->
+<!-- 	<link rel="shortcut icon" href="images/az-icon.ico">
+	<link rel="stylesheet" type="text/css" href="css/style.css"> -->
+	<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script> -->     <!-- jQuery CDN -->
+	<!-- <script src="jquery/nav_mouse.js">	</script> -->           <!--  Navigation Mouseover Script -->
 
-</head>
+<!-- </head>
 <body>
-	<div class="page_wrapper">
+	<div class="page_wrapper"> -->
 
 	<?php 
-		include "inc/header3.inc.php";      // adds Header #2 to the page
+		//include "inc/header3.inc.php";      // adds Header #2 to the page
 	 ?>
 
 	<div class="content">

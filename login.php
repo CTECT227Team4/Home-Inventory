@@ -23,6 +23,8 @@ $userName = "";
 				    // Success
 				    $_SESSION["user_id"] = $found_user["id"];
 				    $_SESSION["userName"] = $found_user["userName"];
+				    $_SESSION["firstName"] = $found_user["firstName"];
+				    $_SESSION["lastName"] = $found_user["lastName"];
 				    redirect_to("landing.php");
 				} else{
 					//failure

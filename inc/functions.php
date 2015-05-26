@@ -104,8 +104,6 @@
 	function attempt_login($userName, $password) {
 		//find user, then password
 		$user = find_user_by_userName($userName);
-		echo "This is working";
-		print_r($user);
 		if ($user) {
 			//found admin, check password
 			if (password_verify($password, $user["password"])) {

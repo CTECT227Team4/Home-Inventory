@@ -1,36 +1,25 @@
-<?php # landing.php ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Home Inventory - Add Item</title>
-	<link rel="shortcut icon" href="images/az-icon.ico">
-	<link rel="stylesheet" type="text/css" href="css/style.css">
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>     <!-- jQuery CDN -->
-	<script src="jquery-ui-1.11.4.custom/jquery-ui.js"></script>
-	<link rel="stylesheet" href="jquery-ui-1.11.4.custom/jquery-ui.css">
-	<script type="text/javascript" src="tipped-4.2.8-light/tipped-4.2.8-light/js/tipped/tipped.js"></script>    <!-- Tooltip plugin -->
-	<link rel="stylesheet" type="text/css" href="tipped-4.2.8-light/tipped-4.2.8-light/css/tipped/tipped.css"/>    <!-- Tooltip plugin -->
-	<script src="jquery/nav_mouse.js">	</script>           <!--  Navigation Mouseover Script -->
-  	<script>
-  		$(document).ready(function() {
-    		$( "#tabs" ).tabs();
-			$(function() {
-	    		$( "#resizable_description resizable_general_notes" ).resizable({
-	      			handles: "se"
-	   			 });
+<?php # add_property.php ?>
+
+<?php $page_title = "Home Inventory - Add Property"; //sets title ?>
+<?php $page_heading = "Add Property" //sets heading to appear on page ?>
+<?php require_once "inc/header.inc.php"; //starts session, includes general functions, populates header content ?>
+
+	 <script type="text/javascript" src="tipped-4.2.8-light/tipped-4.2.8-light/js/tipped/tipped.js"></script>    <!-- Tooltip plugin -->
+	 <link rel="stylesheet" type="text/css" href="tipped-4.2.8-light/tipped-4.2.8-light/css/tipped/tipped.css"/> 
+	   	<script>
+	   		$(document).ready(function() {
+	 	  		$(function() {
+	 	    		$( "#tabs" ).tabs();
+	 	  		});
+	 	  		$(function() {
+	 	    		$( "#resizable resizable2 resizable3 resizable" ).resizable({
+	 	      			handles: "se"
+	 	   			 });
+	 	  		});
 	  		});
-  		});
- 
-  	</script>
+	   	</script>
+<!-- END HEADER CONTENT -->
 
-</head>
-<body>
-	<div class="page_wrapper">
-
-	<?php 
-		include "inc/header3.inc.php";      // adds Header #2 to the page
-	 ?>
 	<div class="content">
 
 	<div id="tabs">
