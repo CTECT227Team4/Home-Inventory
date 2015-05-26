@@ -14,7 +14,15 @@
 	<script src="jquery/nav_mouse.js">	</script>           <!--  Navigation Mouseover Script -->
   	<script>
   		$(document).ready(function() {
-  			Tipped.create('#demo-tooltip', 'Some tooltip text');
+	  		$(function() {
+	    		$( "#tabs" ).tabs();
+	  		});
+	  		$(function() {
+	    		$( "#resizable resizable2 resizable3 resizable" ).resizable({
+	      			handles: "se"
+	   			 });
+	  		});
+ 		});		
   	</script>
 
 </head>
