@@ -102,7 +102,8 @@ $(function () {
 				"url" : <?php
 					$json = $_GET['id'];
 					if ($json == null) $json = '1';
-					echo "\"./$json.json\""; 
+					//echo "\"./$json.json\""; 
+					echo '"http://localhost/az/main.php?F=1&userid=3"';
 			?>,	"dataType" : "json" // needed only if you do not supply JSON headers
 			}
 		}, "plugins" : ["contextmenu", "dnd"]

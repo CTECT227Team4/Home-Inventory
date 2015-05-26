@@ -62,8 +62,8 @@ function upload($driver, $db, $server, $user, $pwd, $id, $parentType, $descripti
 		// check the file is less than the maximum file size
 		if($_FILES['userfile']['size'] < $maxsize) {
 			$thumb_data = $_FILES['userfile']['tmp_name']; // create a second variable for the thumbnail
-			$aspectRatio=(float)($size[0] / $size[1]); // get the aspect ratio (height / width)
-			$thumb_height = 100; // height of the thumbnail
+			$aspectRatio = (float)($size[0] / $size[1]); // get the aspect ratio (height / width)
+			$thumb_height = 24; // height of the thumbnail (jstree limitation is 24x24 px)
 			$thumb_width = $thumb_height * $aspectRatio; // the thumb width is the thumb height/aspectratio
 			/*  get the image source */
 			if (exif_imagetype ($thumb_data) == IMAGETYPE_JPEG) $src = ImageCreateFromjpeg($thumb_data);

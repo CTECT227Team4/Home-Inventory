@@ -24,16 +24,18 @@ if (isset($_GET['itemid'])) $itemid = $_GET['itemid'];
 if (isset($_GET['roomid'])) $roomid = $_GET['roomid'];
 //>>>>>>> origin/master
 
-//header('Content-Type: application/json');
+header('Content-Type: application/json');
 // Moved $firstTime initialization to the top
 $firstTime = true;
 try {
-	$con = @new PDO("mysql:host=localhost;dbname=" . $db, $user, $pwd);
+	$con = @new PDO("$driver:host=$server;dbname=" . $db, $user, $pwd);
 	if ($con) {
 		switch ($webfunction) {
 			case 1: // GetProperties
 				// I'm renaming the columns in the query to return the same name and case that the jstree control uses
-				$sql = "SELECT CONCAT('P', p.id) AS id, name AS text, CONCAT ('$imageslocation', icon) AS icon FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN user u ON u.ID = up.userID LEFT OUTER JOIN category c ON c.ID = p.CategoryID WHERE up.userID = ?";
+				//$sql = "SELECT CONCAT('P', p.id) AS id, name AS text, CONCAT ('$imageslocation', icon) AS icon FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN user u ON u.ID = up.userID LEFT OUTER JOIN category c ON c.ID = p.CategoryID WHERE up.userID = ?";
+				// Added in the thumbnail, if it's been uploaded
+				$sql = "SELECT CONCAT('P', p.id) AS id, p.name AS text, IF (a.ID != 0, CONCAT('showfile.php?ID=', a.ID, '&parentType=1&item=1&thumb=1'), CONCAT ('$imageslocation', icon)) AS icon FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN user u ON u.ID = up.userID LEFT OUTER JOIN category c ON c.ID = p.CategoryID LEFT OUTER JOIN (SELECT * FROM attachment WHERE parentType = 1) a ON a.ID = p.id WHERE up.userID = ?";
 				// To use this function just pass in any parameters in the order you need them in the SQL statement above
 				$rs = getRecordset($con, $sql, $userid);  // In this case it's just $userid
 				
