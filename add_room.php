@@ -17,7 +17,7 @@
 	<div class="content">
 
 		<div id="tabs">
-			<form method="Post" action="process_add_property.php" id="add_room">
+			<form method="Post" action="main.php?F=8" id="add_room">
 			  	<ul>
 				    <li><a href="#tabs-1">Room</a></li>
 				    <li><a href="#tabs-2">Multimedia</a></li>
@@ -33,6 +33,7 @@
 					</p>
 					<p class="tab_one_wide">
 						<label for="property_name">Property:</label>
+						<!-- We will want the value to be the propertyID -->
 						<select name="property_name" id="property_name">
 							<option value="-">-Select a Property-</option>
 							<option value="property1">This needs to propagate from database</option>
