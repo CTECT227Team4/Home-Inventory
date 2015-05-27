@@ -1,5 +1,7 @@
 <?php
 include_once("../azconfig.php");
+require_once("/inc/session.php");
+
 
 $jsonmsg = "";
 $imageslocation = "./images/";  // The relative location to the icon images for the tree control
@@ -149,7 +151,7 @@ try {
 				if (isset($_POST["zip"])) $zip = $_POST["zip"];
 				if (isset($_POST["description"])) $description = $_POST["description"];
 				$categoryID = 1;
-				$userid = 10;
+				$userID = $_SESSION["user_id"];
 
 				function writeRecordset($con, $sql, ...$parameters) {
 					try {
@@ -174,10 +176,12 @@ try {
 				$wProperty = writeRecordset($con, $sql, $name, $address, $zip, $description, $categoryID);
 
 				// add userID and propertyID (created in previous function) to user_property
-				$sql = "INSERT INTO user_property (userID, propertyID) VALUES ({$userid}, (SELECT ID FROM property WHERE name = '{$name}' AND address = '{$address}' LIMIT 1))";
-				$wUser_Property = writeRecordset($con, $sql, $userid, $name, $address);
+				$sql = "INSERT INTO user_property (userID, propertyID) VALUES ({$userID}, (SELECT ID FROM property WHERE name = '{$name}' AND address = '{$address}' LIMIT 1))";
+				$wUser_Property = writeRecordset($con, $sql, $userID, $name, $address);
 
-				$_SESSION["message"] = "Property created";
+				print_r($wUser_Property);
+
+				$_SESSION["message"] = null;
 				// redirect_to("landing.php");
 				// echo '{"error":"1","text":"Rosemary hasn\'t finished coding this yet."}';
 				break;

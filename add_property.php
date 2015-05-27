@@ -22,6 +22,8 @@
 
 	<div class="content">
 
+	<?php echo "<h2>" . $_SESSION["user_id"] . "that"; ?>
+
 	<div id="tabs">
 	  	<ul>
 		    <li><a href="#tabs-1">Property</a></li>
@@ -32,7 +34,7 @@
 
 	  	</ul>
 	  	<div id="tabs-1" class="property_tab tabs_nav">
-			<form method="Post" action="process_add_property.php" id="add_property">
+			<form method="Post" action="main.php?F=7" id="add_property">
 				<p class="tab_one_wide">     
 					<label for="name">Property Name:  <span class="simple-tooltip" title="This can be anything that is a meaningful name to you."><img src="images/info.png"></span></label>
 					<input id="name" type="text" name="name">    
