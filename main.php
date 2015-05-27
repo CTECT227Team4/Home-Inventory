@@ -1,6 +1,8 @@
 <?php
 include_once("../azconfig.php");
 require_once("/inc/session.php");
+require_once("../az/inc/functions.php");
+
 
 
 $jsonmsg = "";
@@ -150,6 +152,7 @@ try {
 				if (isset($_POST["address"])) $address = $_POST["address"];
 				if (isset($_POST["zip"])) $zip = $_POST["zip"];
 				if (isset($_POST["description"])) $description = $_POST["description"];
+				//static for now
 				$categoryID = 1;
 				$userID = $_SESSION["user_id"];
 
@@ -164,7 +167,6 @@ try {
 						}
 						
 						$stmt->execute();
-						print_r($stmt);
 						return $stmt;
 					} catch (Exception $e) { // Echo the message in JSON and exit
 						echo '"error":"' . $e->getCode() . '","text":"' . $e->getMessage() . '"';
@@ -179,11 +181,7 @@ try {
 				$sql = "INSERT INTO user_property (userID, propertyID) VALUES ({$userID}, (SELECT ID FROM property WHERE name = '{$name}' AND address = '{$address}' LIMIT 1))";
 				$wUser_Property = writeRecordset($con, $sql, $userID, $name, $address);
 
-				print_r($wUser_Property);
-
-				$_SESSION["message"] = null;
-				// redirect_to("landing.php");
-				// echo '{"error":"1","text":"Rosemary hasn\'t finished coding this yet."}';
+				redirect_to("landing.php");
 				break;
 			case 8: // WriteRoom
 				echo '{"error":"1","text":"Rosemary hasn\'t finished coding this yet."}';
