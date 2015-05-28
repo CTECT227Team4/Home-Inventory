@@ -1,5 +1,9 @@
 <?php
 include_once("../azconfig.php");
+require_once("/inc/session.php");
+require_once("../az/inc/functions.php");
+
+
 
 $jsonmsg = "";
 $imageslocation = "./images/";  // The relative location to the icon images for the tree control
@@ -148,41 +152,38 @@ try {
 				if (isset($_POST["address"])) $address = $_POST["address"];
 				if (isset($_POST["zip"])) $zip = $_POST["zip"];
 				if (isset($_POST["description"])) $description = $_POST["description"];
+				//static for now
 				$categoryID = 1;
-				$userid = 10;
+				$userID = $_SESSION["user_id"];
 
-				function writeRecordset($con, $sql, ...$parameters) {
-					try {
-						$paramcount = 1;
-						$stmt = $con->prepare($sql);
-					
-						// $parameters is passed in as an array, go through it and add them all
-						foreach ($parameters as $parameter) { 
-							$stmt->bindParam($paramcount++, $parameter);
-						}
-						
-						$stmt->execute();
-						print_r($stmt);
-						return $stmt;
-					} catch (Exception $e) { // Echo the message in JSON and exit
-						echo '"error":"' . $e->getCode() . '","text":"' . $e->getMessage() . '"';
-						exit;
-					}
-				} //end writeRecordset
 				//add the property
 				$sql = "INSERT INTO property (name, address, zip, description, categoryID) VALUES ('{$name}', '{$address}', $zip, '{$description}', '{$categoryID}')";
 				$wProperty = writeRecordset($con, $sql, $name, $address, $zip, $description, $categoryID);
 
 				// add userID and propertyID (created in previous function) to user_property
-				$sql = "INSERT INTO user_property (userID, propertyID) VALUES ({$userid}, (SELECT ID FROM property WHERE name = '{$name}' AND address = '{$address}' LIMIT 1))";
-				$wUser_Property = writeRecordset($con, $sql, $userid, $name, $address);
+				$sql = "INSERT INTO user_property (userID, propertyID) VALUES ({$userID}, (SELECT ID FROM property WHERE name = '{$name}' AND address = '{$address}' LIMIT 1))";
+				$wUser_Property = writeRecordset($con, $sql, $userID, $name, $address);
 
-				$_SESSION["message"] = "Property created";
-				// redirect_to("landing.php");
-				// echo '{"error":"1","text":"Rosemary hasn\'t finished coding this yet."}';
+				redirect_to("landing.php");
 				break;
 			case 8: // WriteRoom
-				echo '{"error":"1","text":"Rosemary hasn\'t finished coding this yet."}';
+
+				// if (isset($_POST["propertyID"])) $propertyID = $_POST["propertyID"];
+				$propertyID = 22;
+				if (isset($_POST["name"])) $name = $_POST["name"];
+				if (isset($_POST["description1"])) $description = $_POST["description1"];
+				$categoryID = 2;
+
+				$sql = "INSERT INTO room (propertyID, name, type, description, categoryID) VALUES ({$propertyID}, '{$name}', 'room', '{$description}', $categoryID)";
+
+				$wr = writeRecordset($con, $sql, $propertyID, $name, $description, $categoryID);
+				print_r($wr);
+
+
+
+				// redirect_to("landing.php");
+
+				// echo '{"error":"1","text":"Rosemary hasn\'t finished coding this yet."}';
 				break;
 			case 9: // WriteSection
 				echo '{"error":"1","text":"Rosemary hasn\'t finished coding this yet."}';
@@ -247,6 +248,24 @@ function getRecordset($con, $sql, ...$parameters) {
 		exit;
 	}
 }
+
+function writeRecordset($con, $sql, ...$parameters) {
+	try {
+		$paramcount = 1;
+		$stmt = $con->prepare($sql);
+	
+		// $parameters is passed in as an array, go through it and add them all
+		foreach ($parameters as $parameter) { 
+			$stmt->bindParam($paramcount++, $parameter);
+		}
+		
+		$stmt->execute();
+		return $stmt;
+	} catch (Exception $e) { // Echo the message in JSON and exit
+		echo '"error":"' . $e->getCode() . '","text":"' . $e->getMessage() . '"';
+		exit;
+	}
+} //end writeRecordset
 
 function echo_r($data) {
 	echo "<pre>";
