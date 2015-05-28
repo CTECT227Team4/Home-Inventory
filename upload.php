@@ -19,7 +19,7 @@ if (isset($_GET['parentType'])) $parentType = $_GET['parentType'];
 
 <input type="hidden" name="ID" value="<?=$id?>">
 <input type="hidden" name="parentType" value="<?=$parentType?>">
-<p>Description</p><textarea></textarea>
+<p>Description</p><textarea name="description"></textarea>
 <br /><input type="submit" value="Submit"><button onclick="self.close()">Close</button></form>
 <?php
 $description = "";
