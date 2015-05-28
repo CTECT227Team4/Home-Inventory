@@ -100,10 +100,10 @@ $(function () {
 		'core' : {
 			'data' : {
 				"url" : <?php
-					$json = $_GET['id'];
-					if ($json == null) $json = '1';
+					//$json = $_GET['id'];
+					//if ($json == null) $json = '1';
 					//echo "\"./$json.json\""; 
-					echo '"http://localhost/az/main.php?F=1&userid=3"';
+					echo '"http://localhost/az/main.php?F=1&userid=24"';
 			?>,	"dataType" : "json" // needed only if you do not supply JSON headers
 			}
 		}, "plugins" : ["contextmenu", "dnd"]

@@ -1,47 +1,42 @@
-<?php # login.php ?>
-<?php require_once("/inc/session.php"); ?>
-<?php require_once("/inc/functions.php") ?>
-
-<?php 
+<?php # login.php
+require_once("/inc/session.php");
+require_once("/inc/functions.php");
+ 
 $userName = "";
 
-	if ($_SERVER['REQUEST_METHOD'] == "POST") {
-			echo "Posted";
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
+		echo "Posted";
 
-			$userName = $_POST["userName"];
-			$password = $_POST["password"];
-			echo $password . "<br>";
+		$userName = $_POST["userName"];
+		$password = $_POST["password"];
+		echo $password . "<br>";
 
-		    //$required_fields = array("username", "password");
-			//validate_presences($required_fields);
+		//$required_fields = array("username", "password");
+		//validate_presences($required_fields);
 
-			//if (empty($errors)) {
+		//if (empty($errors)) {
 
-				$found_user = attempt_login($userName, $password);
+			$found_user = attempt_login($userName, $password);
 
-				if ($found_user) {
-				    // Success
-				    $_SESSION["user_id"] = $found_user["id"];
-				    $_SESSION["userName"] = $found_user["userName"];
-				    $_SESSION["firstName"] = $found_user["firstName"];
-				    $_SESSION["lastName"] = $found_user["lastName"];
-				    redirect_to("landing.php");
-				} else{
-					//failure
-					$_SESSION["message"] = "Username/password not found";
-					echo "Username/password not found";
-				    redirect_to("login.php");
-				}
-			//} else {
-			//	$_SESSION["errors"] = $errors;
-			//	redirect_to("login.php");
+			if ($found_user) {
+				// Success
+				$_SESSION["user_id"] = $found_user["id"];
+				$_SESSION["userName"] = $found_user["userName"];
+				$_SESSION["firstName"] = $found_user["firstName"];
+				$_SESSION["lastName"] = $found_user["lastName"];
+				redirect_to("landing.php");
+			} else{
+				//failure
+				$_SESSION["message"] = "Username/password not found";
+				echo "Username/password not found";
+				redirect_to("login.php");
+			}
+		//} else {
+		//	$_SESSION["errors"] = $errors;
+		//	redirect_to("login.php");
 
-	} //end ($_SERVER['REQUEST_METHOD'] == "POST")
-
-
- ?>
-
-<!DOCTYPE html>
+} //end ($_SERVER['REQUEST_METHOD'] == "POST")
+?><!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
@@ -49,7 +44,6 @@ $userName = "";
 	<link rel="shortcut icon" href="images/az-icon.ico">
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>     <!-- jQuery CDN -->
-
 
 	<!-- <script>
 		$(document).ready(function(){
@@ -68,17 +62,12 @@ $userName = "";
 			});  //  end of submit function
 		});  // end of ready function
 	</script>    -->
-
-
-	
 </head>
 <body>
 	<div class="page_wrapper">
 	<?php 
 		//include "includes/mysqli_connect.inc.php";   //    connects to the MySQL Database
 		//include "inc/header1.inc.php";      // adds Header #2 to the page
-	 ?>
-	<?php 
 		// if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
 		// 	#  checks to see if the fields are filled out		
@@ -115,9 +104,7 @@ $userName = "";
 		<div class="login_wrapper">
 			<h1>Welcome to A-Z Home Inventory</h1>
 			<h2>New User?    
-				<?php 
-					echo "<a class=\"register_link\" href=\"register_user.php\">Please Register</a>";
-				?>
+				<a class="register_link" href="register_user.php">Please Register</a>
 			</h2>
 			<h2>or Please sign-in:</h2>
 			<form action="login.php" method="post" id="login">
@@ -135,8 +122,6 @@ $userName = "";
 				<p>
 					<input type="submit" value="Submit" class="centered_button" id="submit" name="submit">
 				</p>
-
-
 			</form>
 		</div>    <!-- end of login_wrapper -->
 	</section>	<!-- end of content -->

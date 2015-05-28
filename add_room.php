@@ -1,17 +1,17 @@
-<?php # add_room.php ?>
-<?php $page_title = "Home Inventory - Add Room"; //sets title ?>
-<?php $page_heading = "Add Room" //sets heading to appear on page ?>
-<?php require_once "inc/header.inc.php"; ?>
-	   	<script>
-	   		$(document).ready(function() {
-	     		$( "#tabs" ).tabs();
-	 	  		$(function() {
-	 	    		$( "#resizable resizable2" ).resizable({
-	 	      			handles: "se"
-	 	   			 });
-	 	  		});
-	    	});
-	   	</script>
+<?php # add_room.php
+$page_title = "Home Inventory - Add Room"; //sets title
+$page_heading = "Add Room"; //sets heading to appear on page
+require_once "inc/header.inc.php"; 
+?><script>
+$(document).ready(function() {
+	$( "#tabs" ).tabs();
+	$(function() {
+		$( "#resizable resizable2" ).resizable({
+			handles: "se"
+		 });
+	});
+});
+</script>
 <!-- END HEADER CONTENT -->
 
 	<div class="content">

@@ -1,7 +1,7 @@
 <nav>
 	<ul class="upper_buttons">
 		<li><a href="change.view.php">Change View</a></li>
-		<li><a href="add_stuff.php">Add Stuff</a></li>
+		<li><a href="add_property.php">Add Stuff</a></li>
 		<li><a href="reports.php">Reports</a></li>
 		<li><a href="user_profile.php"><?php echo $_SESSION['firstName']; ?></a>
 			<ul>

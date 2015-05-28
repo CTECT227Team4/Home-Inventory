@@ -1,8 +1,8 @@
-<?php # landing.php ?>
-
-<?php $page_title = "A-Z Home Inventory"; ?>
-<?php $page_heading = "Home Inventory" ?>
-<?php require_once "inc/header.inc.php"; ?>
+<?php # landing.php
+$page_title = "A-Z Home Inventory";
+$page_heading = "Home Inventory";
+require_once "inc/header.inc.php";
+?>
 
 <!-- <!DOCTYPE html>
 <html lang="en">

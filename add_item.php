@@ -3,8 +3,8 @@
 <?php $page_heading = "Add Item" //sets heading to appear on page ?>
 <?php require_once "inc/header.inc.php"; //starts session, includes general functions, populates header content ?>
 
-	 <script type="text/javascript" src="tipped-4.2.8-light/tipped-4.2.8-light/js/tipped/tipped.js"></script>    <!-- Tooltip plugin -->
-	 <link rel="stylesheet" type="text/css" href="tipped-4.2.8-light/tipped-4.2.8-light/css/tipped/tipped.css"/> 
+	 <script type="text/javascript" src="jquery/tipped.js"></script>    <!-- Tooltip plugin -->
+	 <link rel="stylesheet" type="text/css" href="jquery/tipped.css"/> 
 	   	<script>
 	   		$(document).ready(function() {
 	 	  		$(function() {
