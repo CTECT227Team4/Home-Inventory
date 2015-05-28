@@ -160,14 +160,11 @@ try {
 				$sql = "INSERT INTO property (name, address, zip, description, categoryID) VALUES ('{$name}', '{$address}', $zip, '{$description}', '{$categoryID}')";
 				$wProperty = writeRecordset($con, $sql, $name, $address, $zip, $description, $categoryID);
 
-				echo $sql . "<br>";
-
 				// add userID and propertyID (created in previous function) to user_property
 				$sql = "INSERT INTO user_property (userID, propertyID) VALUES ({$userID}, (SELECT ID FROM property WHERE name = '{$name}' AND address = '{$address}' LIMIT 1))";
 				$wUser_Property = writeRecordset($con, $sql, $userID, $name, $address);
 
-					echo $sql;
-				// redirect_to("landing.php");
+				redirect_to("landing.php");
 				break;
 			case 8: // WriteRoom
 
