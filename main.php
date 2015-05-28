@@ -148,10 +148,10 @@ try {
 				break;
 			case 7: // WriteProperty
 
-				if (isset($_POST["name"])) $name = $_POST["name"];
-				if (isset($_POST["address"])) $address = $_POST["address"];
+				if (isset($_POST["name"])) $name = addslashes($_POST["name"]);
+				if (isset($_POST["address"])) $address = addslashes($_POST["address"]);
 				if (isset($_POST["zip"])) $zip = $_POST["zip"];
-				if (isset($_POST["description"])) $description = $_POST["description"];
+				if (isset($_POST["description"])) $description = addslashes($_POST["description"]);
 				//static for now
 				$categoryID = 1;
 				$userID = $_SESSION["user_id"];
@@ -160,11 +160,14 @@ try {
 				$sql = "INSERT INTO property (name, address, zip, description, categoryID) VALUES ('{$name}', '{$address}', $zip, '{$description}', '{$categoryID}')";
 				$wProperty = writeRecordset($con, $sql, $name, $address, $zip, $description, $categoryID);
 
+				echo $sql . "<br>";
+
 				// add userID and propertyID (created in previous function) to user_property
 				$sql = "INSERT INTO user_property (userID, propertyID) VALUES ({$userID}, (SELECT ID FROM property WHERE name = '{$name}' AND address = '{$address}' LIMIT 1))";
 				$wUser_Property = writeRecordset($con, $sql, $userID, $name, $address);
 
-				redirect_to("landing.php");
+					echo $sql;
+				// redirect_to("landing.php");
 				break;
 			case 8: // WriteRoom
 
@@ -229,24 +232,6 @@ try {
 	}
 } catch (Exception $e) {
     echo '"error":"' . $e->getCode() . '","text":"' . $e->getMessage() . '"';
-}
-
-function getRecordset($con, $sql, ...$parameters) {
-	try {
-		$paramcount = 1;
-		$stmt = $con->prepare($sql);
-		
-		// $parameters is passed in as an array, go through it and add them all
-		foreach ($parameters as $parameter) { 
-			$stmt->bindParam($paramcount++, $parameter);
-		}
-		
-		$stmt->execute();
-		return $stmt;
-	} catch (Exception $e) { // Echo the message in JSON and exit
-		echo '"error":"' . $e->getCode() . '","text":"' . $e->getMessage() . '"';
-		exit;
-	}
 }
 
 function writeRecordset($con, $sql, ...$parameters) {

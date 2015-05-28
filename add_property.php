@@ -1,5 +1,5 @@
 <?php # add_property.php ?>
-$page_title = "Home Inventory - Add Property"; //sets title
+<?php $page_title = "Home Inventory - Add Property"; //sets title
 $page_heading = "Add Property"; //sets heading to appear on page
 require_once "inc/header.inc.php"; //starts session, includes general functions, populates header content
 ?><script type="text/javascript" src="jquery/tipped.js"></script>    <!-- Tooltip plugin -->
@@ -106,7 +106,7 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 				</p>	 
 		</div>		<!-- end tab 5 -->
 				<p class="centered_button">
-					<input type="submit" value="Add Item" id="add_property_submit">
+					<input type="submit" value="Add Property" id="add_property_submit">
 				</p>
 		</form>    <!-- end of form -->
 	</div>   <!-- end of tabs -->

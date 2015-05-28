@@ -14,23 +14,23 @@
     	return $escaped_string;
     }
 
-    // function getRecordset($con, $sql, ...$parameters) {
-    // 	try {
-    // 		$paramcount = 1;
-    // 		$stmt = $con->prepare($sql);
+    function getRecordset($con, $sql, ...$parameters) {
+    	try {
+    		$paramcount = 1;
+    		$stmt = $con->prepare($sql);
     	
-    // 		// $parameters is passed in as an array, go through it and add them all
-    // 		foreach ($parameters as $parameter) { 
-    // 			$stmt->bindParam($paramcount++, $parameter);
-    // 		}
+    		// $parameters is passed in as an array, go through it and add them all
+    		foreach ($parameters as $parameter) { 
+    			$stmt->bindParam($paramcount++, $parameter);
+    		}
     		
-    // 		$stmt->execute();
-    // 		return $stmt;
-    // 	} catch (Exception $e) { // Echo the message in JSON and exit
-    // 		echo '"error":"' . $e->getCode() . '","text":"' . $e->getMessage() . '"';
-    // 		exit;
-    // 	}
-    // } //end getRecordset
+    		$stmt->execute();
+    		return $stmt;
+    	} catch (Exception $e) { // Echo the message in JSON and exit
+    		echo '"error":"' . $e->getCode() . '","text":"' . $e->getMessage() . '"';
+    		exit;
+    	}
+    } //end getRecordset
 
 	function form_errors($errors) {
 	    $output = "";

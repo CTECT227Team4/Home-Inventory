@@ -4,13 +4,11 @@ require_once("/inc/functions.php");
  
 $userName = "";
 
-<<<<<<< HEAD
+//<<<<<<< HEAD
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
-		echo "Posted";
 
 		$userName = $_POST["userName"];
 		$password = $_POST["password"];
-		echo $password . "<br>";
 
 		//$required_fields = array("username", "password");
 		//validate_presences($required_fields);
@@ -21,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
 			if ($found_user) {
 				// Success
-				$_SESSION["user_id"] = $found_user["id"];
+				$_SESSION["user_id"] = $found_user["ID"];
 				$_SESSION["userName"] = $found_user["userName"];
 				$_SESSION["firstName"] = $found_user["firstName"];
 				$_SESSION["lastName"] = $found_user["lastName"];
@@ -37,46 +35,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 		//	redirect_to("login.php");
 
 } //end ($_SERVER['REQUEST_METHOD'] == "POST")
-?><!DOCTYPE html>
-=======
-	if ($_SERVER['REQUEST_METHOD'] == "POST") {
-			echo "Posted";
-
-			$userName = $_POST["userName"];
-			$password = $_POST["password"];
-			echo $password . "<br>";
-
-		    //$required_fields = array("username", "password");
-			//validate_presences($required_fields);
-
-			//if (empty($errors)) {
-
-				$found_user = attempt_login($userName, $password);
-
-				if ($found_user) {
-				    // Success
-				    $_SESSION["user_id"] = $found_user["ID"];
-				    $_SESSION["userName"] = $found_user["userName"];
-				    $_SESSION["firstName"] = $found_user["firstName"];
-				    $_SESSION["lastName"] = $found_user["lastName"];
-				    redirect_to("landing.php");
-				} else{
-					//failure
-					$_SESSION["message"] = "Username/password not found";
-					echo "Username/password not found";
-				    redirect_to("login.php");
-				}
-			//} else {
-			//	$_SESSION["errors"] = $errors;
-			//	redirect_to("login.php");
-
-	} //end ($_SERVER['REQUEST_METHOD'] == "POST")
-
-
- ?>
-
-<!DOCTYPE html>
->>>>>>> origin/master
+?>
+<!DOCTYPE HTML>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
