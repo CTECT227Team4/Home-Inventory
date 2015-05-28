@@ -8,16 +8,22 @@ require_once("../az/inc/functions.php"); ?>
 	<title><?php echo $page_title; ?></title>
 	<link rel="shortcut icon" href="images/az-icon.ico">
 	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="./jquery/jquery.dataTables.css">
+	<link rel="stylesheet" href="jquery/themes/default/style.min.css" />
 	<script src="jquery/jquery.2.min.js"></script>
 	<script src="jquery/jquery-ui.min.js"></script>
 	<link rel="stylesheet" href="jquery/jquery-ui.min.css">
-	<script src="jquery/nav_mouse.js"></script>           <!--  Navigation Mouseover Script -->
+	<script src="jquery/nav_mouse.js"></script> <!--  Navigation Mouseover Script -->
+	<script type="text/javascript" language="javascript" src="./jquery/jquery.dataTables.js"></script> <!-- Grid init -->
+	<script src="./jquery/jstree.min.js"></script> <!-- Tree init -->
 </head>
 <body>
 	<div class="page_wrapper">
 		<header>
 			<div class="side_logo">
+				<!--
 				<img class="small_logo" src="images/logo.png" alt="A-Z Home Inventory Logo" sizes="30vw" srcset="images/logo.png 1000w">
+				-->
 			</div>
 			<h1><?php echo $_SESSION["firstName"] . " " . $_SESSION["lastName"] . "'s Properties"; ?></h1>
 			<h2><?php echo $page_heading ?></h2>

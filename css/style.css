@@ -510,3 +510,27 @@ input:focus {
 span img {
 	width: 18px;
 }
+
+/* Trying to get the header to be slightly smaller */
+.dataTables_wrapper { 
+	font-size: 12px
+}
+
+
+#data_wrapper {
+	position: relative;
+	top: 40px;
+    border-radius: 10px;
+    border: 4px solid #90C32E;
+    padding: 20px; 
+}
+
+#treemain {
+	position: relative;
+	top: -40px;
+}
+
+#gridmain {
+	position: relative;
+	top: -40px;
+}
