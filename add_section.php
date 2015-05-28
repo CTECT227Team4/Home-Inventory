@@ -21,7 +21,7 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 	<div class="content">
 
 		<div id="tabs">
-			<form method="Post" action="process_add_property.php" id="add_room">
+			<form method="Post" action="main.php?F=9" id="add_room">
 			  	<ul>
 				    <li><a href="#tabs-1">Section</a></li>
 				    <li><a href="#tabs-2">Multimedia</a></li>

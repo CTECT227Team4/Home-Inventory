@@ -170,8 +170,8 @@ try {
 
 				// if (isset($_POST["propertyID"])) $propertyID = $_POST["propertyID"];
 				$propertyID = 22;
-				if (isset($_POST["name"])) $name = $_POST["name"];
-				if (isset($_POST["description1"])) $description = $_POST["description1"];
+				if (isset($_POST["name"])) $name = addslashes($_POST["name"]);
+				if (isset($_POST["description1"])) $description = addslashes($_POST["description1"]);
 				$categoryID = 2;
 
 				$sql = "INSERT INTO room (propertyID, name, type, description, categoryID) VALUES ({$propertyID}, '{$name}', 'room', '{$description}', $categoryID)";
@@ -179,14 +179,31 @@ try {
 				$wr = writeRecordset($con, $sql, $propertyID, $name, $description, $categoryID);
 				print_r($wr);
 
-
-
 				// redirect_to("landing.php");
 
 				// echo '{"error":"1","text":"Rosemary hasn\'t finished coding this yet."}';
 				break;
 			case 9: // WriteSection
-				echo '{"error":"1","text":"Rosemary hasn\'t finished coding this yet."}';
+
+				$propertyID = 18;
+					//if (isset($_POST["propertyID"] && $_POST["propertyID" !== "-"])) $propertyID = $_POST["propertyID"];
+					//if (isset($_POST["roomID"] && $_POST["roomID" !== "-"])) {
+					//	$roomID = $_POST["roomID"];
+
+						//sql - writeRecordset
+					//} //endif
+
+				$roomID = 3;
+				if (isset($_POST["name"])) $name = addslashes($_POST["name"]);
+				if (isset($_POST["description1"])) $description = addslashes($_POST["description1"]);
+				$categoryID = 3;
+
+				$sql = "INSERT INTO section (propertyID, roomID, name, description, categoryID) VALUES ({$propertyID}, {$roomID}, '{$name}', '{$description}', $categoryID)";
+
+				$wr = writeRecordset($con, $sql, $propertyID, $name, $description, $categoryID);
+				print_r($wr);
+
+				//echo '{"error":"1","text":"Rosemary hasn\'t finished coding this yet."}';
 				break;
 			case 10: // WriteItem
 				echo '{"error":"1","text":"Rosemary hasn\'t finished coding this yet."}';
