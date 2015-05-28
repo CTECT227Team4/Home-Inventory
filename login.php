@@ -4,7 +4,6 @@ require_once("/inc/functions.php");
  
 $userName = "";
 
-//<<<<<<< HEAD
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
 		$userName = $_POST["userName"];
@@ -35,8 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 		//	redirect_to("login.php");
 
 } //end ($_SERVER['REQUEST_METHOD'] == "POST")
-?>
-<!DOCTYPE HTML>
+?><!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
