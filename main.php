@@ -169,7 +169,7 @@ try {
 			case 8: // WriteRoom
 
 				// if (isset($_POST["propertyID"])) $propertyID = $_POST["propertyID"];
-				$propertyID = 22;
+				$propertyID = 18;
 				if (isset($_POST["name"])) $name = addslashes($_POST["name"]);
 				if (isset($_POST["description1"])) $description = addslashes($_POST["description1"]);
 				$categoryID = 2;
@@ -177,9 +177,8 @@ try {
 				$sql = "INSERT INTO room (propertyID, name, type, description, categoryID) VALUES ({$propertyID}, '{$name}', 'room', '{$description}', $categoryID)";
 
 				$wr = writeRecordset($con, $sql, $propertyID, $name, $description, $categoryID);
-				print_r($wr);
 
-				// redirect_to("landing.php");
+				redirect_to("landing.php");
 
 				// echo '{"error":"1","text":"Rosemary hasn\'t finished coding this yet."}';
 				break;
@@ -201,7 +200,8 @@ try {
 				$sql = "INSERT INTO section (propertyID, roomID, name, description, categoryID) VALUES ({$propertyID}, {$roomID}, '{$name}', '{$description}', $categoryID)";
 
 				$wr = writeRecordset($con, $sql, $propertyID, $name, $description, $categoryID);
-				print_r($wr);
+				
+				redirect_to("landing.php");
 
 				//echo '{"error":"1","text":"Rosemary hasn\'t finished coding this yet."}';
 				break;
