@@ -7,7 +7,7 @@
 	if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
 			$username = $_POST["userName"];
-			// $password = password_encrypt($_POST["password"]);
+			// create new password hash - PHP 5.5
 			$password = password_hash($_POST["password"], PASSWORD_DEFAULT);
 			$firstName = $_POST["firstName"];
 			$lastName = $_POST["lastName"];
@@ -18,7 +18,6 @@
 				//validate_presences($required_fields);
 				//$fields_with_max_lengths = array("username" => 40, "password" => 50, "firstName" => 50, "lastName" => 50, "email" => 100);
 				//validate_max_lengths($fields_with_max_lengths);
-			//will need function to verify that password === verify_password
 			//will need to check if username/email already exists
 
 

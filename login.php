@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 			$found_user = attempt_login($userName, $password);
 
 			if ($found_user) {
-				// Success
+				// Success - set session variables
 				$_SESSION["user_id"] = $found_user["ID"];
 				$_SESSION["userName"] = $found_user["userName"];
 				$_SESSION["firstName"] = $found_user["firstName"];
