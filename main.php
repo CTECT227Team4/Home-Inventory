@@ -139,15 +139,26 @@ try {
 				if (isset($_POST["zip"])) $zip = $_POST["zip"];
 				if (isset($_POST["description"])) $description = $_POST["description"];
 				$categoryID = 1;
-				$userid = 10;
+				// $userid = 10;
+				$userid = $_GET["U"];
 
-				//add the property
-				$sql = "INSERT INTO property (name, address, zip, description, categoryID) VALUES ('{$name}', '{$address}', $zip, '{$description}', '{$categoryID}')";
-				$wProperty = writeRecordset($con, $sql, $name, $address, $zip, $description, $categoryID);
+				$con->beginTransaction();
 
-				// add userID and propertyID (created in previous function) to user_property
-				$sql = "INSERT INTO user_property (userID, propertyID) VALUES ({$userid}, (SELECT ID FROM property WHERE name = '{$name}' AND address = '{$address}' LIMIT 1))";
-				$wUser_Property = writeRecordset($con, $sql, $userid, $name, $address);
+					$sql = "INSERT INTO property (name, address, zip, description, categoryID) VALUES ('{$name}', '{$address}', $zip, '{$description}', $categoryID)";
+
+					//adds new property to property table
+					$stmt = writeRecordset($con, $sql, $name, $address, $zip, $description, $categoryID);
+
+					//get id of new property
+					$property = $con->lastInsertId();
+
+					$sql = "INSERT INTO user_property (userID, propertyID) VALUES ({$userid}, {$property})";
+					//add property and userid to user_property
+					$stmt = writeRecordset($con, $sql, $userid, $property);
+
+				$con->commit(); //end transaction
+
+				redirect_to("landing.php");
 				
 				/* Inserting like the above will get you into trouble.  What you want is to find the value of the auto increment field from 
 				the first query and use that in the second.  Also a really good idea to wrap both in a transaction.*/
@@ -256,6 +267,11 @@ function getRecordset($con, $sql, ...$parameters) {
 		echo '"error":"' . $e->getCode() . '","text":"' . $e->getMessage() . '"';
 		exit;
 	}
+}
+
+function redirect_to($new_location) {
+    header("Location: " . $new_location);
+    exit;
 }
 
 function echo_r($data) {
