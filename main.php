@@ -35,10 +35,9 @@ try {
 				// I'm renaming the columns in the query to return the same name and case that the jstree control uses
 				//$sql = "SELECT CONCAT('P', p.id) AS id, name AS text, CONCAT ('$imageslocation', icon) AS icon FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN user u ON u.ID = up.userID LEFT OUTER JOIN category c ON c.ID = p.CategoryID WHERE up.userID = ?";
 				// Added in the thumbnail, if it's been uploaded
-				$sql = "SELECT CONCAT('P', p.id) AS id, p.name AS text, IF (a.ID != 0, CONCAT('showfile.php?ID=', a.ID, '&parentType=1&item=1&thumb=1'), CONCAT ('$imageslocation', icon)) AS icon FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN user u ON u.ID = up.userID LEFT OUTER JOIN category c ON c.ID = p.CategoryID LEFT OUTER JOIN (SELECT ID FROM attachment WHERE parentType = 1 LIMIT 1) a ON a.ID = p.id WHERE up.userID = ?";
+				// Currently hardcoded to the first item in the list of attachments, if available.  
+				$sql = "SELECT CONCAT('P', p.id) AS id, p.name AS text, IF (a.ID != 0, CONCAT('showfile.php?ID=', a.ID, CONCAT('&parentType=1&item=',a.item,'&thumb=1')), CONCAT ('$imageslocation', icon)) AS icon FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN user u ON u.ID = up.userID LEFT OUTER JOIN category c ON c.ID = p.CategoryID LEFT OUTER JOIN (SELECT ID, item FROM attachment WHERE parentType = 1 AND mimetype LIKE 'image%' ORDER BY item LIMIT 1) a ON a.ID = p.id WHERE up.userID = ?";
 		
-				
-				//echo $sql;
 				// To use this function just pass in any parameters in the order you need them in the SQL statement above
 				$rs = getRecordset($con, $sql, $userid);  // In this case it's just $userid
 				
@@ -66,11 +65,7 @@ try {
 				echo '[{"id":"P' . $propertyid . '","text": "Main House","icon": "./images/appraisal.png","state": {"opened" : "true"},"children":';
 				echo "["; // The recordset is being returned as an array, so start the array
 				
-				// Moved $firstTime initialization to the top
-				//$firstTime = true;
-				
-				while ($row = $rs->fetch()) {
-				//foreach ($rs as $row) {
+				foreach ($rs as $row) {
 					if ($firstTime) $firstTime = !$firstTime; // Don't echo a comma on the first line, only when added a new one
 					else echo ",";
 
@@ -100,10 +95,7 @@ try {
 				echo '[{' . $parent . '",text": "Main House","icon": "./images/appraisal.png","state": {"opened" : "true"},"children":';
 				echo "["; // The recordset is being returned as an array, so start the array
 				
-				//$firstTime = true;
-				
-				while ($row = $rs->fetch()) {
-				//foreach ($rs as $row) {
+				foreach ($rs as $row) {
 					if ($firstTime) $firstTime = !$firstTime; // Don't echo a comma on the first line, only when added a new one
 					else echo ",";
 
@@ -149,24 +141,6 @@ try {
 				$categoryID = 1;
 				$userid = 10;
 
-				function writeRecordset($con, $sql, ...$parameters) {
-					try {
-						$paramcount = 1;
-						$stmt = $con->prepare($sql);
-					
-						// $parameters is passed in as an array, go through it and add them all
-						foreach ($parameters as $parameter) { 
-							$stmt->bindParam($paramcount++, $parameter);
-						}
-						
-						$stmt->execute();
-						print_r($stmt);
-						return $stmt;
-					} catch (Exception $e) { // Echo the message in JSON and exit
-						echo '"error":"' . $e->getCode() . '","text":"' . $e->getMessage() . '"';
-						exit;
-					}
-				} //end writeRecordset
 				//add the property
 				$sql = "INSERT INTO property (name, address, zip, description, categoryID) VALUES ('{$name}', '{$address}', $zip, '{$description}', '{$categoryID}')";
 				$wProperty = writeRecordset($con, $sql, $name, $address, $zip, $description, $categoryID);
@@ -227,6 +201,25 @@ try {
 } catch (Exception $e) {
     echo '"error":"' . $e->getCode() . '","text":"' . $e->getMessage() . '"';
 }
+
+function writeRecordset($con, $sql, ...$parameters) {
+	try {
+		$paramcount = 1;
+		$stmt = $con->prepare($sql);
+	
+		// $parameters is passed in as an array, go through it and add them all
+		foreach ($parameters as $parameter) { 
+			$stmt->bindParam($paramcount++, $parameter);
+		}
+		
+		$stmt->execute();
+		print_r($stmt);
+		return $stmt;
+	} catch (Exception $e) { // Echo the message in JSON and exit
+		echo '"error":"' . $e->getCode() . '","text":"' . $e->getMessage() . '"';
+		exit;
+	}
+} //end writeRecordset
 
 function getRecordset($con, $sql, ...$parameters) {
 	try {
