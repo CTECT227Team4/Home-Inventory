@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head><title>A-Z Upload File</title></head><body>
 <h2>A-Z Upload File</h2>
-<h3>Lynn, make me pretty!</h3>
+<h3>Lynne, make me pretty!</h3>
 <form method="post" action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data">
 <p>Select Image File</p>
 <input type="file" name="userfile"  size="40">
