@@ -1,5 +1,9 @@
 <?php
 include_once("../azconfig.php");
+require_once("/inc/session.php");
+require_once("../az/inc/functions.php");
+
+
 
 $jsonmsg = "";
 $imageslocation = "./images/";  // The relative location to the icon images for the tree control
@@ -35,10 +39,7 @@ try {
 				// I'm renaming the columns in the query to return the same name and case that the jstree control uses
 				//$sql = "SELECT CONCAT('P', p.id) AS id, name AS text, CONCAT ('$imageslocation', icon) AS icon FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN user u ON u.ID = up.userID LEFT OUTER JOIN category c ON c.ID = p.CategoryID WHERE up.userID = ?";
 				// Added in the thumbnail, if it's been uploaded
-				$sql = "SELECT CONCAT('P', p.id) AS id, p.name AS text, IF (a.ID != 0, CONCAT('showfile.php?ID=', a.ID, '&parentType=1&item=1&thumb=1'), CONCAT ('$imageslocation', icon)) AS icon FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN user u ON u.ID = up.userID LEFT OUTER JOIN category c ON c.ID = p.CategoryID LEFT OUTER JOIN (SELECT ID FROM attachment WHERE parentType = 1 LIMIT 1) a ON a.ID = p.id WHERE up.userID = ?";
-		
-				
-				//echo $sql;
+				$sql = "SELECT CONCAT('P', p.id) AS id, p.name AS text, IF (a.ID != 0, CONCAT('showfile.php?ID=', a.ID, '&parentType=1&item=1&thumb=1'), CONCAT ('$imageslocation', icon)) AS icon FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN user u ON u.ID = up.userID LEFT OUTER JOIN category c ON c.ID = p.CategoryID LEFT OUTER JOIN (SELECT * FROM attachment WHERE parentType = 1) a ON a.ID = p.id WHERE up.userID = ?";
 				// To use this function just pass in any parameters in the order you need them in the SQL statement above
 				$rs = getRecordset($con, $sql, $userid);  // In this case it's just $userid
 				
@@ -47,9 +48,14 @@ try {
 				echo '[{"id":"U' . $userid . '","text": "The Addams Family Properties","children":"true","icon": "./images/appraisal.png","state": {"opened" : "true"},"children":';
 				echo "["; // The recordset is being returned as an array, so start the array
 				
-				foreach ($rs as $row) {
+				// Moved $firstTime initialization to the top
+				//$firstTime = true;
+				
+				while ($row = $rs->fetch()) {
+				//foreach ($rs as $row) {
 					if ($firstTime) $firstTime = !$firstTime; // Don't echo a comma on the first line, only when added a new one
 					else echo ",";
+
 					print json_encode($row, JSON_UNESCAPED_SLASHES);
 					// If we want to load the children (rooms) here, we could make a second call here
 					// Maybe an option to pass in?  Or just load them with a separate call to GetRooms?
@@ -142,48 +148,62 @@ try {
 				break;
 			case 7: // WriteProperty
 
-				if (isset($_POST["name"])) $name = $_POST["name"];
-				if (isset($_POST["address"])) $address = $_POST["address"];
+				if (isset($_POST["name"])) $name = addslashes($_POST["name"]);
+				if (isset($_POST["address"])) $address = addslashes($_POST["address"]);
 				if (isset($_POST["zip"])) $zip = $_POST["zip"];
-				if (isset($_POST["description"])) $description = $_POST["description"];
+				if (isset($_POST["description"])) $description = addslashes($_POST["description"]);
+				//static for now
 				$categoryID = 1;
-				$userid = 10;
+				$userID = $_SESSION["user_id"];
 
-				function writeRecordset($con, $sql, ...$parameters) {
-					try {
-						$paramcount = 1;
-						$stmt = $con->prepare($sql);
-					
-						// $parameters is passed in as an array, go through it and add them all
-						foreach ($parameters as $parameter) { 
-							$stmt->bindParam($paramcount++, $parameter);
-						}
-						
-						$stmt->execute();
-						print_r($stmt);
-						return $stmt;
-					} catch (Exception $e) { // Echo the message in JSON and exit
-						echo '"error":"' . $e->getCode() . '","text":"' . $e->getMessage() . '"';
-						exit;
-					}
-				} //end writeRecordset
 				//add the property
 				$sql = "INSERT INTO property (name, address, zip, description, categoryID) VALUES ('{$name}', '{$address}', $zip, '{$description}', '{$categoryID}')";
 				$wProperty = writeRecordset($con, $sql, $name, $address, $zip, $description, $categoryID);
 
 				// add userID and propertyID (created in previous function) to user_property
-				$sql = "INSERT INTO user_property (userID, propertyID) VALUES ({$userid}, (SELECT ID FROM property WHERE name = '{$name}' AND address = '{$address}' LIMIT 1))";
-				$wUser_Property = writeRecordset($con, $sql, $userid, $name, $address);
+				$sql = "INSERT INTO user_property (userID, propertyID) VALUES ({$userID}, (SELECT ID FROM property WHERE name = '{$name}' AND address = '{$address}' LIMIT 1))";
+				$wUser_Property = writeRecordset($con, $sql, $userID, $name, $address);
 
-				$_SESSION["message"] = "Property created";
-				// redirect_to("landing.php");
-				// echo '{"error":"1","text":"Rosemary hasn\'t finished coding this yet."}';
+				redirect_to("landing.php");
 				break;
 			case 8: // WriteRoom
-				echo '{"error":"1","text":"Rosemary hasn\'t finished coding this yet."}';
+
+				// if (isset($_POST["propertyID"])) $propertyID = $_POST["propertyID"];
+				$propertyID = 18;
+				if (isset($_POST["name"])) $name = addslashes($_POST["name"]);
+				if (isset($_POST["description1"])) $description = addslashes($_POST["description1"]);
+				$categoryID = 2;
+
+				$sql = "INSERT INTO room (propertyID, name, type, description, categoryID) VALUES ({$propertyID}, '{$name}', 'room', '{$description}', $categoryID)";
+
+				$wr = writeRecordset($con, $sql, $propertyID, $name, $description, $categoryID);
+
+				redirect_to("landing.php");
+
+				// echo '{"error":"1","text":"Rosemary hasn\'t finished coding this yet."}';
 				break;
 			case 9: // WriteSection
-				echo '{"error":"1","text":"Rosemary hasn\'t finished coding this yet."}';
+
+				$propertyID = 18;
+					//if (isset($_POST["propertyID"] && $_POST["propertyID" !== "-"])) $propertyID = $_POST["propertyID"];
+					//if (isset($_POST["roomID"] && $_POST["roomID" !== "-"])) {
+					//	$roomID = $_POST["roomID"];
+
+						//sql - writeRecordset
+					//} //endif
+
+				$roomID = 3;
+				if (isset($_POST["name"])) $name = addslashes($_POST["name"]);
+				if (isset($_POST["description1"])) $description = addslashes($_POST["description1"]);
+				$categoryID = 3;
+
+				$sql = "INSERT INTO section (propertyID, roomID, name, description, categoryID) VALUES ({$propertyID}, {$roomID}, '{$name}', '{$description}', $categoryID)";
+
+				$wr = writeRecordset($con, $sql, $propertyID, $name, $description, $categoryID);
+				
+				redirect_to("landing.php");
+
+				//echo '{"error":"1","text":"Rosemary hasn\'t finished coding this yet."}';
 				break;
 			case 10: // WriteItem
 				echo '{"error":"1","text":"Rosemary hasn\'t finished coding this yet."}';
@@ -228,24 +248,23 @@ try {
     echo '"error":"' . $e->getCode() . '","text":"' . $e->getMessage() . '"';
 }
 
-function getRecordset($con, $sql, ...$parameters) {
+function writeRecordset($con, $sql, ...$parameters) {
 	try {
 		$paramcount = 1;
 		$stmt = $con->prepare($sql);
-		
+	
 		// $parameters is passed in as an array, go through it and add them all
 		foreach ($parameters as $parameter) { 
 			$stmt->bindParam($paramcount++, $parameter);
 		}
 		
-		$stmt->setFetchMode (PDO::FETCH_ASSOC); // This should default the fetch to return name->value that can be output directly to JSON easier
 		$stmt->execute();
 		return $stmt;
 	} catch (Exception $e) { // Echo the message in JSON and exit
 		echo '"error":"' . $e->getCode() . '","text":"' . $e->getMessage() . '"';
 		exit;
 	}
-}
+} //end writeRecordset
 
 function echo_r($data) {
 	echo "<pre>";
