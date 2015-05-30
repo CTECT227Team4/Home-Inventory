@@ -148,6 +148,24 @@ try {
 				// add userID and propertyID (created in previous function) to user_property
 				$sql = "INSERT INTO user_property (userID, propertyID) VALUES ({$userid}, (SELECT ID FROM property WHERE name = '{$name}' AND address = '{$address}' LIMIT 1))";
 				$wUser_Property = writeRecordset($con, $sql, $userid, $name, $address);
+				
+				/* Inserting like the above will get you into trouble.  What you want is to find the value of the auto increment field from 
+				the first query and use that in the second.  Also a really good idea to wrap both in a transaction.*/
+				
+				/*
+				$con->beginTransaction();
+				// I think this will work to put 2 statements in one PDO execute, but I haven't tried it yet.  (Also, semicolon at the end of the first)
+				// I'm not sure if it will get tripped up by reusing the $userid field?
+				// So basically I have time to criticize, but not actually test what I'm talking about... ;)
+				// Worst case, you can do it with 2 execute statements
+				$sql = "INSERT INTO property (name, address, zip, description, categoryID) VALUES ('{$name}', '{$address}', $zip, '{$description}', '{$categoryID}');";
+				$sql .= "INSERT INTO user_property (userID, propertyID) VALUES ({$userid}, LAST_INSERT_ID())";
+				// LAST_INSERT_ID() is the key to making this work.  It's different in different DBs, but that's the MySQL way.
+				// See https://dev.mysql.com/doc/refman/5.6/en/getting-unique-id.html for more info
+				$something = writeRecordset($con, $sql, $userid, $name, $address);
+				$con->commit(); // If no errors
+				// else do $con->rollBack(); // Something went wrong
+				*/
 
 				$_SESSION["message"] = "Property created";
 				// redirect_to("landing.php");
