@@ -142,7 +142,8 @@ try {
 				// $userid = 10;
 				$userid = $_GET["U"];
 
-				$con->beginTransaction();
+				try {
+					$con->beginTransaction();
 
 					$sql = "INSERT INTO property (name, address, zip, description, categoryID) VALUES ('{$name}', '{$address}', $zip, '{$description}', $categoryID)";
 
@@ -156,7 +157,11 @@ try {
 					//add property and userid to user_property
 					$stmt = writeRecordset($con, $sql, $userid, $property);
 
-				$con->commit(); //end transaction
+					$con->commit(); //end transaction
+				} catch (Exception $e) {
+					$con->rollBack();
+					echo "Failed: " . $e->getMessage();
+				}
 
 				redirect_to("landing.php");
 				
