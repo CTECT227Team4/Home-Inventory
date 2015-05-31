@@ -191,7 +191,7 @@ try {
 				if (isset($_POST["description1"])) $description = addslashes($_POST["description1"]);
 				$categoryID = 3;
 
-				$sql = "INSERT INTO section (propertyID, roomID, name, type, description, categoryID) VALUES ({$propertyID}, {$roomID}, '{$name}', 'section', '{$description}', $categoryID)";
+				$sql = "INSERT INTO section (propertyID, roomID, name, description, categoryID) VALUES ({$propertyID}, {$roomID}, '{$name}', '{$description}', $categoryID)";
 
 				try {
 					writeRecordset($con, $sql, $propertyID, $roomID, $name, $description, $categoryID);
