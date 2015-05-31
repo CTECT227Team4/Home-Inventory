@@ -4,18 +4,19 @@
 <?php require_once "inc/header.inc.php"; //starts session, includes general functions, populates header content ?>
 
 	 <script type="text/javascript" src="jquery/tipped.js"></script>    <!-- Tooltip plugin -->
-	 <link rel="stylesheet" type="text/css" href="jquery/tipped.css"/> 
+	 <link rel="stylesheet" type="text/css" href="jquery/tipped.css"/> <!-- Tooltip plugin CSS-->
 	   	<script>
 	   		$(document).ready(function() {
 	 	  		$(function() {
 	 	    		$( "#tabs" ).tabs();
-	 	  		});
+	 	  		});   // end jquery ui tabs plugin
 	 	  		$(function() {
 	 	    		$( "#resizable resizable2 resizable3 resizable" ).resizable({
 	 	      			handles: "se"
-	 	   			 });
-	 	  		});
-	  		});
+	 	   			 }); 
+	 	  		});  //  end resizable notes fields
+	 	  		$('#name').focus();  // puts the cursor in the name field upon load.
+	  		});  // ends ready
 	   	</script>
 <!-- END HEADER CONTENT -->
 
