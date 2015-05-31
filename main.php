@@ -188,9 +188,41 @@ try {
 				// echo '{"error":"1","text":"Rosemary hasn\'t finished coding this yet."}';
 				break;
 			case 8: // WriteRoom
-				echo '{"error":"1","text":"Rosemary hasn\'t finished coding this yet."}';
+				// if (isset($_POST["propertyID"])) $propertyID = $_POST["propertyID"];
+				$propertyID = 18;
+				if (isset($_POST["name"])) $name = addslashes($_POST["name"]);
+				if (isset($_POST["description1"])) $description = addslashes($_POST["description1"]);
+				$categoryID = 2;
+
+				$sql = "INSERT INTO room (propertyID, name, type, description, categoryID) VALUES ({$propertyID}, '{$name}', 'room', '{$description}', $categoryID)";
+
+				try {
+					writeRecordset($con, $sql, $propertyID, $name, $description, $categoryID);
+				} catch (Exception $e) {
+					echo "Failed: " . $e->getMessage();
+				}
+
+				redirect_to("landing.php");
 				break;
 			case 9: // WriteSection
+				// if (isset($_POST["propertyID"])) $propertyID = $_POST["propertyID"];
+				$propertyID = 18;
+				$roomID = 16;
+				if (isset($_POST["name"])) $name = addslashes($_POST["name"]);
+				if (isset($_POST["description1"])) $description = addslashes($_POST["description1"]);
+				$categoryID = 3;
+
+				$sql = "INSERT INTO section (propertyID, roomID, name, type, description, categoryID) VALUES ({$propertyID}, {$roomID}, '{$name}', 'section', '{$description}', $categoryID)";
+
+				try {
+					writeRecordset($con, $sql, $propertyID, $roomID, $name, $description, $categoryID);
+				} catch (Exception $e) {
+					echo "Failed: " . $e->getMessage();
+				}
+
+				redirect_to("landing.php");
+				break;
+
 				echo '{"error":"1","text":"Rosemary hasn\'t finished coding this yet."}';
 				break;
 			case 10: // WriteItem
