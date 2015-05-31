@@ -493,7 +493,7 @@ input:focus {
 	height:90px;
 }
 
-.centered_button {
+p.centered_button {
 	display: block;
 	text-align: center;
 }

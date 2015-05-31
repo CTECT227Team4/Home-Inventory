@@ -42,24 +42,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 	<link rel="shortcut icon" href="images/az-icon.ico">
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>     <!-- jQuery CDN -->
-
-	<!-- <script>
+	<script>
 		$(document).ready(function(){
-			 	$('#submit').prop('disabled', true);
-
-			$('#login').submit(function(evt){
-
-					var user = $('#userName').val();
-					console.log(firstName)
-					if(firstName === ""){
-						$('#firstname').css('border', '2px solid red');
-					} 	else {
-						$('#submit').prop('disabled', false);
-					} // end of if
-
-			});  //  end of submit function
+			$('#userName').focus();
 		});  // end of ready function
-	</script>    -->
+	</script>   
 </head>
 <body>
 	<div class="page_wrapper">
