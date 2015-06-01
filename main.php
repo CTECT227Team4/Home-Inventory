@@ -1,5 +1,7 @@
 <?php
 include_once("../azconfig.php");
+require_once ("inc/functions.php");
+require_once ("inc/session.php");
 
 $jsonmsg = "";
 $imageslocation = "./images/";  // The relative location to the icon images for the tree control
@@ -16,13 +18,9 @@ $itemid = 0;
 if (isset($_GET['F'])) $webfunction = $_GET['F'];
 if (isset($_GET['userid'])) $userid = $_GET['userid'];
 if (isset($_GET['propertyid'])) $propertyid = $_GET['propertyid'];
-//<<<<<<< HEAD
 if (isset($_GET['sectionid'])) $sectionid = $_GET['sectionid'];
 if (isset($_GET['roomid'])) $roomid = $_GET['roomid'];
 if (isset($_GET['itemid'])) $itemid = $_GET['itemid'];
-//=======
-if (isset($_GET['roomid'])) $roomid = $_GET['roomid'];
-//>>>>>>> origin/master
 
 header('Content-Type: application/json');
 // Moved $firstTime initialization to the top
@@ -134,13 +132,13 @@ try {
 				break;
 			case 7: // WriteProperty
 
-				if (isset($_POST["name"])) $name = $_POST["name"];
-				if (isset($_POST["address"])) $address = $_POST["address"];
+				if (isset($_POST["name"])) $name = addslashes($_POST["name"]);
+				if (isset($_POST["address"])) $address = addslashes($_POST["address"]);
 				if (isset($_POST["zip"])) $zip = $_POST["zip"];
-				if (isset($_POST["description"])) $description = $_POST["description"];
+				if (isset($_POST["description"])) $description = addslashes($_POST["description"]);
 				$categoryID = 1;
 				// $userid = 10;
-				$userid = $_GET["U"];
+				$userid = $_SESSION["user_id"];
 
 				try {
 					$con->beginTransaction();
@@ -200,9 +198,6 @@ try {
 				}
 
 				redirect_to("landing.php");
-				break;
-
-				echo '{"error":"1","text":"Rosemary hasn\'t finished coding this yet."}';
 				break;
 			case 10: // WriteItem
 				echo '{"error":"1","text":"Rosemary hasn\'t finished coding this yet."}';
@@ -266,29 +261,24 @@ function writeRecordset($con, $sql, ...$parameters) {
 	}
 } //end writeRecordset
 
-function getRecordset($con, $sql, ...$parameters) {
-	try {
-		$paramcount = 1;
-		$stmt = $con->prepare($sql);
+// function getRecordset($con, $sql, ...$parameters) {
+// 	try {
+// 		$paramcount = 1;
+// 		$stmt = $con->prepare($sql);
 		
-		// $parameters is passed in as an array, go through it and add them all
-		foreach ($parameters as $parameter) { 
-			$stmt->bindParam($paramcount++, $parameter);
-		}
+// 		// $parameters is passed in as an array, go through it and add them all
+// 		foreach ($parameters as $parameter) { 
+// 			$stmt->bindParam($paramcount++, $parameter);
+// 		}
 		
-		$stmt->setFetchMode (PDO::FETCH_ASSOC); // This should default the fetch to return name->value that can be output directly to JSON easier
-		$stmt->execute();
-		return $stmt;
-	} catch (Exception $e) { // Echo the message in JSON and exit
-		echo '"error":"' . $e->getCode() . '","text":"' . $e->getMessage() . '"';
-		exit;
-	}
-}
-
-function redirect_to($new_location) {
-    header("Location: " . $new_location);
-    exit;
-}
+// 		$stmt->setFetchMode (PDO::FETCH_ASSOC); // This should default the fetch to return name->value that can be output directly to JSON easier
+// 		$stmt->execute();
+// 		return $stmt;
+// 	} catch (Exception $e) { // Echo the message in JSON and exit
+// 		echo '"error":"' . $e->getCode() . '","text":"' . $e->getMessage() . '"';
+// 		exit;
+// 	}
+// }
 
 function echo_r($data) {
 	echo "<pre>";
