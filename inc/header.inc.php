@@ -1,6 +1,10 @@
 <?php require_once("/inc/session.php");
 require_once("../az/inc/functions.php"); ?>
 
+<?php if (!isset($_SESSION["userName"]) || !isset($_SESSION["user_id"]) || !isset($_SESSION["logged_in"])) {
+	redirect_to("login.php");
+	} ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
