@@ -23,7 +23,7 @@ require_once("../az/inc/functions.php"); ?>
 			<div class="side_logo">
 				<img class="small_logo" src="images/logo.png" alt="A-Z Home Inventory Logo" sizes="30vw" srcset="images/logo.png 1000w">
 			</div>
-			<h1><?php echo $_SESSION["firstName"] . " " . $_SESSION["lastName"] . "'s Properties"; ?></h1>
+			<h1 id="header_session_name"><?php echo $_SESSION["firstName"] . " " . $_SESSION["lastName"] . "'s Properties"; ?></h1>
 			<h2><?php echo $page_heading ?></h2>
 			<?php require_once ("/inc/nav.inc.php"); ?>
 		</header> <!-- End Header -->

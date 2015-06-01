@@ -147,6 +147,10 @@ a {
 	margin-bottom: 40px;
 }
 
+#header_session_name {
+	margin-top: 5%;
+	
+}
 nav {
 	width: 100%;
 	clear: both;
