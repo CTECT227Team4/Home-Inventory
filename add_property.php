@@ -48,7 +48,7 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 					<input id="zip" type="text" name="zip">    
 				</p>
 				<p class="tab_two_long_wide">      <!--  makes two inputs on one line -->
-					<label for="county">  <span class="simple-tooltip" title="This can be helpful when gathering property tax information."><img src="images/info.png"></span>Property County:</label>
+					<label for="county">Property County:  <span class="simple-tooltip" title="This can be helpful when gathering property tax information."><img src="images/info.png"></span></label>
 					<input id="county" type="text" name="county">       
 				</p>
 				<p class="tab_two_wide">     <!--  makes two inputs on one line -->
@@ -63,11 +63,11 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 					<label for="year_built">Year Built:</label>
 					<input id="year_built" type="text" name="year_built">       
 				</p>
-				<p class="two_long_wide">      <!--  makes two inputs on one line -->
+				<p class="tab_two_long_wide">      <!--  makes two inputs on one line -->
 					<label for="year_purchased">Year Purchased:</label>
 					<input id="year_purchased" type="text" name="year_purchased">       
 				</p>
-				<p class="two_long_wide">      <!--  makes two inputs on one line -->
+				<p class="tab_two_long_wide">      <!--  makes two inputs on one line -->
 					<label for="price">Purchase Price:</label>
 					<input id="price" type="text" name="price">       
 				</p>
@@ -78,11 +78,11 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 		</div>    <!-- end tab 1 -->
 
 		<div id="tabs-2" class="taxes_tab tabs_nav">
-				<p class="tab_one_wide">     
+				<p class="tab_one_xwide">     
 					<label for="property_taxID">Property Tax ID No.:  <span class="simple-tooltip" title="???"><img src="images/info.png"></span></label>
 					<input id="property_taxID" type="text" name="property_taxID">    
 				</p>
-				<p class="tab_one_wide">
+				<p class="tab_one_xwide">
 					<label for="gis_url">Prop. Tax GIS URL:  <span class="simple-tooltip" title="???"><img src="images/info.png"></span></label>
 					<input id="gis_url" type="text" name="gis_url">
 				</p>

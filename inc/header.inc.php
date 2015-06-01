@@ -10,6 +10,7 @@ require_once("../az/inc/functions.php"); ?>
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<link rel="stylesheet" type="text/css" href="./jquery/jquery.dataTables.css">
 	<link rel="stylesheet" href="jquery/themes/default/style.min.css" />
+	<link rel="stylesheet" href="font-awesome-4.3.0/css/font-awesome.min.css">
 	<script src="jquery/jquery.2.min.js"></script>
 	<script src="jquery/jquery-ui.min.js"></script>
 	<link rel="stylesheet" href="jquery/jquery-ui.min.css">
@@ -23,7 +24,9 @@ require_once("../az/inc/functions.php"); ?>
 			<div class="side_logo">
 				<img class="small_logo" src="images/logo.png" alt="A-Z Home Inventory Logo" sizes="30vw" srcset="images/logo.png 1000w">
 			</div>
+			<div class="header_title">
 			<h1 id="header_session_name"><?php echo $_SESSION["firstName"] . " " . $_SESSION["lastName"] . "'s Properties"; ?></h1>
 			<h2><?php echo $page_heading ?></h2>
+			</div>
 			<?php require_once ("/inc/nav.inc.php"); ?>
 		</header> <!-- End Header -->
