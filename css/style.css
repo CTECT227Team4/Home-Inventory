@@ -48,7 +48,9 @@ input:focus, select:focus, textarea:focus, button:focus {
 #90C32E Used for panel backgrounds
 #333333 Used for text
 #387929 Available for use as applicable
-#ad102a For Errors   */
+#ad102a For Errors   
+#D7FE8B For Light Green backgrounds in tab headers, etc.
+*/
 
 
 /*  ----------------    TYPOGRAPHY        ----------------*/
@@ -470,6 +472,94 @@ input:focus {
 }
 
 
+#data_wrapper {
+	position: relative;
+	top: 40px;
+    border: 4px solid #90C32E;
+    padding: 20px; 
+	margin: 0 5%;
+}
+
+#treemain {
+	position: relative;
+}
+
+.viewwidget button {
+	background-color: #FFFFFF;
+	color: #333333;
+	font-size: 1rem;
+	outline: 4px solid #90C32E;
+	padding: 5px;
+	border: none;
+	margin-right: 10px;
+	margin-bottom: 10px;
+}
+
+.viewwidget button:hover {
+	background-color: #90C32E;
+	color: #FFFFFF;
+}
+
+#gridmain {
+	position: relative;
+	top: -40px;
+}
+
+
+#grid-basic thead, #grid-basic tr{
+	font-size: 1.2rem;
+	color: #333333;
+}
+
+#grid-basic thead th {
+	border-bottom: 2px solid #90C32E;
+}
+
+#grid-basic tbody tr.even {
+	border-bottom: 2px solid #90C32E;
+}
+
+#grid-basic tr.odd, #grid-basic tbody tr.odd>.sorting_1 {
+	background-color: #D7FE8B;
+}
+
+#grid-basic tr.even, #grid-basic tbody tr.odd>.sorting_1 {
+} 
+
+
+#grid-basic tbody tr.even>.sorting_1:hover {
+	border-top: 2px solid #90C32E;
+}
+
+/*, table.dataTable.order-column.stripe tbody tr.even>.sorting_1*/
+
+
+
+#gridmain input, #gridmain select, #gridmain label{
+	font-size: 1rem;
+}
+
+#grid-basic table {
+	border-color: #90C32E;
+}
+
+
+
+
+@media screen and (max-width:1250px) {
+
+
+}
+
+@media screen and (max-width:900px) {
+
+
+}
+
+
+
+
+
 /* ----------------------    TABBED FORMS   --------------------- */
 
 #add_item, #add_property, #add_room {
@@ -582,29 +672,6 @@ p.centered_button {
 
 span img {
 	width: 1rem;
-}
-
-/* Trying to get the header to be slightly smaller */
-.dataTables_wrapper { 
-	font-size: 12px
-}
-
-#data_wrapper {
-	position: relative;
-	top: 40px;
-    border-radius: 10px;
-    border: 4px solid #90C32E;
-    padding: 20px; 
-}
-
-#treemain {
-	position: relative;
-	top: -40px;
-}
-
-#gridmain {
-	position: relative;
-	top: -40px;
 }
 
 @media screen and (max-width:1250px) {
