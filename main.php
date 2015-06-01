@@ -203,7 +203,23 @@ try {
 				echo '{"error":"1","text":"Rosemary hasn\'t finished coding this yet."}';
 				break;
 			case 11: // GetCategories
-				echo '{"error":"1","text":"Rosemary hasn\'t finished coding this yet."}';
+				// locahost/az/main.php?F=11&parentType=1
+				$parentType = $_GET["parentType"];
+				$sql = "SELECT CONCAT('C', c.id) AS id, description AS text, CONCAT ('$imageslocation', icon) AS icon FROM category c WHERE c.parentType = ?";
+
+				$rs = getRecordset($con, $sql, $parentType);
+
+				echo '[{"id":"P' . $parentType . '","text": "Main House","icon": "./images/appraisal.png","state": {"opened" : "true"},"children":';
+				echo "["; // The recordset is being returned as an array, so start the array
+				
+				foreach ($rs as $row) {
+					if ($firstTime) $firstTime = !$firstTime; // Don't echo a comma on the first line, only when added a new one
+					else echo ",";
+
+					print json_encode($row, JSON_UNESCAPED_SLASHES);
+				}
+				echo "]"; // End the array
+				echo "}]"; // End the whole tree
 				break;
 			case 12: // Get list of properties for drop down
 				// Messing with putting the description in the list too.  And blank, if there's no description.
