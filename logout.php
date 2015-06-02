@@ -9,5 +9,5 @@
 	$_SESSION["firstName"] = "";
 	$_SESSION["lastName"] = "";
 
-	redirect_to("login.php");
+	redirect_to("index.php");
 	 ?>

@@ -1,3 +1,41 @@
+<?php # login.php
+require_once("/inc/session.php");
+require_once("/inc/functions.php");
+ 
+$userName = "";
+
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
+
+		$userName = $_POST["userName"];
+		$password = $_POST["password"];
+
+		//$required_fields = array("username", "password");
+		//validate_presences($required_fields);
+
+		//if (empty($errors)) {
+
+			$found_user = attempt_login($userName, $password);
+
+			if ($found_user) {
+				// Success - set session variables
+				$_SESSION["user_id"] = $found_user["ID"];
+				$_SESSION["userName"] = $found_user["userName"];
+				$_SESSION["firstName"] = $found_user["firstName"];
+				$_SESSION["lastName"] = $found_user["lastName"];
+				$_SESSION["logged_in"] = "logged in";
+				redirect_to("landing.php");
+			} else{
+				//failure
+				$_SESSION["message"] = "Username/password not found";
+				echo "Username/password not found";
+				redirect_to("login.php");
+			}
+		//} else {
+		//	$_SESSION["errors"] = $errors;
+		//	redirect_to("login.php");
+
+} //end ($_SERVER['REQUEST_METHOD'] == "POST")
+?>
 <!DOCTYPE html>
 <!--   This is the login page for A-Z Home Inventory.  It begins the user's session.   -->
 <html lang="en">
@@ -28,7 +66,7 @@
 				?>
 			</h2>
 			<h2>or Please sign-in:</h2>
-			<form method="Post" action="process_login.php" id="login">
+			<form action="index.php" method="post" id="login">
 				<p>
 					<label for="userName">Username:</label>
 					<input id="userName" type="text" name="userName">
@@ -41,10 +79,8 @@
 					<a href="#">Forgotten your password or username?</a>
 				</p>
 				<p>
-					<input type="submit" value="Submit" class="centered_button" id="submit">
+					<input type="submit" value="Submit" class="centered_button" id="submit" name="submit">
 				</p>
-
-
 			</form>
 		</div>    <!-- end of login_wrapper -->
 	</section>	<!-- end of content -->
