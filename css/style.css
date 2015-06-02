@@ -488,7 +488,7 @@ input:focus {
 	background-color: #FFFFFF;
 	color: #333333;
 	font-size: 1rem;
-	outline: 4px solid #90C32E;
+	outline: 2px solid #90C32E;
 	padding: 5px;
 	border: none;
 	margin-right: 10px;
@@ -523,17 +523,14 @@ input:focus {
 	background-color: #D7FE8B;
 }
 
-#grid-basic tr.even, #grid-basic tbody tr.odd>.sorting_1 {
-} 
-
-
-#grid-basic tbody tr.even>.sorting_1:hover {
-	border-top: 2px solid #90C32E;
+#grid-basic.dataTable.no-footer  {
+	border-bottom: 2px solid #90C32E;
 }
 
-/*, table.dataTable.order-column.stripe tbody tr.even>.sorting_1*/
-
-
+.dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+	background: #D7FE8B !important;
+	border: 1px solid #90C32E !important;
+}
 
 #gridmain input, #gridmain select, #gridmain label{
 	font-size: 1rem;
@@ -562,7 +559,7 @@ input:focus {
 
 /* ----------------------    TABBED FORMS   --------------------- */
 
-#add_item, #add_property, #add_room {
+#add_item, #add_property, #add_room, #user_info {
 	font-size: 1.3rem;
 }
 
@@ -623,7 +620,7 @@ input:focus {
   	width: 65%;
 }
 
-.tab_one_wide .tab_one_wide_text, .tab_one_xwide{
+.tab_one_wide .tab_one_wide_text, .tab_one_xwide, .tab_one_wide_text {
 	position: relative;
 	width: 100%;
 	clear: both;
@@ -663,6 +660,7 @@ input:focus {
 p.centered_button {
 	display: block;
 	text-align: center;
+	clear: both;
 }
 
 .simple_tooltip i{
@@ -717,3 +715,44 @@ span img {
 	}
 }
 
+/*             ----------------------------------   POP-UP PHOTO  -----------------------------------         */
+
+#pop-up_header {
+
+}
+
+
+
+/*             ---------------------   USER PROFILE  -----------------------         */
+
+.coverage {
+	width: 100%;
+	clear: both;
+}
+
+.coverage label {
+	width: 35%;
+	padding-right: 5px;
+	text-align: right;
+	float: left;
+}
+
+.coverage input {
+  	float: left;
+  	width: 45%;
+  	margin-bottom: 10px;
+}
+
+.password_tab {
+	margin-left: 5%;
+}
+
+.password_tab h3 {
+	font-size: 1.2rem;
+	text-align: left;
+	clear: both;
+}
+.password_tab p {
+	width: 60%;
+	margin: 10px auto;
+}
