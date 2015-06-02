@@ -13,8 +13,8 @@
 		<li><a href="user_profile.php"><?php echo $_SESSION['firstName']; ?> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-caret-down"></i></a>
 			<ul>
 				<li><a href="user_profile.php">User Profile</a></li>
-				<li><a href="change_password.php">Change Password</a></li>
-				<li><a href="insurance.php">Insurance</a></li>
+				<li><a href="user_profile.php#tabs-2">Change Password</a></li>
+				<li><a href="user_profile.php#tabs-3">Insurance</a></li>
 				<li><a href="logout.php">Logout</a></li>
 			</ul>
 		</li>
