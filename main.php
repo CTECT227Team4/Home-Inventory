@@ -11,10 +11,11 @@ $propertyid = 0;
 $sectionid = 0;
 $roomid = 0;
 $itemid = 0;
-
+// Test update
 // This should work if you use the URL:  http://localhost/az/main.php?F=1&userid=2
 // with the copy of the database I had on Saturday.
 
+if (isset($_POST["json"])) $json = $_POST["json"];
 if (isset($_GET['F'])) $webfunction = $_GET['F'];
 if (isset($_GET['userid'])) $userid = $_GET['userid'];
 if (isset($_GET['propertyid'])) $propertyid = $_GET['propertyid'];
@@ -200,7 +201,9 @@ try {
 				redirect_to("landing.php");
 				break;
 			case 10: // WriteItem
-				echo '{"error":"1","text":"Rosemary hasn\'t finished coding this yet."}';
+				$json = '{"propertyID":"1","roomID":"1","sectionID":"1","name":"Test Thing","categoryID":"1","description":"Some testing.","manufacturer":"Sony","brand":"Sony","modelNumber":"ABC123","serialNumber":"123456","condition":"new","beneficiary":"None","purchaseDate":"1/1/2015","purchasePrice":"200","purchasedFrom":"store","paymentMethod":"VISA","warrantyExpirationDate":"1/1/2017","warrantyType":"good type"}';
+				$thing = new Item($json);
+				$thing->write($con);
 				break;
 			case 11: // GetCategories
 				// locahost/az/main.php?F=11&parentType=1
@@ -265,6 +268,8 @@ function writeRecordset($con, $sql, ...$parameters) {
 	
 		// $parameters is passed in as an array, go through it and add them all
 		foreach ($parameters as $parameter) { 
+		echo $parameter . "<br>";
+		
 			$stmt->bindParam($paramcount++, $parameter);
 		}
 		
@@ -300,5 +305,49 @@ function echo_r($data) {
 	echo "<pre>";
 	print_r($data);
 	echo "</pre>";
+}
+
+class Item { // object to hold item record
+	var $propertyID;
+	var $roomID;
+	var $sectionID;
+	var $name;
+	var $categoryID;
+	var $description;
+	var $manufacturer;
+	var $brand;
+	var $modelNumber;
+	var $serialNumber;
+	var $condition;
+	var $beneficiary;
+	var $purchaseDate;
+	var $purchasePrice;
+	var $purchasedFrom;
+	var $paymentMethod;
+	var $warrantyExpirationDate;
+	var $warrantyType;
+
+    public function __construct($json = "") {
+        if ($json != "") $this->set($json);
+    }
+
+    public function set($json) {
+		$data = json_decode($json, true);
+        foreach ($data AS $key=>$value) {
+            $this->{$key} = $value;
+        }
+    }
+	
+	public function write($con) {
+		$vars = array_keys(get_object_vars($this)); // Get just the var names
+		$sql = "INSERT INTO property (" . implode(",", $vars) . ") VALUES (" . str_repeat("?,", count($vars)) . ")";
+		$sql = str_replace("?,)", "?)", $sql); // Remove trailing ','
+		
+		try {
+			writeRecordset($con, $sql, get_object_vars($this));
+		} catch (Exception $e) {
+			echo "Failed: " . $e->getMessage();
+		}
+	}
 }
 ?>
