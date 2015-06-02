@@ -35,15 +35,15 @@ try {
 				// Added in the thumbnail, if it's been uploaded
 				// Currently hardcoded to the first item in the list of attachments, if available.  
 				$sql = "SELECT CONCAT('P', p.id) AS id, p.name AS text, IF (a.ID != 0, CONCAT('showfile.php?ID=', a.ID, CONCAT('&parentType=1&item=',a.item,'&thumb=1')), CONCAT ('$imageslocation', icon)) AS icon FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN user u ON u.ID = up.userID LEFT OUTER JOIN category c ON c.ID = p.CategoryID LEFT OUTER JOIN (SELECT ID, item FROM attachment WHERE parentType = 1 AND mimetype LIKE 'image%' ORDER BY item LIMIT 1) a ON a.ID = p.id WHERE up.userID = ?";
-		
+
 				// To use this function just pass in any parameters in the order you need them in the SQL statement above
 				$rs = getRecordset($con, $sql, $userid);  // In this case it's just $userid
-				
+
 				// The jstree control requires unique ID's for each node.  Not exactly sure how we want to handle this.
 				// For now I put "U" for the user node, "P" for property, so we'll have "S"=section, "R"=room, "I"=item
 				echo '[{"id":"U' . $userid . '","text": "The Addams Family Properties","children":"true","icon": "./images/appraisal.png","state": {"opened" : "true"},"children":';
 				echo "["; // The recordset is being returned as an array, so start the array
-				
+
 				foreach ($rs as $row) {
 					if ($firstTime) $firstTime = !$firstTime; // Don't echo a comma on the first line, only when added a new one
 					else echo ",";
@@ -62,7 +62,7 @@ try {
 
 				echo '[{"id":"P' . $propertyid . '","text": "Main House","icon": "./images/appraisal.png","state": {"opened" : "true"},"children":';
 				echo "["; // The recordset is being returned as an array, so start the array
-				
+
 				foreach ($rs as $row) {
 					if ($firstTime) $firstTime = !$firstTime; // Don't echo a comma on the first line, only when added a new one
 					else echo ",";
@@ -92,7 +92,7 @@ try {
 
 				echo '[{' . $parent . '",text": "Main House","icon": "./images/appraisal.png","state": {"opened" : "true"},"children":';
 				echo "["; // The recordset is being returned as an array, so start the array
-				
+
 				foreach ($rs as $row) {
 					if ($firstTime) $firstTime = !$firstTime; // Don't echo a comma on the first line, only when added a new one
 					else echo ",";
@@ -105,13 +105,13 @@ try {
 			case 4: // GetItems
 				$sql = "SELECT CONCAT('P', p.id) AS id, name AS text, CONCAT ('$imageslocation', icon) AS icon FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN user u ON u.ID = up.userID LEFT OUTER JOIN category c ON c.ID = p.CategoryID WHERE up.userID = ?";
 				$rs = getRecordset($con, $sql, $userid);
-				
+
 				echo '[{"id":"U' . $userid . '","text": "The Addams Family Properties","children":"true","icon": "./images/appraisal.png","state": {"opened" : "true"},"children":';
 				echo "["; // The recordset is being returned as an array, so start the array
-				
+
 				// Moved $firstTime initialization to the top
 				//$firstTime = true;
-				
+
 				while ($row = $rs->fetch()) {
 				//foreach ($rs as $row) {
 					if ($firstTime) $firstTime = !$firstTime; // Don't echo a comma on the first line, only when added a new one
@@ -247,6 +247,8 @@ try {
 				}
 				echo "}";
 				break;
+			case 14: //getRooms for dropdown
+				// echo "This hasn't been coded yet";
 			default: 
 				echo '{"error":"1","text":"Unknown function."}';
 		}
