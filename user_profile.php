@@ -45,7 +45,7 @@ $(document).ready(function() {
 
 				<div id="tabs-2" class="password_tab tabs_nav">
 
-				<h3><a name="password">Please verify your current password:</a></h3>
+				<h3>Please verify your current password:</h3>
 				<p class="two_wide">          <!--  makes two inputs on one line -->
 					<label for="password">Current Password:</label>
 					<input id="password" type="password" name="password">
@@ -67,7 +67,7 @@ $(document).ready(function() {
 
 				<div id="tabs-3" class="insurance_tab tabs_nav">
 		  			<p class="tab_one_wide">
-						<label for="insurance_name"><a name="insurance">Insurance Company:</a></label>
+						<label for="insurance_name">Insurance Company:</label>
 						<input id="name" type="text" name="name">    
 					</p>
 		  			<p class="tab_one_wide">
