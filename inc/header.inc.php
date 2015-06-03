@@ -31,7 +31,15 @@ require_once("../az/inc/functions.php"); ?>
 				</a>
 			</div>
 			<div class="header_title">
-			<h1 id="header_session_name"><?php echo $_SESSION["firstName"] . " " . $_SESSION["lastName"] . "'s Properties"; ?></h1>
+			<h1 id="header_session_name">
+				<?php //this displays the user's name in the header, checks if the last name ends in "s", and displays the correct punctuation
+					echo $_SESSION["firstName"] . " " . $_SESSION["lastName"];
+					if (substr($_SESSION["lastName"], -1) == "s") {
+						echo "' Properties";
+						} else {
+							echo "'s Properties";
+							} //endif ?>
+			</h1>
 			<h2><?php echo $page_heading ?></h2>
 			</div>
 			<?php require_once ("/inc/nav.inc.php"); ?>

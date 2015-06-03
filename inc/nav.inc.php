@@ -14,7 +14,7 @@
 			</ul>
 		</li>
 		<li><a href="reports.php">Reports</a></li>
-		<li><a href="user_profile.php"><?php echo $_SESSION['firstName']; ?> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-caret-down"></i></a>
+		<li><a href="user_profile.php"><?php echo ucfirst($_SESSION['firstName']); ?> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-caret-down"></i></a>
 			<ul>
 				<li><a href="user_profile.php">User Profile</a></li>
 				<li><a href="user_profile.php#tabs-2">Change Password</a></li>
