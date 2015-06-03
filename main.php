@@ -251,7 +251,8 @@ try {
 				echo "}";
 				break;
 			case 14: //getRooms for dropdown
-				// echo "This hasn't been coded yet";
+				echo "This hasn't been coded yet";
+				break;
 			default: 
 				echo '{"error":"1","text":"Unknown function."}';
 		}

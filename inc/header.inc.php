@@ -26,7 +26,9 @@ require_once("../az/inc/functions.php"); ?>
 	<div class="page_wrapper">
 		<header>
 			<div class="side_logo">
-				<img class="small_logo" src="images/logo.png" alt="A-Z Home Inventory Logo" sizes="30vw" srcset="images/logo.png 1000w">
+				<a href="landing.php">
+					<img class="small_logo" src="images/logo.png" alt="A-Z Home Inventory Logo" sizes="30vw" srcset="images/logo.png 1000w">
+				</a>
 			</div>
 			<div class="header_title">
 			<h1 id="header_session_name"><?php echo $_SESSION["firstName"] . " " . $_SESSION["lastName"] . "'s Properties"; ?></h1>

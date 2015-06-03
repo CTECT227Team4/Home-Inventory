@@ -1,6 +1,6 @@
 <?php # login.php
-require_once("/inc/session.php");
-require_once("/inc/functions.php");
+include("inc/session.php");
+include("inc/functions.php");
  
 $userName = "";
 

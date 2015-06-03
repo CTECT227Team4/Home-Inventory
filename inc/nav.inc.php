@@ -1,6 +1,10 @@
 <nav>
 	<ul class="upper_buttons">
-		<li ><a id="toggler" href="javascript: void(0)" onclick="toggleView()">Grid View</a></li>
+		<?php if (isset($nav_context) && $nav_context == "inventory") { ?>
+		<li><a id="toggler" href="javascript: void(0)" onclick="toggleView()">Grid View</a></li>
+		<?php } else { ?>
+		<li><a href="landing.php">Inventory</a></li>
+		<?php } ?>
 		<li><a href="add_property.php">Add &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-caret-down"></i></a>
 			<ul>
 				<li><a href="add_property.php">Add Property</a></li>

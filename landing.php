@@ -1,8 +1,11 @@
 <?php # landing.php
 $page_title = "A-Z Home Inventory";
 $page_heading = "Home Inventory";
+$nav_context = "inventory";
+// $nav_context sets the first nav item to be the grid/tree view toggler
+// This value is *case sensitive*
 require_once "inc/header.inc.php";
-?><!-- <div class="page_wrapper"> Started in header.inc.php -->
+?>
 	<div id="data_wrapper">
 		<div id="treemain" class="dispwindow">
 			<div id="treeviewwidget" class="viewwidget">
