@@ -8,22 +8,16 @@
         exit;
     }
 
-    function mysql_prep($string) {
-    	global $con;
-    	$escaped_string = mysqli_real_escape_string($con, $string);
-    	return $escaped_string;
-    }
-
-    function getRecordset($con, $sql, ...$parameters) {
+    function getRecordset($con, $sql, $parameters) {
     	try {
     		$paramcount = 1;
     		$stmt = $con->prepare($sql);
-    	
+
     		// $parameters is passed in as an array, go through it and add them all
     		foreach ($parameters as $parameter) { 
     			$stmt->bindParam($paramcount++, $parameter);
     		}
-    		
+
     		$stmt->execute();
     		return $stmt;
     	} catch (Exception $e) { // Echo the message in JSON and exit
@@ -31,6 +25,28 @@
     		exit;
     	}
     } //end getRecordset
+
+    
+    function writeRecordset($con, $sql, $parameters) {
+    	try {
+    		$paramcount = 1;
+    		$stmt = $con->prepare($sql);
+
+    		// $parameters is passed in as an array, go through it and add them all
+    		foreach ($parameters as $parameter) { 
+    		echo $parameter . "<br>";
+
+    			$stmt->bindParam($paramcount++, $parameter);
+    		}
+
+    		$stmt->execute();
+    		print_r($stmt);
+    		return $stmt;
+    	} catch (Exception $e) { // Echo the message in JSON and exit
+    		echo '"error":"' . $e->getCode() . '","text":"' . $e->getMessage() . '"';
+    		exit;
+    	}
+    } //end writeRecordset
 
 	function form_errors($errors) {
 	    $output = "";

@@ -11,6 +11,7 @@ $propertyid = 0;
 $sectionid = 0;
 $roomid = 0;
 $itemid = 0;
+$parameters = [];
 // Test update
 // This should work if you use the URL:  http://localhost/az/main.php?F=1&userid=2
 // with the copy of the database I had on Saturday.
@@ -38,7 +39,8 @@ try {
 				$sql = "SELECT CONCAT('P', p.id) AS id, p.name AS text, IF (a.ID != 0, CONCAT('showfile.php?ID=', a.ID, CONCAT('&parentType=1&item=',a.item,'&thumb=1')), CONCAT ('$imageslocation', icon)) AS icon FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN user u ON u.ID = up.userID LEFT OUTER JOIN category c ON c.ID = p.CategoryID LEFT OUTER JOIN (SELECT ID, item FROM attachment WHERE parentType = 1 AND mimetype LIKE 'image%' ORDER BY item LIMIT 1) a ON a.ID = p.id WHERE up.userID = ?";
 
 				// To use this function just pass in any parameters in the order you need them in the SQL statement above
-				$rs = getRecordset($con, $sql, $userid);  // In this case it's just $userid
+				$parameters = [$userid];
+				$rs = getRecordset($con, $sql, $parameters);  // In this case it's just $userid
 
 				// The jstree control requires unique ID's for each node.  Not exactly sure how we want to handle this.
 				// For now I put "U" for the user node, "P" for property, so we'll have "S"=section, "R"=room, "I"=item
@@ -59,7 +61,10 @@ try {
 				// locahost/az/main.php?F=2&propertyid=1
 				$sql = "SELECT CONCAT('R', r.id) AS id, name AS text, CONCAT ('$imageslocation', icon) AS icon FROM room r LEFT OUTER JOIN category c ON c.ID = r.CategoryID WHERE r.propertyID = ?";
 
-				$rs = getRecordset($con, $sql, $propertyid);
+				//create array of parameters
+				$parameters = [$propertyid];
+
+				$rs = getRecordset($con, $sql, $parameters);
 
 				echo '[{"id":"P' . $propertyid . '","text": "Main House","icon": "./images/appraisal.png","state": {"opened" : "true"},"children":';
 				echo "["; // The recordset is being returned as an array, so start the array
@@ -78,18 +83,22 @@ try {
 				// locahost/az/main.php?F=3&propertyid=1 OR localhost/az/main.php?F=3&roomid=2
 
 				//check whether to select sections in a room or a property
-				if (isset($roomid)) {
+				if (isset($roomid) && $roomid != 0) {
 					$sql = "SELECT CONCAT ('S', s.id) AS id, name AS text, CONCAT ('$imageslocation', icon) AS icon FROM section s LEFT OUTER JOIN category c ON c.ID = s.CategoryID WHERE s.roomID = ?";
 					//creates variable for correct node (R) to be echoed with result
 					$parent = "\"id\":\"R" . $roomid;
+					$parameters = [$roomid];
 				} else {
 					$sql = "SELECT CONCAT('S', s.id) AS id, name AS text, CONCAT ('$imageslocation', icon) AS icon FROM section s LEFT OUTER JOIN category c ON c.ID = s.CategoryID WHERE s.propertyID = ?";
 					//creates variable for correct node (P) to be echoed with result
 					$parent = "\"id\":\"P" . $propertyid;
+					$parameters = [$propertyid];
 				}
 
 				//if $roomid is set, get records for $roomid, otherwise get records for $propertyid
-				isset($roomid) ? $rs = getRecordset($con, $sql, $roomid) : $rs = getRecordset($con, $sql, $propertyid);
+				// isset($roomid) ? $parameters = [$roomid] : $parameters = [$propertyid];
+
+				$rs = getRecordset($con, $sql, $parameters);
 
 				echo '[{' . $parent . '",text": "Main House","icon": "./images/appraisal.png","state": {"opened" : "true"},"children":';
 				echo "["; // The recordset is being returned as an array, so start the array
@@ -138,7 +147,6 @@ try {
 				if (isset($_POST["zip"])) $zip = $_POST["zip"];
 				if (isset($_POST["description"])) $description = addslashes($_POST["description"]);
 				$categoryID = 1;
-				// $userid = 10;
 				$userid = $_SESSION["user_id"];
 
 				try {
@@ -146,15 +154,19 @@ try {
 
 					$sql = "INSERT INTO property (name, address, zip, description, categoryID) VALUES ('{$name}', '{$address}', $zip, '{$description}', $categoryID)";
 
+					$parameters = [$name, $address, $zip, $description, $categoryID];
+
 					//adds new property to property table
-					$stmt = writeRecordset($con, $sql, $name, $address, $zip, $description, $categoryID);
+					$stmt = writeRecordset($con, $sql, $parameters);
 
 					//get id of new property
 					$property = $con->lastInsertId();
 
 					$sql = "INSERT INTO user_property (userID, propertyID) VALUES ({$userid}, {$property})";
+
+					$parameters = [$userid, $property];
 					//add property and userid to user_property
-					$stmt = writeRecordset($con, $sql, $userid, $property);
+					$stmt = writeRecordset($con, $sql, $parameters);
 
 					$con->commit(); //end transaction
 				} catch (Exception $e) {
@@ -173,9 +185,10 @@ try {
 				$categoryID = 2;
 
 				$sql = "INSERT INTO room (propertyID, name, type, description, categoryID) VALUES ({$propertyID}, '{$name}', 'room', '{$description}', $categoryID)";
+				$parameters = [$propertyID, $name, $description, $categoryID];
 
 				try {
-					writeRecordset($con, $sql, $propertyID, $name, $description, $categoryID);
+					writeRecordset($con, $sql, $parameters);
 				} catch (Exception $e) {
 					echo "Failed: " . $e->getMessage();
 				}
@@ -192,8 +205,10 @@ try {
 
 				$sql = "INSERT INTO section (propertyID, roomID, name, description, categoryID) VALUES ({$propertyID}, {$roomID}, '{$name}', '{$description}', $categoryID)";
 
+				$parameters = [$propertyID, $roomID, $name, $description, $categoryID];
+
 				try {
-					writeRecordset($con, $sql, $propertyID, $roomID, $name, $description, $categoryID);
+					writeRecordset($con, $sql, $parameters);
 				} catch (Exception $e) {
 					echo "Failed: " . $e->getMessage();
 				}
@@ -210,9 +225,11 @@ try {
 				$parentType = $_GET["parentType"];
 				$sql = "SELECT CONCAT('C', c.id) AS id, description AS text, CONCAT ('$imageslocation', icon) AS icon FROM category c WHERE c.parentType = ?";
 
-				$rs = getRecordset($con, $sql, $parentType);
+				$parameters = [$parentType];
 
-				echo '[{"id":"P' . $parentType . '","text": "Main House","icon": "./images/appraisal.png","state": {"opened" : "true"},"children":';
+				$rs = getRecordset($con, $sql, $parameters);
+
+				echo '[{"id":"C' . $parentType . '","text": "Categories","icon": "./images/appraisal.png","state": {"opened" : "true"},"children":';
 				echo "["; // The recordset is being returned as an array, so start the array
 				
 				foreach ($rs as $row) {
@@ -228,7 +245,8 @@ try {
 				// Messing with putting the description in the list too.  And blank, if there's no description.
 				//$sql = "SELECT ID, CONCAT (name, ' - ', description) FROM property p INNER JOIN user_property up ON p.ID = up.propertyID WHERE up.userID = ?";
 				$sql = "SELECT ID, name FROM property p INNER JOIN user_property up ON p.ID = up.propertyID WHERE up.userID = ?";
-				$rs = getRecordset($con, $sql, $userid);
+				$parameters = [$userid];
+				$rs = getRecordset($con, $sql, $parameters);
 				echo "{";
 				foreach ($rs as $row) {
 					if ($firstTime) $firstTime = !$firstTime;
@@ -241,7 +259,8 @@ try {
 				$sql = "SELECT s.ID AS ID, s.name AS name FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN section s ON p.ID = s.propertyID WHERE p.ID = 1 AND up.userID = ?";
 				//$rs = getRecordset($con, $sql, 1, $userid);
 				//$rs = getRecordset($con, $sql, $propertyid, $userid);
-				$rs = getRecordset($con, $sql, $userid);
+				$parameters = [$userid];
+				$rs = getRecordset($con, $sql, $parameters);
 				echo "{";
 				foreach ($rs as $row) {
 					if ($firstTime) $firstTime = !$firstTime;
@@ -263,46 +282,6 @@ try {
 } catch (Exception $e) {
     echo '"error":"' . $e->getCode() . '","text":"' . $e->getMessage() . '"';
 }
-
-function writeRecordset($con, $sql, ...$parameters) {
-	try {
-		$paramcount = 1;
-		$stmt = $con->prepare($sql);
-	
-		// $parameters is passed in as an array, go through it and add them all
-		foreach ($parameters as $parameter) { 
-		echo $parameter . "<br>";
-		
-			$stmt->bindParam($paramcount++, $parameter);
-		}
-		
-		$stmt->execute();
-		print_r($stmt);
-		return $stmt;
-	} catch (Exception $e) { // Echo the message in JSON and exit
-		echo '"error":"' . $e->getCode() . '","text":"' . $e->getMessage() . '"';
-		exit;
-	}
-} //end writeRecordset
-
-// function getRecordset($con, $sql, ...$parameters) {
-// 	try {
-// 		$paramcount = 1;
-// 		$stmt = $con->prepare($sql);
-		
-// 		// $parameters is passed in as an array, go through it and add them all
-// 		foreach ($parameters as $parameter) { 
-// 			$stmt->bindParam($paramcount++, $parameter);
-// 		}
-		
-// 		$stmt->setFetchMode (PDO::FETCH_ASSOC); // This should default the fetch to return name->value that can be output directly to JSON easier
-// 		$stmt->execute();
-// 		return $stmt;
-// 	} catch (Exception $e) { // Echo the message in JSON and exit
-// 		echo '"error":"' . $e->getCode() . '","text":"' . $e->getMessage() . '"';
-// 		exit;
-// 	}
-// }
 
 function echo_r($data) {
 	echo "<pre>";
