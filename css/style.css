@@ -142,7 +142,6 @@ a {
 }
 
 .side_logo {
-	width: 40%;
 	float: left;
 	margin-left: 5%;
 }
@@ -157,12 +156,10 @@ a {
 	margin-bottom: 0px;
 }
 
-
-
 .header_title {
-	position: absolute;
-	left: 40%;
-	top: 5%;
+	float: left;
+	margin-left: 50px;
+	margin-top: 28px;
 }
 
 #header_session_name {
@@ -569,6 +566,7 @@ input:focus {
 	width: 90%;
 	margin: 0 auto 100px auto;
 	font-size: 1.2rem;
+	overflow: hidden;
 }
 
 #tabs:focus {
@@ -651,7 +649,8 @@ input:focus {
 
 .tab_one_wide_text textarea {
 	width: 79%;
-	height:90px;
+	height: 90px;
+	overflow: hidden;
 }
 
 p.centered_button {
