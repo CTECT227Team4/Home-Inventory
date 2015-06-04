@@ -24,7 +24,7 @@ if (isset($_GET['sectionid'])) $sectionid = $_GET['sectionid'];
 if (isset($_GET['roomid'])) $roomid = $_GET['roomid'];
 if (isset($_GET['itemid'])) $itemid = $_GET['itemid'];
 
-//header('Content-Type: application/json');
+header('Content-Type: application/json');
 // Moved $firstTime initialization to the top
 $firstTime = true;
 try {
