@@ -1,12 +1,22 @@
 <?php
 	//Connect to database
 	require_once('../azconfig.php');
-	$con = @new PDO("mysql:host=localhost;dbname=" . $db, $user, $pwd);
+	$con = @new PDO("$driver:host=$server;dbname=" . $db, $user, $pwd);
 
 	function redirect_to($new_location) {
         header("Location: " . $new_location);
         exit;
     }
+	
+	function sqlparms($string, $data) {
+		$indexed = $data == array_values($data);
+		foreach($data as $k=>$v) {
+			if(is_string($v)) $v="'$v'";
+			if($indexed) $string = preg_replace('/\?/',$v,$string,1);
+			else $string = str_replace(":$k",$v,$string);
+		}
+		return $string;
+	}
 	
 	function jsonspew ($con, $sql, $parameters) {
 		$firstTime = true;
@@ -47,17 +57,15 @@
     function writeRecordset($con, $sql, $parameters) {
     	try {
     		$paramcount = 1;
-    		$stmt = $con->prepare($sql);
-
+			echo sqlparms($sql, array_values($parameters));
+			//$sql = sqlparms($sql, array_values($parameters));
     		// $parameters is passed in as an array, go through it and add them all
-    		foreach ($parameters as $parameter) { 
-    		echo $parameter . "<br>";
-
+			$stmt = $con->prepare($sql);
+			foreach ($parameters as $parameter) {
     			$stmt->bindParam($paramcount++, $parameter);
     		}
-
     		$stmt->execute();
-    		print_r($stmt);
+			print_r($con->errorInfo());
     		return $stmt;
     	} catch (Exception $e) { // Echo the message in JSON and exit
     		echo '"error":"' . $e->getCode() . '","text":"' . $e->getMessage() . '"';
@@ -163,4 +171,101 @@
 	// 		redirect_to("login.php");
 		}
 	 } 
+
+abstract class AzObject { // Abstract base class to parse JSON and put it into an inherited object class
+	public function __construct($json = "") {
+        if ($json != "") $this->set($json);
+    }
+
+    public function set($json) {
+		$data = json_decode($json, true);
+        foreach ($data AS $key=>$value) {
+            $this->{$key} = $value;
+        }
+    }
+	
+	public function delete($con) {
+		$sql = "DELETE FROM " . get_class($this) . " WHERE ID = ?";
+		try {
+			writeRecordset($con, $sql, array($this->ID));
+		} catch (Exception $e) {
+			echo "Failed: " . $e->getMessage();
+		}
+	}
+	public function write($con) {
+		$vars = array_keys(get_object_vars($this)); // Get just the var names
+		if ($this->ID) { // ID supplied, do an update
+			$sql = 'UPDATE ' . get_class($this) . ' SET ';
+			foreach ($vars AS $key) {
+				$sql .= "`$key` = ?,";
+			}
+			$sql = rtrim($sql, ","); // Remove trailing comma
+			$sql .= " WHERE ID=" . $this->ID;
+			$vars = array_values(get_object_vars($this)); // Get just the var values
+		} else { // No ID supplied, do an insert
+			array_splice($vars, 0, 1); // Delete the first element (Will be 'ID')
+			$sql = 'INSERT INTO ' . get_class($this) . ' (`' . implode('`,`', $vars) . '`) VALUES (' . str_repeat("?,", count($vars)) . ")";
+			$sql = str_replace("?,)", "?)", $sql); // Remove trailing ',' from str_repeat above
+			$vars = array_values(get_object_vars($this)); // Get just the var values
+			array_splice($vars, 0, 1); // Delete the first element, just a blank ID field
+		}
+
+		try {
+			writeRecordset($con, $sql, $vars);
+		} catch (Exception $e) {
+			echo "Failed: " . $e->getMessage();
+		}
+	}
+}
+
+class Property extends AzObject { // object to hold property record
+// Just a placeholder.  Won't work yet, until it handles writing to the user_property table as well
+	var $ID;
+	var $name;
+	var $address;
+	var $zip;
+	var $description;
+	var $categoryID;
+}
+
+class Section extends AzObject { // object to hold section record
+	var $ID;
+	var $propertyID;
+	var $roomID;
+	var $name;
+	var $description;
+	var $categoryID;
+}
+
+class Room extends AzObject { // object to hold room record
+	var $ID;
+	var $propertyID;
+	var $name;
+	var $type;
+	var $description;
+	var $image;
+	var $categoryID;
+}
+
+class Item extends AzObject { // object to hold item record
+	var $ID;
+	var $propertyID;
+	var $roomID;
+	var $sectionID;
+	var $name;
+	var $categoryID;
+	var $description;
+	var $manufacturer;
+	var $brand;
+	var $modelNumber;
+	var $serialNumber;
+	var $condition;
+	var $beneficiary;
+	var $purchaseDate;
+	var $purchasePrice;
+	var $purchasedFrom;
+	var $paymentMethod;
+	var $warrantyExpirationDate;
+	var $warrantyType;
+}	 
 ?>

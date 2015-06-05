@@ -13,9 +13,6 @@ $roomid = 0;
 $itemid = 0;
 $zipcode = 0;
 $parameters = [];
-// Test update
-// This should work if you use the URL:  http://localhost/az/main.php?F=1&userid=2
-// with the copy of the database I had on Saturday.
 
 if (isset($_POST["json"])) $json = $_POST["json"];
 if (isset($_GET['F'])) $webfunction = $_GET['F'];
@@ -30,7 +27,6 @@ header('Content-Type: application/json');
 // Moved $firstTime initialization to the top
 $firstTime = true;
 try {
-	$con = @new PDO("$driver:host=$server;dbname=" . $db, $user, $pwd);
 	if ($con) {
 		switch ($webfunction) {
 			case 1: // GetProperties
@@ -38,49 +34,21 @@ try {
 				//$sql = "SELECT CONCAT('P', p.id) AS id, name AS text, CONCAT ('$imageslocation', icon) AS icon FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN user u ON u.ID = up.userID LEFT OUTER JOIN category c ON c.ID = p.CategoryID WHERE up.userID = ?";
 				// Added in the thumbnail, if it's been uploaded
 				// Currently hardcoded to the first item in the list of attachments, if available.  
-				$sql = "SELECT CONCAT('P', p.id) AS id, p.name AS text, IF (a.ID != 0, CONCAT('showfile.php?ID=', a.ID, CONCAT('&parentType=1&item=',a.item,'&thumb=1')), CONCAT ('$imageslocation', icon)) AS icon FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN user u ON u.ID = up.userID LEFT OUTER JOIN category c ON c.ID = p.CategoryID LEFT OUTER JOIN (SELECT ID, item FROM attachment WHERE parentType = 1 AND mimetype LIKE 'image%' ORDER BY item LIMIT 1) a ON a.ID = p.id WHERE up.userID = ?";
-
-				// To use this function just pass in any parameters in the order you need them in the SQL statement above
-				$parameters = [$userid];
-				$rs = getRecordset($con, $sql, $parameters);  // In this case it's just $userid
 
 				// The jstree control requires unique ID's for each node.  Not exactly sure how we want to handle this.
 				// For now I put "U" for the user node, "P" for property, so we'll have "S"=section, "R"=room, "I"=item
-				echo '[{"id":"U' . $userid . '","text": "The Addams Family Properties","children":"true","icon": "./images/appraisal.png","state": {"opened" : "true"},"children":';
-				echo "["; // The recordset is being returned as an array, so start the array
-
-				foreach ($rs as $row) {
-					if ($firstTime) $firstTime = !$firstTime; // Don't echo a comma on the first line, only when added a new one
-					else echo ",";
-					print json_encode($row, JSON_UNESCAPED_SLASHES);
-					// If we want to load the children (rooms) here, we could make a second call here
-					// Maybe an option to pass in?  Or just load them with a separate call to GetRooms?
-				}
-				echo "]"; // End the array
-				echo "}]"; // End the whole tree
+				echo '[{"id":"U' . $userid . '","text": "The Addams Family Properties","children":"true","icon": "./images/appraisal.png","state": {"opened" : "true"},"children":['; // The recordset is being returned as an array, so start the array
+				$sql = "SELECT CONCAT('P', p.id) AS id, p.name AS text, IF (a.ID != 0, CONCAT('showfile.php?ID=', a.ID, CONCAT('&parentType=1&item=',a.item,'&thumb=1')), CONCAT ('$imageslocation', icon)) AS icon FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN user u ON u.ID = up.userID LEFT OUTER JOIN category c ON c.ID = p.CategoryID LEFT OUTER JOIN (SELECT ID, item FROM attachment WHERE parentType = 1 AND mimetype LIKE 'image%' ORDER BY item LIMIT 1) a ON a.ID = p.id WHERE up.userID = ?";
+				jsonspew ($con, $sql, array($userid));
+				echo "]}]"; // End the array, then end the whole tree
 				break;
 			case 2: // GetRooms
 				// locahost/az/main.php?F=2&propertyid=1
+				echo '[{"id":"P' . $propertyid . '","text": "Main House","icon": "./images/appraisal.png","state": {"opened" : "true"},"children":['; // The recordset is being returned as an array, so start the array
 				$sql = "SELECT CONCAT('R', r.id) AS id, name AS text, CONCAT ('$imageslocation', icon) AS icon FROM room r LEFT OUTER JOIN category c ON c.ID = r.CategoryID WHERE r.propertyID = ?";
-
-				//create array of parameters
-				$parameters = [$propertyid];
-
-				$rs = getRecordset($con, $sql, $parameters);
-
-				echo '[{"id":"P' . $propertyid . '","text": "Main House","icon": "./images/appraisal.png","state": {"opened" : "true"},"children":';
-				echo "["; // The recordset is being returned as an array, so start the array
-
-				foreach ($rs as $row) {
-					if ($firstTime) $firstTime = !$firstTime; // Don't echo a comma on the first line, only when added a new one
-					else echo ",";
-
-					print json_encode($row, JSON_UNESCAPED_SLASHES);
-				}
-				echo "]"; // End the array
-				echo "}]"; // End the whole tree
+				jsonspew($con, $sql, array($propertyid));
+				echo "]}]"; // End the array, then end the whole tree
 				break;
-
 			case 3: // GetSections
 				// locahost/az/main.php?F=3&propertyid=1 OR localhost/az/main.php?F=3&roomid=2
 
@@ -218,9 +186,15 @@ try {
 				redirect_to("landing.php");
 				break;
 			case 10: // WriteItem
-				$json = '{"propertyID":"1","roomID":"1","sectionID":"1","name":"Test Thing","categoryID":"1","description":"Some testing.","manufacturer":"Sony","brand":"Sony","modelNumber":"ABC123","serialNumber":"123456","condition":"new","beneficiary":"None","purchaseDate":"1/1/2015","purchasePrice":"200","purchasedFrom":"store","paymentMethod":"VISA","warrantyExpirationDate":"1/1/2017","warrantyType":"good type"}';
-				$thing = new Item($json);
-				$thing->write($con);
+				// Without ID, do insert
+				$json = '{"propertyID":"1","roomID":"1","sectionID":"1","name":"Test Thing","categoryID":"1","description":"Some testing.","manufacturer":"Sony","brand":"Sony","modelNumber":"ABC123","serialNumber":"123456","condition":"1","beneficiary":"None","purchaseDate":"2015-1-1","purchasePrice":"200","purchasedFrom":"store","paymentMethod":"VISA","warrantyExpirationDate":"2017-1-1","warrantyType":"good type"}';
+				// With ID, do update
+				//$json = '{"ID":"1","propertyID":"1","roomID":"1","sectionID":"1","name":"Test Thing","categoryID":"1","description":"Some testing.","manufacturer":"Sony","brand":"Sony","modelNumber":"ABC123","serialNumber":"123456","condition":"1","beneficiary":"None","purchaseDate":"2015-1-1","purchasePrice":"200","purchasedFrom":"store","paymentMethod":"VISA","warrantyExpirationDate":"2017-1-1","warrantyType":"good type"}';
+				// Testing for delete, only an ID is needed
+				//$json = '{"ID":"1"}';
+				$item = new Item($json);
+				$item->write($con);				
+				//$item->delete($con);
 				break;
 			case 11: // GetCategories
 				// locahost/az/main.php?F=11&parentType=1
@@ -275,9 +249,7 @@ try {
 				echo "This hasn't been coded yet";
 				break;
 			case 15: // get City/State/County from zip code
-				$sql = "SELECT City, State, County FROM zip z WHERE z.zipcode = ? LIMIT 1";
-				$parameters = [$zipcode];
-				jsonspew($con, $sql, $parameters);
+				jsonspew($con, "SELECT City, State, County FROM zip z WHERE z.zipcode = ? LIMIT 1", array($zipcode));
 				break;
 			default: 
 				echo '{"error":"1","text":"Unknown function."}';
@@ -288,49 +260,5 @@ try {
 	}
 } catch (Exception $e) {
     echo '"error":"' . $e->getCode() . '","text":"' . $e->getMessage() . '"';
-}
-
-class Item { // object to hold item record
-	var $propertyID;
-	var $roomID;
-	var $sectionID;
-	var $name;
-	var $categoryID;
-	var $description;
-	var $manufacturer;
-	var $brand;
-	var $modelNumber;
-	var $serialNumber;
-	var $condition;
-	var $beneficiary;
-	var $purchaseDate;
-	var $purchasePrice;
-	var $purchasedFrom;
-	var $paymentMethod;
-	var $warrantyExpirationDate;
-	var $warrantyType;
-
-    public function __construct($json = "") {
-        if ($json != "") $this->set($json);
-    }
-
-    public function set($json) {
-		$data = json_decode($json, true);
-        foreach ($data AS $key=>$value) {
-            $this->{$key} = $value;
-        }
-    }
-	
-	public function write($con) {
-		$vars = array_keys(get_object_vars($this)); // Get just the var names
-		$sql = "INSERT INTO property (" . implode(",", $vars) . ") VALUES (" . str_repeat("?,", count($vars)) . ")";
-		$sql = str_replace("?,)", "?)", $sql); // Remove trailing ','
-		
-		try {
-			writeRecordset($con, $sql, get_object_vars($this));
-		} catch (Exception $e) {
-			echo "Failed: " . $e->getMessage();
-		}
-	}
 }
 ?>
