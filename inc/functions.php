@@ -7,6 +7,22 @@
         header("Location: " . $new_location);
         exit;
     }
+	
+	function jsonspew ($con, $sql, $parameters) {
+		$firstTime = true;
+		$rs = getRecordset($con, $sql, $parameters);
+		foreach ($rs as $row) {
+			if ($firstTime) $firstTime = !$firstTime;
+			else echo ",";
+			print json_encode($row, JSON_UNESCAPED_SLASHES);
+		}
+	}
+
+	function echo_r($data) {
+		echo "<pre>";
+		print_r($data);
+		echo "</pre>";
+	}
 
     function getRecordset($con, $sql, $parameters) {
     	try {

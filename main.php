@@ -277,12 +277,7 @@ try {
 			case 15: // get City/State/County from zip code
 				$sql = "SELECT City, State, County FROM zip z WHERE z.zipcode = ? LIMIT 1";
 				$parameters = [$zipcode];
-				$rs = getRecordset($con, $sql, $parameters);
-				foreach ($rs as $row) {
-					if ($firstTime) $firstTime = !$firstTime;
-					else echo ",";
-					print json_encode($row, JSON_UNESCAPED_SLASHES);
-				}
+				jsonspew($con, $sql, $parameters);
 				break;
 			default: 
 				echo '{"error":"1","text":"Unknown function."}';
@@ -293,12 +288,6 @@ try {
 	}
 } catch (Exception $e) {
     echo '"error":"' . $e->getCode() . '","text":"' . $e->getMessage() . '"';
-}
-
-function echo_r($data) {
-	echo "<pre>";
-	print_r($data);
-	echo "</pre>";
 }
 
 class Item { // object to hold item record
