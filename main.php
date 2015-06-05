@@ -11,6 +11,7 @@ $propertyid = 0;
 $sectionid = 0;
 $roomid = 0;
 $itemid = 0;
+$zipcode = 0;
 $parameters = [];
 // Test update
 // This should work if you use the URL:  http://localhost/az/main.php?F=1&userid=2
@@ -23,6 +24,7 @@ if (isset($_GET['propertyid'])) $propertyid = $_GET['propertyid'];
 if (isset($_GET['sectionid'])) $sectionid = $_GET['sectionid'];
 if (isset($_GET['roomid'])) $roomid = $_GET['roomid'];
 if (isset($_GET['itemid'])) $itemid = $_GET['itemid'];
+if (isset($_GET['zipcode'])) $zipcode = $_GET['zipcode'];
 
 header('Content-Type: application/json');
 // Moved $firstTime initialization to the top
@@ -271,6 +273,16 @@ try {
 				break;
 			case 14: //getRooms for dropdown
 				echo "This hasn't been coded yet";
+				break;
+			case 15: // get City/State/County from zip code
+				$sql = "SELECT City, State, County FROM zip z WHERE z.zipcode = ? LIMIT 1";
+				$parameters = [$zipcode];
+				$rs = getRecordset($con, $sql, $parameters);
+				foreach ($rs as $row) {
+					if ($firstTime) $firstTime = !$firstTime;
+					else echo ",";
+					print json_encode($row, JSON_UNESCAPED_SLASHES);
+				}
 				break;
 			default: 
 				echo '{"error":"1","text":"Unknown function."}';

@@ -18,6 +18,7 @@
     			$stmt->bindParam($paramcount++, $parameter);
     		}
 
+			$stmt->setFetchMode (PDO::FETCH_ASSOC); // This should default the fetch to return name->value that can be output directly to JSON easier
     		$stmt->execute();
     		return $stmt;
     	} catch (Exception $e) { // Echo the message in JSON and exit
