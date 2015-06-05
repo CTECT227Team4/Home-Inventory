@@ -28,20 +28,20 @@ require_once("../az/inc/functions.php"); ?>
 		<header>
 			<div class="side_logo">
 				<a href="landing.php">
-					<img class="small_logo" src="images/logo.png" alt="A-Z Home Inventory Logo" sizes="30vw" srcset="images/logo.png 1000w">
+					<img class="small_logo" src="images/logo.png" alt="A-Z Home Inventory Logo" sizes="25vw" srcset="images/logo.png 1000w">
 				</a>
 			</div>
 			<div class="header_title">
-			<h1 id="header_session_name">
-				<?php //this displays the user's name in the header, checks if the last name ends in "s", and displays the correct punctuation
-					echo $_SESSION["firstName"] . " " . $_SESSION["lastName"];
-					if (substr($_SESSION["lastName"], -1) == "s") {
-						echo "' Properties";
-						} else {
-							echo "'s Properties";
-							} //endif ?>
-			</h1>
-			<h2><?php echo $page_heading ?></h2>
-			</div>
+				<h1 id="header_session_name">
+					<?php //this displays the user's name in the header, checks if the last name ends in "s", and displays the correct punctuation
+						echo $_SESSION["firstName"] . " " . $_SESSION["lastName"];
+						if (substr($_SESSION["lastName"], -1) == "s") {
+							echo "' Properties";
+							} else {
+								echo "'s Properties";
+								} //endif ?>
+				</h1>
+				<h2><?php echo $page_heading; ?></h2>
+			</div>  <!-- end of header_title -->
 			<?php require_once ("/inc/nav.inc.php"); ?>
 		</header> <!-- End Header -->
