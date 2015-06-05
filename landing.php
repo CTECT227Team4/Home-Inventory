@@ -9,10 +9,8 @@ require_once "inc/header.inc.php";
 	<div id="data_wrapper">
 		<div id="treemain" class="dispwindow">
 			<div id="treeviewwidget" class="viewwidget">
-				<p>
-					<button class="allButtons" onclick="$('.jstree').jstree('open_all');">Open All</button>
-					<button class="allButtons" onclick="$('.jstree').jstree('close_all');">Close All</button>
-				</p>
+				<button class="allButtons" onclick="$('.jstree').jstree('open_all');">Open All</button>
+				<button class="allButtons" onclick="$('.jstree').jstree('close_all');">Close All</button>
 				<div id="treeview" class="viewwidget">
 				</div>   <!-- end treeview -->
 			</div>   <!-- end treeviewwidget -->
