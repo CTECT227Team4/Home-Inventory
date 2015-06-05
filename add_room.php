@@ -3,6 +3,10 @@ $page_title = "Home Inventory - Add Room"; //sets title
 $page_heading = "Add Room"; //sets heading to appear on page
 require_once "inc/header.inc.php"; 
 ?><script>
+function packform() {
+	return $('form#add_room').serializeJSON();
+}
+
 $(document).ready(function() {
 	$( "#tabs" ).tabs();
 	$(function() {
@@ -62,6 +66,7 @@ $(document).ready(function() {
 				</div>	  <!-- end of tabs4 -->	
 
 					<p class="centered_button">
+						<button type="button" onclick="alert(packform())">Save</button>
 						<input type="submit" value="Submit"  id="add_item_submit">
 					</p>		
 			</form>   <!--  end of form -->

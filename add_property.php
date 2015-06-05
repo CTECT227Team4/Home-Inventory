@@ -5,6 +5,10 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 ?><script type="text/javascript" src="jquery/tipped.js"></script>    <!-- Tooltip plugin   -->
   <link rel="stylesheet" type="text/css" href="jquery/tipped.css"/> <!-- Tooltip plugin CSS    -->
 	   	<script>
+			function packform() {
+				return $('form#add_property').serializeJSON();
+			}
+
 	   		$(document).ready(function() {
 	 	  		$(function() {
 	 	    		$( "#tabs" ).tabs();
@@ -111,9 +115,10 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 				</p>	 
 		</div>		<!-- end tab 5 -->
 				<p class="centered_button">
+					<button type="button" onclick="alert(packform())">Save</button>
 					<input type="submit" value="Save" id="add_property_submit">
 				</p>
-		</form>    <!-- end of form -->
+		</form>    <!-- end of form -->		
 	</div>   <!-- end of tabs -->
 </body>
 </html>

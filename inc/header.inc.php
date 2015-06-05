@@ -21,6 +21,7 @@ require_once("../az/inc/functions.php"); ?>
 	<script src="jquery/nav_mouse.js"></script> <!--  Navigation Mouseover Script -->
 	<script type="text/javascript" language="javascript" src="./jquery/jquery.dataTables.js"></script> <!-- Grid init -->
 	<script src="./jquery/jstree.min.js"></script> <!-- Tree init -->
+	<script src="jquery/jquery.serialize-object.min.js"></script> <!-- JSON helper init -->
 </head>
 <body>
 	<div class="page_wrapper">

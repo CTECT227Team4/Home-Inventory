@@ -6,6 +6,9 @@
 	 <script type="text/javascript" src="jquery/tipped.js"></script>    <!-- Tooltip plugin -->
 	 <link rel="stylesheet" type="text/css" href="jquery/tipped.css"/> <!-- Tooltip plugin CSS-->
 	   	<script>
+			function packform() {
+				return $('form#add_item').serializeJSON();
+			}
 	   		$(document).ready(function() {
 	 	  		$(function() {
 	 	    		$( "#tabs" ).tabs();
@@ -228,6 +231,7 @@
 				</div>	  <!-- end of tabs7 -->	
 
 					<p class="centered_button">
+						<button type="button" onclick="alert(packform())">Save</button>
 						<input type="submit" value="Submit"  id="add_item_submit">
 					</p>		
 			</form>   <!--  end of form -->

@@ -5,6 +5,10 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 ?><script type="text/javascript" src="jquery/tipped.js"></script>    <!-- Tooltip plugin -->
 	 <link rel="stylesheet" type="text/css" href="jquery/tipped.css"/> 
 	   	<script>
+			function packform() {
+				return $('form#add_section').serializeJSON();
+			}
+		
 	   		$(document).ready(function() {
 	 	  		$(function() {
 	 	    		$( "#tabs" ).tabs();
@@ -21,7 +25,7 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 	<div class="content">
 
 		<div id="tabs">
-			<form method="Post" action="main.php?F=9" id="add_room">
+			<form id="add_section">
 			  	<ul>
 				    <li><a href="#tabs-1">Section</a></li>
 				    <li><a href="#tabs-2">Multimedia</a></li>
@@ -73,6 +77,7 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 				</div>	  <!-- end of tabs4 -->	
 
 					<p class="centered_button">
+						<button type="button" onclick="alert(packform())">Save</button>
 						<input type="submit" value="Submit"  id="add_item_submit">
 					</p>		
 			</form>   <!--  end of form -->
