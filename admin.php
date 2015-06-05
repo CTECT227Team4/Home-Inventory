@@ -27,5 +27,23 @@ Get All Clients
 
 		</div>
 	</section>
+
+
+
+	<section class="get_all_users">
+		<h2>All Users</h2>
+
+	FirstName	LastName	E-Mail	Type of User
+
+
+
+	Edit
+
+
+
+
+
+
+
 </body>
 </html>

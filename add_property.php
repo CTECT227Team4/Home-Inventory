@@ -44,7 +44,7 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 					<input id="address2" type="text" name="address2">
 				</p>
 				<p class="tab_two_wide">     <!--  makes two inputs on one line -->
-					<label for="zip">Zipcode:  <span class="simple-tooltip" title="The City and State will propagate from the zipcode."><img src="images/info.png"></span></label>
+					<label for="zip">Zip Code:  <span class="simple-tooltip" title="The City and State will propagate from the zipcode."><img src="images/info.png"></span></label>
 					<input id="zip" type="text" name="zip">    
 				</p>
 				<p class="tab_two_long_wide">      <!--  makes two inputs on one line -->
@@ -90,7 +90,11 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 		</div>     <!-- end tab 2 -->
 		<div id="tabs-3" class="multimedia_tab tabs_nav">
 				
+				
+				<h2>Current Photos Attached To This Property:</h2>
 				<p> Add the multimedia grid </p>
+				<p class="add_file"><a href="#">Add File Button</a></p>
+
 				
 		</div>    <!-- end tab 3 -->
 
@@ -107,7 +111,7 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 				</p>	 
 		</div>		<!-- end tab 5 -->
 				<p class="centered_button">
-					<input type="submit" value="Add Property" id="add_property_submit">
+					<input type="submit" value="Save" id="add_property_submit">
 				</p>
 		</form>    <!-- end of form -->
 	</div>   <!-- end of tabs -->

@@ -25,7 +25,7 @@ html, body {
 	color: #333333;				/* dk. grey specified by client  */
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-	max-width: 1500px;
+	max-width: 960px;
 }
 
 ::selection {
@@ -619,6 +619,10 @@ input:focus {
 	position: relative;
 	width: 100%;
 	clear: both;
+}
+
+.tab_one_wide_text {
+	overflow: hidden;
 }
 
 .tab_one_wide label, .tab_one_wide_text label {

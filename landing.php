@@ -71,11 +71,11 @@ function toggleView() { // Toggle tree vs grid views
 	if (treeview.style.display == 'none') {
 		gridview.style.display = 'none'
 		treeview.style.display = 'block'
-		toggler.textContent = "Grid View";
+		toggler.textContent = "Inventory Grid";
 	} else {
 		gridview.style.display = 'block'
 		treeview.style.display = 'none'
-		toggler.textContent = "Tree View";
+		toggler.textContent = "Inventory Tree";
 	}
 }
 $(function () {
