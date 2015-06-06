@@ -93,7 +93,7 @@ input:focus, select:focus, textarea:focus, button:focus {
 
 h1 {
 	font-size: 1.8rem;		/* 40px/18px */
-	font-family: 'Lakesight', cursive;
+	font-family: 'Futura';
 	color: #004800;     /*  Dark green specified by client   */
 	text-align: center;
 	margin-bottom: 20px;
@@ -102,7 +102,7 @@ h1 {
 h2 {
 	font-size: 1.5rem;
 	margin-bottom: 20px;
-	font-family: 'Lakesight', cursive;
+	font-family: 'Futura';
 	color: #004800;     /*  Dark green specified by client   */
 	text-align: center;	
 
@@ -185,6 +185,7 @@ header {
 #header_session_name {
 /*    text-transform: uppercase;	*/
     font-size: 2.5rem;
+    font-family: 'Lakesight', cursive;
 }
 
 nav {	
