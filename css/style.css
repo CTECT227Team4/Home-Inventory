@@ -449,6 +449,14 @@ input:focus {
 	position: relative;
 }
 
+#toggle_view_buttons {
+	position: absolute;
+	right: 23px;
+	top: 20px;
+	z-index: 10;
+	/* This CSS makes the grid/tree toggler position over gridmain/treemain so that the JavaScript works  */
+}
+
 #toggle_view_buttons button {
 	float: right;
 	padding: 5px;
