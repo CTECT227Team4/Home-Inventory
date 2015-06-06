@@ -218,18 +218,9 @@ try {
 				echo "}]"; // End the whole tree
 				break;
 			case 12: // Get list of properties for drop down
-				// Messing with putting the description in the list too.  And blank, if there's no description.
-				//$sql = "SELECT ID, CONCAT (name, ' - ', description) FROM property p INNER JOIN user_property up ON p.ID = up.propertyID WHERE up.userID = ?";
-				$sql = "SELECT ID, name FROM property p INNER JOIN user_property up ON p.ID = up.propertyID WHERE up.userID = ?";
-				$parameters = [$userid];
-				$rs = getRecordset($con, $sql, $parameters);
-				echo "{";
-				foreach ($rs as $row) {
-					if ($firstTime) $firstTime = !$firstTime;
-					else echo ",";
-					echo '"' . $row["ID"] . '":"' . $row["name"] . '"';
-				}
-				echo "}";
+				echo '{"properties":[';
+				jsonspew ($con, "SELECT ID, name FROM property p INNER JOIN user_property up ON p.ID = up.propertyID WHERE up.userID = ?", array($userid));
+				echo "]}";
 				break;
 			case 13: // Get list of sections for drop down
 				$sql = "SELECT s.ID AS ID, s.name AS name FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN section s ON p.ID = s.propertyID WHERE p.ID = 1 AND up.userID = ?";

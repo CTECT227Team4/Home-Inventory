@@ -10,6 +10,12 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 			}
 		
 	   		$(document).ready(function() {
+				$.getJSON("main.php?F=12&userid=24",function(obj) {
+					 $.each(obj.properties, function(key, value) {
+						$("#propertyid").append("<option value=" + value.ID + ">" + value.name  + "</option>");
+					 });
+				});
+				
 	 	  		$(function() {
 	 	    		$( "#tabs" ).tabs();
 	 	  		});
@@ -42,9 +48,7 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 					<p class="tab_one_wide">
 						<label for="propertyid">Property:</label>
 						<select name="propertyid" id="propertyid">
-							<option value="-">-Select a Property-</option>
-							<option value="property1">This needs to propagate from database</option>
-							<option value="add_new_property">Add New Property</option>
+							<option value="">-Select a Property-</option>
 						</select>
 					</p>
 					<p class="tab_one_wide">
