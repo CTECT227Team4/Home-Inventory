@@ -431,7 +431,7 @@ input:focus {
 	border: 2px solid #004800;     /*  Dark green specified by client   */
 }
 
-/*.simple-tooltip[title]:hover:after {
+.simple-tooltip[title]:hover:after {
   	content: attr(title);
 	font-size: .75em;
 	background-color: #D7FE8B;         
@@ -444,7 +444,7 @@ input:focus {
 	top: 70%;
 	white-space: nowrap;
 	z-index: 20;
-}*/
+}
 
 /* ----------------------    LANDING --------------------- */
 
