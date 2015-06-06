@@ -2,8 +2,10 @@
 <?php require_once("/inc/session.php"); ?>
 <?php require_once("/inc/functions.php") ?>
 <?php require_once("../azconfig.php"); ?>
-<?php //require_once("/inc/validation_functions.php") ?>
+
 <?php
+	if (logged_in()) redirect_to("landing.php");
+	
 	if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
 			$username = $_POST["userName"];
@@ -12,14 +14,6 @@
 			$firstName = $_POST["firstName"];
 			$lastName = $_POST["lastName"];
 			$email = $_POST["email"];
-
-			//to be used with PHP validation functions if desired - see inc/validation_functions.php
-			 	//$required_fields = array("username", "password", "firstName", "lastName", "email");
-				//validate_presences($required_fields);
-				//$fields_with_max_lengths = array("username" => 40, "password" => 50, "firstName" => 50, "lastName" => 50, "email" => 100);
-				//validate_max_lengths($fields_with_max_lengths);
-			//will need to check if username/email already exists			
-
 
 				try {
 					$sql = "INSERT INTO user (userName, password, firstName, lastName, email, usertypeID) VALUES ('{$username}', '{$password}', '{$firstName}', '{$lastName}', '{$email}', 1)";

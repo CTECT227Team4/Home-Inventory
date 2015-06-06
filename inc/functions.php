@@ -124,8 +124,6 @@
 	function find_user_by_userName($userName) {
 		global $con;
 
-		//$safe_userName = mysqli_real_escape_string($con, $userName);
-
 		$sql = "SELECT * ";
 		$sql .= "FROM user ";
 		// $sql .= "WHERE userName = '{$safe_userName}' ";

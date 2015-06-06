@@ -11,11 +11,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 		$userName = $_POST["userName"];
 		$password = $_POST["password"];
 
-		//$required_fields = array("username", "password");
-		//validate_presences($required_fields);
-
-		//if (empty($errors)) {
-
 			$found_user = attempt_login($userName, $password);
 
 			if ($found_user) {
@@ -31,9 +26,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 				$_SESSION["message"] = "Username/password not found";
 				redirect_to("login.php");
 			}
-		//} else {
-		//	$_SESSION["errors"] = $errors;
-		//	redirect_to("login.php");
 
 } //end ($_SERVER['REQUEST_METHOD'] == "POST")
 ?><!DOCTYPE html>
