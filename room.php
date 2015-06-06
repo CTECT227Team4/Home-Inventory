@@ -1,7 +1,11 @@
 <?php # add_room.php
 $page_title = "Home Inventory - Add Room"; //sets title
 $page_heading = "Add Room"; //sets heading to appear on page
-require_once "inc/header.inc.php"; 
+require_once "inc/header.inc.php";
+
+$roomid = 0;
+if (isset($_GET['roomid'])) $sectionid = (int) $_GET['roomid'];
+
 ?><script>
 function packform() {
 	return $('form#add_room').serializeJSON();

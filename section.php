@@ -3,9 +3,7 @@ $page_title = "Home Inventory - Add Section"; //sets title
 $page_heading = "Add Section"; //sets heading to appear on page
 require_once "inc/header.inc.php"; //starts session, includes general functions, populates header content
 
-$userid = 0;
 $sectionid = 0;
-if (isset($_SESSION["user_id"])) $userid = (int) $_SESSION["user_id"];
 if (isset($_GET['sectionid'])) $sectionid = (int) $_GET['sectionid'];
 
 ?><script type="text/javascript" src="jquery/tipped.js"></script>    <!-- Tooltip plugin -->
