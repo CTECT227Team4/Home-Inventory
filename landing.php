@@ -8,7 +8,7 @@ require_once "inc/header.inc.php";
 ?>
 	<div id="data_wrapper">
 		<div id="toggle_view_buttons">
-			<button id="toggler" href="javascript: void(0)" onclick="toggleView()">Grid View</button>
+			<button id="toggler" href="javascript: void(0)" onclick="toggleView()">Inventory Grid View</button>
 		</div>   <!-- end toggle view buttons -->
 		<div id="treemain" class="dispwindow">
 			<div id="treeviewwidget" class="viewwidget">
@@ -72,11 +72,11 @@ function toggleView() { // Toggle tree vs grid views
 	if (treeview.style.display == 'none') {
 		gridview.style.display = 'none'
 		treeview.style.display = 'block'
-		toggler.textContent = "Inventory Grid";
+		toggler.textContent = "Inventory Grid View";
 	} else {
 		gridview.style.display = 'block'
 		treeview.style.display = 'none'
-		toggler.textContent = "Inventory Tree";
+		toggler.textContent = "Inventory Tree View";
 	}
 }
 $(function () {

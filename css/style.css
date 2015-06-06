@@ -19,9 +19,8 @@ html, body {
 	background-color: #FFFFFF;	/* white */
 	font-size: 18px;			/* used as the basis for all font sizes, margins, paddings, widths, etc.) */
 	line-height: 1.4;			/* one and a half times the font height */
-	font-family: 'futura-normal', arial; 
+	font-family: 'Lato', sans-serif; 
 	font-weight: 400;			/* normal */
-
 	color: #333333;				/* dk. grey specified by client  */
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
@@ -67,6 +66,11 @@ input:focus, select:focus, textarea:focus, button:focus {
 @import url(http://allfont.net/css/?fonts=futura-normal);
 
 @font-face {
+	font-family: Lakesight;
+	src: url("../fonts/Lakesight_PersonalUseOnly.ttf");
+}
+
+@font-face {
     font-family: Futura;
     src: url("../fonts/futura.ttf");
 }
@@ -89,7 +93,7 @@ input:focus, select:focus, textarea:focus, button:focus {
 
 h1 {
 	font-size: 1.8rem;		/* 40px/18px */
-	font-family: 'Futura';
+	font-family: 'Lakesight', cursive;
 	color: #004800;     /*  Dark green specified by client   */
 	text-align: center;
 	margin-bottom: 20px;
@@ -98,7 +102,7 @@ h1 {
 h2 {
 	font-size: 1.5rem;
 	margin-bottom: 20px;
-	font-family: 'Futura';
+	font-family: 'Lakesight', cursive;
 	color: #004800;     /*  Dark green specified by client   */
 	text-align: center;	
 
@@ -107,7 +111,8 @@ h2 {
 h3 {
 	font-size: 1.2rem;
 	margin-bottom: 20px;
-	font-family: 'Futura';
+	font-family: 'Lato', sans-serif;
+	font-weight: 700;
 	color: #004800;     /*  Dark green specified by client   */
 	text-align: center;	
 }
@@ -174,12 +179,12 @@ header {
 
 .header_title {
 	float: left;
-	margin: 80px auto 50px auto;
+	margin: 40px auto 30px auto;
 }
 
 #header_session_name {
-    text-transform: uppercase;	
-    font-size: 1.6rem;
+/*    text-transform: uppercase;	*/
+    font-size: 2.5rem;
 }
 
 nav {	
@@ -195,7 +200,7 @@ nav {
 	margin-right: 4%;
 	margin-bottom: 30px;
 	display: inline-block;
-	z-index: 10;
+	z-index: 20;
 }
 
 .dropdown:last-child {
@@ -310,7 +315,8 @@ nav {
 
 .forgot {
 	font-size: 1.2rem;
-	font-family: futuraItalic;
+	font-family: 'Lato', sans-serif;
+	font-style: italic;
 	color: #ad102a;     /*   Dark Red color for :link  */;
 	text-align: center;
 }
@@ -424,10 +430,10 @@ input:focus {
 	border: 2px solid #004800;     /*  Dark green specified by client   */
 }
 
-.simple-tooltip[title]:hover:after {
+/*.simple-tooltip[title]:hover:after {
   	content: attr(title);
 	font-size: .75em;
-	background-color: #D7FE8B;          /*Light Green */
+	background-color: #D7FE8B;         
 	color: #333333;
 	outline: 2px solid #90C32E;
 	padding: 0 2px;
@@ -437,19 +443,7 @@ input:focus {
 	top: 70%;
 	white-space: nowrap;
 	z-index: 20;
-}
-
-
-
-
-
-
-
-
-
-
-
-
+}*/
 
 /* ----------------------    LANDING --------------------- */
 
@@ -594,7 +588,7 @@ input:focus {
 /* ----------------------    TABBED FORMS   --------------------- */
 
 #add_item, #add_property, #add_room, #user_info {
-	font-size: 1.3rem;
+	font-size: 1.1rem;
 }
 
 #tabs {
@@ -608,15 +602,15 @@ input:focus {
 	outline: #90C32E;
 }
 #tabs p {
-	font-size: 1.1rem;
+	font-size: 1rem;
 }
 .tabs_nav {
 	height: auto;
 }
 
 .tab_two_wide, .tab_two_long_wide {
-	width: 46%;
-	margin-right: 3%;
+	width: 48%;
+	margin-right: 2%;
 	float: left;
 	position: relative;	
 	margin-bottom: 10px;
@@ -625,7 +619,7 @@ input:focus {
 .tab_two_wide label {
     float: left;
     padding-right: 5px;
-    width: 45.5%;
+    width: 48%;
     text-align: right;
 }
 
@@ -635,7 +629,7 @@ input:focus {
 
 .tab_two_wide input, .tab_two_wide select {
   	float: left;
-  	width: 54.5%;
+  	width: 50%;
 }
 
 .tab_two_long_wide label {
@@ -663,7 +657,7 @@ input:focus {
 .tab_one_wide label, .tab_one_wide_text label {
     float: left;
     padding-right: 5px;
-    width: 21%;
+    width: 23%;
     text-align: right;
 }
 
@@ -788,8 +782,9 @@ span img {
 }
 
 .password_tab h3 {
-	font-family: 'futura-md-bt-bold';
+	font-family: 'Lato', sans-serif;
 	font-size: 1.2rem;
+	font-weight: 700;
 	text-align: left;
 	clear: both;
 }

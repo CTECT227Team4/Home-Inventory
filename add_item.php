@@ -52,7 +52,7 @@
 						</select>
 					</p>
 					<p class="tab_two_wide">
-						<label for="section_name">Section:</label>
+						<label for="section_name">Section:  <span class="simple-tooltip" title="The section where the item is located."><img src="images/info.png"></span></label>
 						<select name="section_name" id="section_name">
 							<option value="-">-Select a Section-</option>
 							<option value="section1">This needs to propagate from database</option>
@@ -68,7 +68,7 @@
 						</select>
 					</p>					
 					<p class="tab_one_wide">     <!--  makes two inputs on one line -->
-						<label for="category">Category:  </label>
+						<label for="category">Category: <span class="simple-tooltip" title="Select a category from the drop down menu that can be a helpful way to sort your items."><img src="images/info.png"></span></label></label>
 						<select name="category" id="category">
 							<option value="-">-Select a Category-</option>
 							<option value="Category1">Category 1</option>
@@ -92,7 +92,7 @@
 						<input id="serialNumber" type="text" name="serialNumber">       
 					</p>
 					<p class="tab_two_wide">     <!--  makes two inputs on one line -->
-						<label for="condition">Condition:</label>
+						<label for="condition">Condition:  </label>
 						<select name="condition" id="condition">
 							<option value="-">-Select a Condition-</option>
 							<option value="New">New</option>
@@ -102,7 +102,7 @@
 						</select>
 					</p>
 					<p class="tab_two_wide">      <!--  makes two inputs on one line -->
-						<label for="beneficiary">Beneficiary:</label>
+						<label for="beneficiary">Beneficiary:  <span class="simple-tooltip" title="A quick way to keep track of who you would like to leave this item to in your will"><img src="images/info.png"></span></label>
 						<input id="beneficiary" type="text" name="beneficiary">       
 					</p>
 					<p class="tab_one_wide_text">     
@@ -122,15 +122,15 @@
 							<input id="purchase_price" type="text" name="purchase_price">       
 						</p>
 						<p class="tab_one_wide">      <!--  makes two inputs on one line -->
-							<label for="purchased_from">Purchased From:</label>
+							<label for="purchased_from">Purchased From:  <span class="simple-tooltip" title="The store that you purchased the item from."><img src="images/info.png"></span></label>
 							<input id="purchased_from" type="text" name="purchased_from">       
 						</p>
-						<p class="tab_two_wide">      <!--  makes two inputs on one line -->
+						<p class="tab_one_wide">      <!--  makes two inputs on one line -->
 							<label for="paid_with">Paid for With:  <span class="simple-tooltip" title="The method which you paid for the item, i.e., credit card, etc."><img src="images/info.png"></span></label>
 							<input id="paid_with" type="text" name="paid_with">       
 						</p>
-						<p class="two_long_wide">      <!--  makes two inputs on one line -->
-							<label for="estimated_value">Estimated Current Value:</label>
+						<p class="tab_one_wide">      <!--  makes two inputs on one line -->
+							<label for="estimated_value">Est. Replacement:  <span class="simple-tooltip" title="This is your best guess of what it would cost to replace this item."><img src="images/info.png"></span></label>
 							<input id="estimated_value" type="text" name="estimated_value">       
 						</p>
 						<p class="tab_two_wide">      <!--  makes two inputs on one line -->
@@ -161,15 +161,23 @@
 				</div>   <!-- end of tabs2 -->
 
 				<div id="tabs-3" class="multimedia_tab tabs_nav">
-						<p> Add the multimedia grid </p>
+					<h3>Current Photos Attached To This Item:</h3>
+					<p> Add the multimedia grid </p>
+					<p><button class="add_file"><a href="#">Add File</a></button></p>
+					<p><button class="scan_file"><a href="#">Scan Photo</a></button></p>
+					<p class="scan_under_construction"><img src="images/under-construction.png" alt="under construction icon"> Under <br>Construction </p>
 				</div>   <!-- end of tabs3 -->
 
 				<div id="tabs-4" class="documents_tab tabs_nav">
-			 			<p> Add the documents grid </p>
+			 		<h3>Current Documents Attached To This Item:</h3>
+					<p> Add the multimedia grid </p>
+					<p><button class="add_file"><a href="#">Add File</a></button></p>
+					<p><button class="scan_file"><a href="#">Scan Photo</a></button></p>
+					<p class="scan_under_construction"><img src="images/under-construction.png" alt="under construction icon"> Under <br>Construction </p>
 				</div>    <!-- end of tabs4 -->
 
 				<div id="tabs-5" class="warranty_tab tabs_nav">
-						<p class="tab_two_wide">     <!--  makes two inputs on one line -->
+						<p class="tab_one_wide">     <!--  makes two inputs on one line -->
 						<label for="warranty_question">Warranty:</label>
 							<select name="warranty_question" id="warranty_question">
 								<option value="-">-Is a Warranty in Effect Now?-</option>
@@ -177,7 +185,7 @@
 								<option value="No">No</option>
 							</select>
 						</p>
-						<p class="tab_two_long_wide">      <!--  makes two inputs on one line -->
+						<p class="tab_one_wide">      <!--  makes two inputs on one line -->
 							<label for="warranty_expiration">Expiration Date:</label>
 							<input id="warranty_expiration" type="text" name="warranty_expiration">       
 						</p>

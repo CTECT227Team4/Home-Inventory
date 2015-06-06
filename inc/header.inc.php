@@ -15,10 +15,11 @@ require_once("../az/inc/functions.php"); ?>
 	<link rel="stylesheet" type="text/css" href="./jquery/jquery.dataTables.css">
 	<link rel="stylesheet" href="jquery/themes/default/style.min.css" />
 	<link rel="stylesheet" href="font-awesome-4.3.0/css/font-awesome.min.css">
+	<link href='http://fonts.googleapis.com/css?family=Lato:400,700,900,400italic,700italic' rel='stylesheet' type='text/css'>
 	<script src="jquery/jquery.2.min.js"></script>
 	<script src="jquery/jquery-ui.min.js"></script>
 	<link rel="stylesheet" href="jquery/jquery-ui.min.css">
-	<script src="jquery/nav_mouse.js"></script> <!--  Navigation Mouseover Script -->
+	<!--  <script src="jquery/nav_mouse.js"></script> Navigation Mouseover Script -->
 	<script type="text/javascript" language="javascript" src="./jquery/jquery.dataTables.js"></script> <!-- Grid init -->
 	<script src="./jquery/jstree.min.js"></script> <!-- Tree init -->
 	<script src="jquery/jquery.serialize-object.min.js"></script> <!-- JSON helper init -->
