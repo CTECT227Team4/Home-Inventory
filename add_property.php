@@ -67,7 +67,7 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 					<label for="year_built">Year Built:</label>
 					<input id="year_built" type="text" name="year_built">       
 				</p>
-				<p class="tab_two_long_wide">      <!--  makes two inputs on one line -->
+				<p class="tab_two_wide">      <!--  makes two inputs on one line -->
 					<label for="year_purchased">Year Purchased:</label>
 					<input id="year_purchased" type="text" name="year_purchased">       
 				</p>
@@ -90,22 +90,22 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 					<label for="gis_url">Prop. Tax GIS URL:  <span class="simple-tooltip" title="???"><img src="images/info.png"></span></label>
 					<input id="gis_url" type="text" name="gis_url">
 				</p>
- 
 		</div>     <!-- end tab 2 -->
-		<div id="tabs-3" class="multimedia_tab tabs_nav">
-				
-				
-				<h2>Current Photos Attached To This Property:</h2>
-				<p> Add the multimedia grid </p>
-				<p class="add_file"><a href="#">Add File Button</a></p>
 
-				
+		<div id="tabs-3" class="multimedia_tab tabs_nav">
+				<h3>Current Photos Attached To This Property:</h3>
+				<p> Add the multimedia grid </p>
+				<p><button class="add_file"><a href="#">Add File</a></button></p>
+				<p><button class="scan_file"><a href="#">Scan Photo</a></button></p>
+				<p class="scan_under_construction"><img src="images/under-construction.png" alt="under construction icon"> Under <br>Construction </p>
 		</div>    <!-- end tab 3 -->
 
 		<div id="tabs-4" class="documents_tab tabs_nav">
-				
-				<p> Add the documents grid </p>
-	 
+				<h3>Current Documents Attached To This Property:</h3>
+				<p> Add the multimedia grid </p>
+				<p><button class="add_file"><a href="#">Add File</a></button></p>
+				<p><button class="scan_file"><a href="#">Scan Photo</a></button></p>
+				<p class="scan_under_construction"><img src="images/under-construction.png" alt="under construction icon"> Under <br>Construction </p> 
 		</div>     <!-- end tab 4 -->
 
 		<div id="tabs-5" class="notes_tab tabs_nav">
@@ -114,6 +114,7 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 					<textarea id="resizable_general_notes" class="wide_textarea" name="general_notes" rows="10" cols="80"></textarea>    
 				</p>	 
 		</div>		<!-- end tab 5 -->
+		
 				<p class="centered_button">
 					<button type="button" onclick="alert(packform())">Save</button>
 					<input type="submit" value="Save" id="add_property_submit">

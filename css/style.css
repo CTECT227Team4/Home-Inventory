@@ -92,17 +92,24 @@ h1 {
 	font-family: 'Futura';
 	color: #004800;     /*  Dark green specified by client   */
 	text-align: center;
-	font-weight: bold;
 	margin-bottom: 20px;
 }
 
 h2 {
 	font-size: 1.5rem;
-	margin-bottom: 2%;
+	margin-bottom: 20px;
 	font-family: 'Futura';
 	color: #004800;     /*  Dark green specified by client   */
 	text-align: center;	
-	font-weight: bold;
+
+}
+
+h3 {
+	font-size: 1.2rem;
+	margin-bottom: 20px;
+	font-family: 'Futura';
+	color: #004800;     /*  Dark green specified by client   */
+	text-align: center;	
 }
 
 p {
@@ -269,7 +276,7 @@ nav {
 	color: #ad102a;     /*   Dark Red color for :link pseudo;  */
 }
 
-#login button, #login_header button {
+#login button, #login_header button, .forgot button {
 	background-color: #D7FE8B;          /*Light Green */
 	color: #333333;
 	font-size: 1.2rem;
@@ -320,26 +327,26 @@ nav {
 .two_wide label {
     float: left;
     padding-right: 5px;
-    width: 25%;
+    width: 35%;
     text-align: right;
 }
 
 .two_wide input {
   	float: left;
-  	width: 75%;
+  	width: 65%;
   	font-size: 1rem;
 }
 
 .two_long_wide label {
     float: left;
     padding-right: 5px;
-    width: 35%;
+    width: 45%;
     text-align: right;
 }
 
 .two_long_wide input {
   	float: left;
-  	width: 65%;
+  	width: 55%;
 }
 
 .one_wide {
@@ -350,16 +357,36 @@ nav {
 .space {
 	margin-bottom: 40px;
 }
-.one_wide label{
+#registration .one_wide label{
     float: left;
     padding-right: 5px;
-    width: 11.5%;
+    width: 24%;
     text-align: right;
+}
+
+#registration input.error, {
+	border: 2px solid #AD102A;     /*   Dark Red  */
+	color: #AD102A;
+}
+
+#registration label.error {
+	color: #AD102A;
+	float: left;
+	padding-left: 10px;
+    width: 33%;
+    text-align: left;
+}
+
+.one_wide label {
+   float: left;
+    padding-right: 5px;
+    width: 16%;
+    text-align: right;	
 }
 
 .one_wide input {
   	float: left;
-  	width: 70%;
+  	width: 40%;
   	margin-bottom: 10px
 }
 
@@ -380,6 +407,32 @@ input[type=submit] {
 input:focus {
 	border: 2px solid #004800;     /*  Dark green specified by client   */
 }
+
+.simple-tooltip[title]:hover:after {
+  	content: attr(title);
+	font-size: .75em;
+	background-color: #D7FE8B;          /*Light Green */
+	color: #333333;
+	outline: 2px solid #90C32E;
+	padding: 0 2px;
+	border: none;
+	position: absolute;
+	left: 120px;
+	top: 70%;
+	white-space: nowrap;
+	z-index: 20;
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 /* ----------------------    LANDING --------------------- */
@@ -548,7 +601,7 @@ input:focus {
 .tab_two_wide label {
     float: left;
     padding-right: 5px;
-    width: 35%;
+    width: 45.5%;
     text-align: right;
 }
 
@@ -558,19 +611,19 @@ input:focus {
 
 .tab_two_wide input, .tab_two_wide select {
   	float: left;
-  	width: 65%;
+  	width: 54.5%;
 }
 
 .tab_two_long_wide label {
     float: left;
     padding-right: 5px;
-    width: 35%;
+    width: 48%;
     text-align: right;
 }
 
 .tab_two_long_wide input {
   	float: left;
-  	width: 65%;
+  	width: 52%;
 }
 
 .tab_one_wide .tab_one_wide_text, .tab_one_xwide, .tab_one_wide_text {
@@ -586,31 +639,31 @@ input:focus {
 .tab_one_wide label, .tab_one_wide_text label {
     float: left;
     padding-right: 5px;
-    width: 16%;
+    width: 21%;
     text-align: right;
 }
 
 .tab_one_wide input, .tab_one_wide select, .tab_one_wide_text textarea {
   	float: left;
-  	width: 79%;
+  	width: 74%;
   	margin-bottom: 10px;
 }
 
 .tab_one_xwide label {
     float: left;
     padding-right: 5px;
-    width: 20%;
+    width: 26%;
     text-align: right;
 }
 
 .tab_one_xwide input {
  	float: left;
-  	width: 75%;
+  	width: 73.5%;
   	margin-bottom: 10px;	
 }
 
 .tab_one_wide_text textarea {
-	width: 79%;
+	width: 74%;
 	height: 90px;
 	overflow: hidden;
 }
@@ -626,38 +679,43 @@ p.centered_button {
 	color: red;
 }
 
-span img {
+.add_file, .scan_file {
+	position: absolute;
+	right: 20px;
+	padding: 5px;
+	background-color: #D7FE8B;          /*Light Green */
+	color: #333333;
+	font-size: 1rem;
+	outline: 2px solid #90C32E;
+	padding: 5px;
+	border: none;
+	margin-bottom: 10px;
+	width: 125px;
+}
+
+.add_file {
+	top: 125px;
+}
+
+.scan_file {
+	top: 175px;
+}
+
+.scan_under_construction {
+	position: absolute;
+	right: 20px;
+	top: 208px;
+	font-size: 10px;
+	line-height: 14px;
+	color: #333333;	
+}
+.scan_under_construction img {
 	width: 1rem;
 }
 
-@media screen and (max-width:1250px) {
 
-	.item_tab, .room_tab {
-		max-height: auto;
-	}
-
-	.tab_two_wide, .tab_two_long_wide {
-		width: 100%;
-		clear: both;
-		margin-right: 0;
-		margin-bottom: 10px;
-	}
-
-	.tab_one_wide label, .tab_two_wide label, .tab_two_long_wide label, .tab_one_wide_text label {
-	    width: 22%;
-	}
-
-	.tab_one_wide input, .tab_two_wide input, .tab_two_long_wide input, .tab_one_wide_text textarea, .tab_one_wide select, .tab_two_wide select {
-	  	width: 73%;
-	}
-
-	.tab_one_xwide label {
-		width: 25%;
-	}
-
-	.tab_one_xwide input {
-		width: 70%;
-	}
+span img {
+	width: 1rem;
 }
 
 @media screen and (max-width:950px) {

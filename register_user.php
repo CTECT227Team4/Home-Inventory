@@ -51,6 +51,7 @@
 	<link rel="shortcut icon" href="images/az-icon.ico">
 	<link rel="stylesheet" href="css/style.css">
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>     <!-- jQuery CDN -->
+	<script src="js/validate_registration.js"></script>
 
 </head>
 <body>
@@ -59,42 +60,47 @@
 	 ?>
 
 	<div class="page_wrapper">
-
-
 		<div class="registration_wrapper">
 			<h2>Please Enter Your Registration Information:</h2>
 
 			<form action="register_user.php" method="post" name="register" id="registration">
-				<p class="two_wide">     <!--  makes two inputs on one line -->
+				<p class="one_wide">     
 					<label for="firstName">First Name:</label>
 					<input id="firstName" type="text" name="firstName">    
+					<label for="firstName" class="error" id="firstError">Please enter your first name.</label>
 				</p>
-				<p class="two_wide">      <!--  makes two inputs on one line -->
+				<p class="one_wide">      
 					<label for="lastName">Last Name:</label>
-					<input id="lastName" type="text" name="lastName">       
+					<input id="lastName" type="text" name="lastName"> 
+					<label for="lastName" class="error" id="lastError">Please enter your last name.</label>      
 				</p>
-				<p class="one_wide" class="space">
+				<p class="one_wide">
 					<label for="email">Email:</label>
 					<input id="email" type="text" name="email">
+					<label for="email" class="error" id="emailError">Please enter your email.</label>  
 				</p>
-				<p class="one_wide" class="space">
+				<p class="one_wide">
 					<label for="userName">Username:</label>
 					<input id="userName" type="text" name="userName">
+					<label for="userName" class="error" id="userError">Please enter a Username.</label> 					
 				</p>
-				<p class="two_wide">          <!--  makes two inputs on one line -->
-					<label for="password">Password:</label>
+				<p class="one_wide">          
+					<label for="password">Password:  <span class="simple-tooltip" title="Please choose a password that is at least 8 characters and includes a special character."><img src="images/info.png"></span></label>
 					<input id="password" type="password" name="password">
+					<label for="password" class="error" id="passwordError">Please enter a Password.</label>
 				</p>
-				<p class="two_long_wide">             <!--  makes two inputs on one line, one with a long label -->
-					<label for="password">Verify Password:</label>
-					<input id="verify_password" type="password" name="password">
+				<p class="one_wide">             
+					<label for="verifyPassword">Verify Password:  <span class="simple-tooltip" title="Please verify your password by typing it again."><img src="images/info.png"></span></label>
+					<input id="verifyPassword" type="password" name="verifyPassword">
+					<label for="verifyPassword" class="error" id="verifyError">Please verify your Password.</label>
+					<label for="verifyPassword" class="error" id="verifyError2">Passwords do not match.</label>
 				</p>
 				<p>
 					<input type="submit" value="Register" class="centered_button" id="register">
 				</p>
 			</form>
 				<p class="forgot">
-					<a href="login.php">Oops, I'd like to return to the Login Page</a>       <!-- centers the text -->
+					<button class="forgotten"><a href="login.php">Oops, I'd like to return to the Login Page</a> </button>      <!-- centers the text -->
 				</p>
 		</div>    <!--  end of registration wrapper -->
 	</div>    <!-- end of page wrapper -->
