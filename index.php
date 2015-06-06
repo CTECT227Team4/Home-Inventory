@@ -2,7 +2,7 @@
 include("inc/session.php");
 include("inc/functions.php");
 
-if ($_SESSION["logged_in"]) redirect_to("landing.php");
+if (logged_in()) redirect_to("landing.php");
 
 $userName = "";
 
@@ -10,11 +10,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
 		$userName = $_POST["userName"];
 		$password = $_POST["password"];
-
-		//$required_fields = array("username", "password");
-		//validate_presences($required_fields);
-
-		//if (empty($errors)) {
 
 			$found_user = attempt_login($userName, $password);
 
@@ -24,17 +19,14 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 				$_SESSION["userName"] = $found_user["userName"];
 				$_SESSION["firstName"] = $found_user["firstName"];
 				$_SESSION["lastName"] = $found_user["lastName"];
-				$_SESSION["logged_in"] = "logged in";
+				$_SESSION["logged_in"] = TRUE;
 				redirect_to("landing.php");
 			} else{
 				//failure
 				$_SESSION["message"] = "Username/password not found";
 				echo "Username/password not found";
 				redirect_to("login.php");
-			}
-		//} else {
-		//	$_SESSION["errors"] = $errors;
-		//	redirect_to("login.php");
+			} //endif
 
 } //end ($_SERVER['REQUEST_METHOD'] == "POST")
 ?>

@@ -2,7 +2,7 @@
 require_once("/inc/session.php");
 require_once("/inc/functions.php");
 
-if ($_SESSION["logged_in"]) redirect_to("landing.php");
+if (logged_in()) redirect_to("landing.php");
 
 $userName = "";
 
@@ -29,7 +29,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 			} else{
 				//failure
 				$_SESSION["message"] = "Username/password not found";
-				echo "Username/password not found";
 				redirect_to("login.php");
 			}
 		//} else {
@@ -53,9 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 </head>
 <body>
 	<div class="page_wrapper">
-	<?php 
-
- ?>
+	<?php echo message(); ?>
 	<section class="content">
 		<div class="login_wrapper">
 			<h1>Hi <?php echo $_SESSION["firstName"]; ?><h1>

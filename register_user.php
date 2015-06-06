@@ -4,7 +4,7 @@
 <?php require_once("../azconfig.php"); ?>
 <?php
 
-if ($_SESSION["logged_in"]) redirect_to("landing.php");
+if (logged_in()) redirect_to("landing.php");
 
 	if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
@@ -21,7 +21,6 @@ if ($_SESSION["logged_in"]) redirect_to("landing.php");
 				$stmt->execute();
 				$_SESSION["message"] = "User created.";
 				redirect_to("login.php");
-				echo "User <em>" . $username . "</em> created.";
 			} catch(PDOException $e) {
 			    echo $sql . "<br>" . $e->getMessage();
 			    $_SESSION["message"] = "User creation failed.";

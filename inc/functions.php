@@ -170,7 +170,7 @@
 		if(!logged_in()) {
 	// 		redirect_to("login.php");
 		}
-	 } 
+	 }
 
 abstract class AzObject { // Abstract base class to parse JSON and put it into an inherited object class
 	public function __construct($json = "") {
