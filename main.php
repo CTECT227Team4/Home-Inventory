@@ -3,7 +3,7 @@ include_once("../azconfig.php");
 require_once ("inc/functions.php");
 require_once ("inc/session.php");
 
-$jsonmsg = "";
+$json = "";
 $imageslocation = "./images/";  // The relative location to the icon images for the tree control
 $webfunction = 0;
 $userid = 0;
@@ -12,20 +12,29 @@ $sectionid = 0;
 $roomid = 0;
 $itemid = 0;
 $zipcode = 0;
+$parenttype = 0;
 $parameters = [];
 
 if (isset($_POST["json"])) $json = $_POST["json"];
-if (isset($_GET['F'])) $webfunction = $_GET['F'];
-if (isset($_GET['userid'])) $userid = $_GET['userid'];
-if (isset($_GET['propertyid'])) $propertyid = $_GET['propertyid'];
-if (isset($_GET['sectionid'])) $sectionid = $_GET['sectionid'];
-if (isset($_GET['roomid'])) $roomid = $_GET['roomid'];
-if (isset($_GET['itemid'])) $itemid = $_GET['itemid'];
-if (isset($_GET['zipcode'])) $zipcode = $_GET['zipcode'];
+// Casting all these to ints, so that invalid input can't be put in.
+if (isset($_GET['F'])) $webfunction = (int) $_GET['F'];
+if (isset($_SESSION["user_id"])) $userid = (int) $_SESSION["user_id"];
+if (isset($_GET['propertyid'])) $propertyid = (int) $_GET['propertyid'];
+if (isset($_GET['sectionid'])) $sectionid = (int) $_GET['sectionid'];
+if (isset($_GET['roomid'])) $roomid = (int) $_GET['roomid'];
+if (isset($_GET['itemid'])) $itemid = (int) $_GET['itemid'];
+if (isset($_GET['parenttype'])) $parenttype = (int) $_GET['parenttype'];
+if (isset($_GET['zipcode'])) $zipcode = (int) $_GET['zipcode'];
 
 header('Content-Type: application/json');
 // Moved $firstTime initialization to the top
 $firstTime = true;
+
+if ($userid < 1) {
+	echo '"error":"1","text":"Not logged in."';
+	exit;
+}
+
 try {
 	if ($con) {
 		switch ($webfunction) {
@@ -88,9 +97,6 @@ try {
 
 				echo '[{"id":"U' . $userid . '","text": "The Addams Family Properties","children":"true","icon": "./images/appraisal.png","state": {"opened" : "true"},"children":';
 				echo "["; // The recordset is being returned as an array, so start the array
-
-				// Moved $firstTime initialization to the top
-				//$firstTime = true;
 
 				while ($row = $rs->fetch()) {
 				//foreach ($rs as $row) {
@@ -218,38 +224,33 @@ try {
 				echo "}]"; // End the whole tree
 				break;
 			case 12: // Get list of properties for drop down
-				// Messing with putting the description in the list too.  And blank, if there's no description.
-				//$sql = "SELECT ID, CONCAT (name, ' - ', description) FROM property p INNER JOIN user_property up ON p.ID = up.propertyID WHERE up.userID = ?";
-				$sql = "SELECT ID, name FROM property p INNER JOIN user_property up ON p.ID = up.propertyID WHERE up.userID = ?";
-				$parameters = [$userid];
-				$rs = getRecordset($con, $sql, $parameters);
-				echo "{";
-				foreach ($rs as $row) {
-					if ($firstTime) $firstTime = !$firstTime;
-					else echo ",";
-					echo '"' . $row["ID"] . '":"' . $row["name"] . '"';
-				}
-				echo "}";
+				echo '{"properties":[';
+				jsonspew ($con, "SELECT ID, name FROM property p INNER JOIN user_property up ON p.ID = up.propertyID WHERE up.userID = ?", array($userid));
+				echo "]}";
 				break;
 			case 13: // Get list of sections for drop down
-				$sql = "SELECT s.ID AS ID, s.name AS name FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN section s ON p.ID = s.propertyID WHERE p.ID = 1 AND up.userID = ?";
-				//$rs = getRecordset($con, $sql, 1, $userid);
-				//$rs = getRecordset($con, $sql, $propertyid, $userid);
-				$parameters = [$userid];
-				$rs = getRecordset($con, $sql, $parameters);
-				echo "{";
-				foreach ($rs as $row) {
-					if ($firstTime) $firstTime = !$firstTime;
-					else echo ",";
-					echo '"' . $row["ID"] . '":"' . $row["name"] . '"';
-				}
-				echo "}";
+				echo '{"sections":[';
+				// No idea why this line doesn't work, no time to figure it out.
+				//jsonspew ($con, "SELECT s.ID AS ID, s.name AS name FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN section s ON p.ID = s.propertyID WHERE  up.userID = ? AND p.ID = ?", array($userid, $propertyid));
+				jsonspew ($con, "SELECT s.ID AS ID, s.name AS name FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN section s ON p.ID = s.propertyID WHERE  up.userID = ? AND p.ID = " . $propertyid, array($userid));
+				echo "]}";
 				break;
 			case 14: //getRooms for dropdown
-				echo "This hasn't been coded yet";
+				echo '{"rooms":[';
+				// No idea why this line doesn't work, no time to figure it out.
+				//jsonspew ($con, "SELECT r.ID, r.name FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN room r ON r.propertyID = p.ID WHERE up.userID = ? AND p.ID = ? ORDER BY r.ID ASC", array($userid, $propertyid));
+				jsonspew ($con, "SELECT r.ID, r.name FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN room r ON r.propertyID = p.ID WHERE up.userID = ? AND p.ID = " . $propertyid, array($userid));
+				echo "]}";
 				break;
 			case 15: // get City/State/County from zip code
 				jsonspew($con, "SELECT City, State, County FROM zip z WHERE z.zipcode = ? LIMIT 1", array($zipcode));
+				break;
+			case 16: // Get categories for dropdown
+
+			case 17: // GetEditSection
+			echo '{"section":';
+				jsonspew ($con, "SELECT propertyid, roomid, name, description, categoryid, notes FROM az.section WHERE ID = ?", array($sectionid));
+				echo "}";
 				break;
 			default: 
 				echo '{"error":"1","text":"Unknown function."}';

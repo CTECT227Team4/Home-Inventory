@@ -8,7 +8,7 @@ require_once "inc/header.inc.php";
 ?>
 	<div id="data_wrapper">
 		<div id="toggle_view_buttons">
-			<button><a id="toggler" href="javascript: void(0)" onclick="toggleView()">Grid View</a></button>
+			<button id="toggler" href="javascript: void(0)" onclick="toggleView()">Grid View</button>
 		</div>   <!-- end toggle view buttons -->
 		<div id="treemain" class="dispwindow">
 			<div id="treeviewwidget" class="viewwidget">

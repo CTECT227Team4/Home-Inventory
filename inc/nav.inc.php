@@ -8,7 +8,7 @@
 			<ul class="dropdown_menu">
 				<li><a href="add_property.php">Add Property</a></li>
 				<li><a href="add_room.php">Add Room</a></li>
-				<li><a href="add_section.php">Add Section</a></li>
+				<li><a href="section.php">Add Section</a></li>
 				<li><a href="add_item.php">Add Item</a></li>
 			</ul>
 	</div>  <!-- end dropdown -->
