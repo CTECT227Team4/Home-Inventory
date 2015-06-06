@@ -220,6 +220,23 @@ abstract class AzObject { // Abstract base class to parse JSON and put it into a
 
 class Property extends AzObject { // object to hold property record
 // Just a placeholder.  Won't work yet, until it handles writing to the user_property table as well
+/* All the vars from the form
+	var $name
+	var $address
+	var $address2
+	var $zip
+	var $county
+	var $city
+	var $state
+	var $year_built
+	var $year_purchased
+	var $price
+	var $description
+	var $property_taxID
+	var $gis_url
+	var $general_notes
+*/
+	// All the vars from the DB
 	var $ID;
 	var $name;
 	var $address;
@@ -230,11 +247,12 @@ class Property extends AzObject { // object to hold property record
 
 class Section extends AzObject { // object to hold section record
 	var $ID;
+	var $name;
 	var $propertyID;
 	var $roomID;
-	var $name;
 	var $description;
-	var $categoryID;
+	var $notes;
+	var $categoryID;  // In the database, not on the form, don't recall what it's for
 }
 
 class Room extends AzObject { // object to hold room record
