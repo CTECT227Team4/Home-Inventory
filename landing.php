@@ -70,7 +70,6 @@ function toggleView() { // Toggle tree vs grid views
 	var gridview = document.getElementById('gridmain');
 	var toggler =  document.getElementById('toggler');
 	if (treeview.style.display == 'none') {
-		console.log("This is working");
 		gridview.style.display = 'none'
 		treeview.style.display = 'block'
 		toggler.textContent = "Inventory Grid";
