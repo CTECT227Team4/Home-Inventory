@@ -55,20 +55,22 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 	<?php echo message(); ?>
 	<section class="content">
 		<div class="login_wrapper">
-			<h1>Hi <?php echo $_SESSION["firstName"]; ?><h1>
+			<h1>Hi <!-- <?php echo $_SESSION["firstName"]; ?>  --> <h1>
 			<h1>Welcome to A-Z Home Inventory</h1>
 			<h2>Please sign-in:</h2>
 			<form action="login.php" method="post" id="login">
 				<p>
 					<label for="userName">Username:</label>
 					<input id="userName" type="text" name="userName">
+					<label for="userName" class="error" id="userError">Please enter your Username.</label> 
 				</p>
 				<p>
 					<label for="password">Password:</label>
 					<input id="password" type="password" name="password">
+					<label for="password" class="error" id="passwordError">Please enter your password.</label>   
 				</p>
 				<p class="forgot">
-					<a href="#">Forgotten your password or username?</a>
+					<button class="forgotten"><a href="#">Forgotten your password or username?</a></button>
 				</p>
 				<p>
 					<input type="submit" value="Submit" class="centered_button" id="submit" name="submit">
@@ -77,5 +79,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 		</div>    <!-- end of login_wrapper -->
 	</section>	<!-- end of content -->
 	</div>   <!-- end of page wrapper -->
+	<script src="js/validate_login.js"></script>
 </body>
 </html>

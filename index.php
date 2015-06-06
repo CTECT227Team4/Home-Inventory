@@ -39,6 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 	<link rel="shortcut icon" href="images/az-icon.ico">
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>     <!-- jQuery CDN -->
+
 	<script>
 		$(document).ready(function(){
 			 	$('#userName').focus();   // puts the cursor in the UserName field on load
@@ -64,10 +65,13 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 				<p>
 					<label for="userName">Username:</label>
 					<input id="userName" type="text" name="userName">
+					<label for="userName" class="error" id="userError">Please enter your Username.</label>      
 				</p>
 				<p>
 					<label for="password">Password:</label>
 					<input id="password" type="password" name="password">
+					<label for="password" class="error" id="passwordError">Please enter your password.</label>      
+
 				</p>
 				<p class="forgot">
 					<button class="forgotten"><a href="#">Forgotten your password or username?</a></button>
@@ -79,5 +83,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 		</div>    <!-- end of login_wrapper -->
 	</section>	<!-- end of content -->
 	</div>   <!-- end of page wrapper -->
+	<script src="js/validate_login.js"></script>
 </body>
 </html>

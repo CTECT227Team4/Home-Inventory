@@ -64,13 +64,11 @@
 					<label for="firstName">First Name:</label>
 					<input id="firstName" type="text" name="firstName">    
 					<label for="firstName" class="error" id="firstError">Please enter your first name.</label>
-					<input id="firstName" type="text" name="firstName">
 				</p>
 				<p class="one_wide">      
 					<label for="lastName">Last Name:</label>
 					<input id="lastName" type="text" name="lastName"> 
 					<label for="lastName" class="error" id="lastError">Please enter your last name.</label>      
-					<input id="lastName" type="text" name="lastName">
 				</p>
 				<p class="one_wide">
 					<label for="email">Email:</label>

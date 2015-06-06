@@ -269,9 +269,25 @@ nav {
 #login p {
 	font-size: 1.4rem;
 	text-align: center;
-	margin-bottom: 10px;
+	margin-bottom: 25px;
 }
 
+#login input.error, {
+	border: 2px solid #AD102A;     /*   Dark Red  */
+	color: #AD102A;
+}
+
+#login label.error {
+	color: #AD102A;
+	float: left;
+    border: none;
+	position: absolute;
+	margin-top: -5px; 
+	margin-left: 250px;
+	white-space: nowrap;
+	z-index: 20;
+	font-size: 16px;
+}
 .red_text h2{
 	color: #ad102a;     /*   Dark Red color for :link pseudo;  */
 }
