@@ -12,6 +12,7 @@ $sectionid = 0;
 $roomid = 0;
 $itemid = 0;
 $zipcode = 0;
+$parenttype = 0;
 $parameters = [];
 
 if (isset($_POST["json"])) $json = $_POST["json"];
@@ -22,6 +23,7 @@ if (isset($_GET['propertyid'])) $propertyid = (int) $_GET['propertyid'];
 if (isset($_GET['sectionid'])) $sectionid = (int) $_GET['sectionid'];
 if (isset($_GET['roomid'])) $roomid = (int) $_GET['roomid'];
 if (isset($_GET['itemid'])) $itemid = (int) $_GET['itemid'];
+if (isset($_GET['parenttype'])) $parenttype = (int) $_GET['parenttype'];
 if (isset($_GET['zipcode'])) $zipcode = (int) $_GET['zipcode'];
 
 header('Content-Type: application/json');
@@ -95,9 +97,6 @@ try {
 
 				echo '[{"id":"U' . $userid . '","text": "The Addams Family Properties","children":"true","icon": "./images/appraisal.png","state": {"opened" : "true"},"children":';
 				echo "["; // The recordset is being returned as an array, so start the array
-
-				// Moved $firstTime initialization to the top
-				//$firstTime = true;
 
 				while ($row = $rs->fetch()) {
 				//foreach ($rs as $row) {
@@ -245,6 +244,13 @@ try {
 				break;
 			case 15: // get City/State/County from zip code
 				jsonspew($con, "SELECT City, State, County FROM zip z WHERE z.zipcode = ? LIMIT 1", array($zipcode));
+				break;
+			case 16: // Get categories for dropdown
+
+			case 17: // GetEditSection
+			echo '{"section":';
+				jsonspew ($con, "SELECT propertyid, roomid, name, description, categoryid, notes FROM az.section WHERE ID = ?", array($sectionid));
+				echo "}";
 				break;
 			default: 
 				echo '{"error":"1","text":"Unknown function."}';

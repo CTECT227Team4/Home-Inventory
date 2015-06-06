@@ -2,6 +2,12 @@
 $page_title = "Home Inventory - Add Section"; //sets title
 $page_heading = "Add Section"; //sets heading to appear on page
 require_once "inc/header.inc.php"; //starts session, includes general functions, populates header content
+
+$userid = 0;
+$sectionid = 0;
+if (isset($_SESSION["user_id"])) $userid = (int) $_SESSION["user_id"];
+if (isset($_GET['sectionid'])) $sectionid = (int) $_GET['sectionid'];
+
 ?><script type="text/javascript" src="jquery/tipped.js"></script>    <!-- Tooltip plugin -->
 	 <link rel="stylesheet" type="text/css" href="jquery/tipped.css"/> 
 	   	<script>
@@ -10,26 +16,47 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 			}
 		
 	   		$(document).ready(function() {
-				$.getJSON("main.php?F=12",function(obj) {
-					 $.each(obj.properties, function(key, value) {
-						$("#propertyid").append("<option value=" + value.ID + ">" + value.name  + "</option>");
-					 });
-				});
+				<?php
+				echo "var userid = $userid;";
+				echo "var sectionid = $sectionid;"
+				?>
 				
-				$("#propertyid").change(function () {
-					// Set the value on read, if available
-					$.getJSON("main.php?F=14&propertyid=" + this.value, function(obj) {
+				function getaroom(url) {
+					$.getJSON(url, function(obj) {
 						$("#roomid").empty();
 						$("#roomid").append("<option value=0>-Select a Room-</option>");
 						 $.each(obj.rooms, function(key, value) {
 							$("#roomid").append("<option value=" + value.ID + ">" + value.name + "</option>");
 						 });
 					});
+				}
+				
+				function populate(url) {
+					if (userid != 0 && sectionid != 0) {
+						$.getJSON(url, function(obj) {
+							$.each(obj.section, function(key, value) {
+								if (key == "roomid") getaroom("main.php?F=14&propertyid=" + this.value);
+								$("#" + key).val(value);
+							});
+						});
+					}
+				}
+
+				$.getJSON("main.php?F=12", function(obj) {
+					 $.each(obj.properties, function(key, value) {
+						$("#propertyid").append("<option value=" + value.ID + ">" + value.name  + "</option>");
+					 });
+					 populate("main.php?F=17&sectionid=" + sectionid);
 				});
 				
+				$("#propertyid").change(function () {
+					getaroom("main.php?F=14&propertyid=" + this.value);
+				});
+
 	 	  		$(function() {
 	 	    		$( "#tabs" ).tabs();
 	 	  		});
+
 	 	  		$(function() {
 	 	    		$( "#resizable resizable2 resizable3 resizable" ).resizable({
 	 	      			handles: "se"
@@ -70,7 +97,7 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 					</p>	
 					<p class="tab_one_wide_text">     
 						<label for="description">Description:</label>
-						<textarea id="resizable" name="description" ></textarea>
+						<textarea id="description" name="description" ></textarea>
 					</p>				
 				</div>  <!-- end of tabs 1 -->
 
