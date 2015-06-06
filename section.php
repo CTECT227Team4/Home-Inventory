@@ -21,38 +21,25 @@ if (isset($_GET['sectionid'])) $sectionid = (int) $_GET['sectionid'];
 				echo "var sectionid = $sectionid;"
 				?>
 				
-				function getaroom(myUrl) { // Get list of rooms for drop down
-					$.ajax({
-						url: myUrl,
-						dataType: 'json',
-						async: false,
-						//data: myData,
-						success: function(obj) {
-							$("#roomid").empty();
-							$("#roomid").append("<option value=0>-Select a Room-</option>");
-							$.each(obj.rooms, function(key, value) {
-								$("#roomid").append("<option value=" + value.ID + ">" + value.name + "</option>");
-							});
-						}
-					});
-				
-				/*
+				function getaroom(url, roomid) { // Get list of rooms for drop down
 					$.getJSON(url, function(obj) {
-						$("#roomid").empty();
-						$("#roomid").append("<option value=0>-Select a Room-</option>");
-						$.each(obj.rooms, function(key, value) {
+						$("#roomid").empty(); // Clear the list each call
+						$("#roomid").append("<option value=0>-Select a Room-</option>"); // Add default option back
+						$.each(obj.rooms, function(key, value) { // Go through JSON return and append all elements
 							$("#roomid").append("<option value=" + value.ID + ">" + value.name + "</option>");
 						});
+						$("#roomid").val(roomid); // After the list is filled use the passed in roomid
 					});
-					*/
 				}
 				
 				function populate(url) { // Fill in form values
 					if (userid != 0 && sectionid != 0) {
 						$.getJSON(url, function(obj) {
+							var propertyid = 0; // Default to 0, cache for later
 							$.each(obj.section, function(key, value) {
-								if (key == "roomid") getaroom("main.php?F=14&propertyid=" + this.value);
-								$("#" + key).val(value);
+								if (key == "propertyid") propertyid = value; // Cache the propertyid value for the following line
+								if (key == "roomid") getaroom("main.php?F=14&propertyid=" + propertyid, value);
+								else $("#" + key).val(value);
 							});
 						});
 					}
@@ -66,7 +53,7 @@ if (isset($_GET['sectionid'])) $sectionid = (int) $_GET['sectionid'];
 				});
 				
 				$("#propertyid").change(function () {
-					getaroom("main.php?F=14&propertyid=" + this.value);
+					getaroom("main.php?F=14&propertyid=" + this.value, 0);
 				});
 
 	 	  		$(function() {
@@ -118,19 +105,11 @@ if (isset($_GET['sectionid'])) $sectionid = (int) $_GET['sectionid'];
 				</div>  <!-- end of tabs 1 -->
 
 				<div id="tabs-2" class="multimedia_tab tabs_nav">
-					<h3>Current Photos Attached To This Section:</h3>
-					<p> Add the multimedia grid </p>
-					<p><button class="add_file"><a href="#">Add File</a></button></p>
-					<p><button class="scan_file"><a href="#">Scan Photo</a></button></p>
-					<p class="scan_under_construction"><img src="images/under-construction.png" alt="under construction icon"> Under <br>Construction </p>
+						<p> Add the multimedia grid </p>
 				</div>   <!-- end of tabs2 -->
 
 				<div id="tabs-3" class="documents_tab tabs_nav">
-			 		<h3>Current Photos Attached To This Section:</h3>
-					<p> Add the multimedia grid </p>
-					<p><button class="add_file"><a href="#">Add File</a></button></p>
-					<p><button class="scan_file"><a href="#">Scan Photo</a></button></p>
-					<p class="scan_under_construction"><img src="images/under-construction.png" alt="under construction icon"> Under <br>Construction </p>
+			 			<p> Add the documents grid </p>
 				</div>    <!-- end of tabs3 -->
 
 				<div id="tabs-4" class="notes_tab tabs_nav">
