@@ -46,19 +46,23 @@ $(document).ready(function() {
 				<div id="tabs-2" class="password_tab tabs_nav">
 
 				<h3>Please verify your current password:</h3>
-				<p class="two_wide">          <!--  makes two inputs on one line -->
-					<label for="password">Current Password:</label>
-					<input id="password" type="password" name="password">
+				<p class="one_wide">          <!--  makes two inputs on one line -->
+					<label for="currentPassword">Current Password:</label>
+					<input id="currentPassword" type="password" name="currentPassword">
+					<label for="password" class="error" id="currentError">Please enter current Password.</label>
 				</p>
 
 				<h3>Now please enter your new password and verify it:</h3>
-				<p class="two_wide">          <!--  makes two inputs on one line -->
+				<p class="one_wide">          <!--  makes two inputs on one line -->
 					<label for="password">Password:</label>
 					<input id="password" type="password" name="password">
+					<label for="password" class="error" id="passwordError">Please enter a Password.</label>
 				</p>
-				<p class="two_wide">             <!--  makes two inputs on one line, one with a long label -->
-					<label for="password">Verify Password:</label>
-					<input id="verify_password" type="password" name="password">
+				<p class="one_wide">             <!--  makes two inputs on one line, one with a long label -->
+					<label for="verifyPassword">Verify Password:</label>
+					<input id="verifyPassword" type="password" name="verifyPassword">
+					<label for="verifyPassword" class="error" id="verifyError">Please verify your Password.</label>
+					<label for="verifyPassword" class="error" id="verifyError2">Passwords do not match.</label>
 				</p>
 
 				<h3>Thank You or No Dice Message</h3>
@@ -130,5 +134,6 @@ $(document).ready(function() {
 			</form>   <!--  end of form -->
 		</div>	<!-- end of tabs -->	
 	</div>   <!-- end of content -->
+	<script src="js/validate_password_change.js"></script>
 </body>
 </html>

@@ -17,7 +17,6 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 	 	      			handles: "se"
 	 	   			 });
 	 	  		});  //  end resizable notes fields
-	 	  		$('#name').focus();  // puts the cursor in the property name field upon load.
 	  		});
 	   	</script>
 <!-- END HEADER CONTENT -->
@@ -60,6 +59,13 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 				<p class="tab_two_wide">      <!--  makes two inputs on one line -->
 					<label for="state">State:</label>
 					<input id="state" type="text" name="state">       
+				</p>
+				<p class="tab_one_wide">
+					<label for="property_category">Category:</label>
+					<select name="property_category" id="categoryid">
+						<option value="-">-Select a Property Category-</option>
+						<option value="project_category">This needs to propagate from database</option>
+						<option value="add_new_category">Add New Category</option>
 				</p>
 				<p class="tab_one_wide short">      <!--  makes two inputs on one line -->
 					<label for="year_built">Year Built:</label>

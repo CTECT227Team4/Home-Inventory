@@ -7,7 +7,7 @@
 		<button><a href="#">Add &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a><i class="fa fa-caret-down"></i></button>
 			<ul class="dropdown_menu">
 				<li><a href="add_property.php">Add Property</a></li>
-				<li><a href="add_room.php">Add Room</a></li>
+				<li><a href="room.php">Add Room</a></li>
 				<li><a href="section.php">Add Section</a></li>
 				<li><a href="add_item.php">Add Item</a></li>
 			</ul>

@@ -1,7 +1,11 @@
 <?php # add_room.php
 $page_title = "Home Inventory - Add Room"; //sets title
 $page_heading = "Add Room"; //sets heading to appear on page
-require_once "inc/header.inc.php"; 
+require_once "inc/header.inc.php";
+
+$roomid = 0;
+if (isset($_GET['roomid'])) $sectionid = (int) $_GET['roomid'];
+
 ?><script>
 function packform() {
 	return $('form#add_room').serializeJSON();
@@ -43,6 +47,13 @@ $(document).ready(function() {
 							<option value="property1">This needs to propagate from database</option>
 							<option value="add_new_property">Add New Property</option>
 						</select>
+					</p>
+					<p class="tab_one_wide">
+						<label for="room_category">Category:</label>
+						<select name="room_category" id="categoryid">
+							<option value="-">-Select a Room Category-</option>
+							<option value="room_category">This needs to propagate from database</option>
+							<option value="add_new_category">Add New Category</option>
 					</p>
 					<p class="tab_one_wide_text">     
 						<label for="description1">Description:</label>

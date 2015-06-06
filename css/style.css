@@ -186,6 +186,12 @@ header {
 /*    text-transform: uppercase;	*/
     font-size: 2.5rem;
     font-family: 'Lakesight', cursive;
+	margin-bottom: 10px;
+}
+
+#header_session_subtitle{
+    font-size: 1.8rem;
+    font-family: 'Lakesight', cursive;	
 }
 
 nav {	
@@ -713,17 +719,17 @@ p.centered_button {
 }
 
 .add_file {
-	top: 125px;
+	top: 100px;
 }
 
 .scan_file {
-	top: 175px;
+	top: 150px;
 }
 
 .scan_under_construction {
 	position: absolute;
 	right: 20px;
-	top: 208px;
+	top: 183px;
 	font-size: 10px;
 	line-height: 14px;
 	color: #333333;	
@@ -784,12 +790,44 @@ span img {
 
 .password_tab h3 {
 	font-family: 'Lato', sans-serif;
-	font-size: 1.2rem;
+	font-size: 1.1rem;
 	font-weight: 700;
+	padding-top: 20px;
+	padding-bottom: 10px;
 	text-align: left;
 	clear: both;
+	margin-bottom: 0;
+	margin-top: 0;
 }
 .password_tab p {
-	width: 60%;
+	width: 90%;
 	margin: 10px auto;
+}
+
+.password_tab input {
+	float: left;
+	width: 30%;
+	margin-bottom: 10px;
+}
+
+.password_tab label {
+	float: left;
+	width: 25%;
+}
+
+.password_tab label.error {
+	width: 40%;
+}
+
+#user_info input.error, {
+	border: 2px solid #AD102A;     /*   Dark Red  */
+	color: #AD102A;
+}
+
+#user_info label.error {
+	color: #AD102A;
+	float: left;
+	padding-left: 10px;
+    width: 40%;
+    text-align: left;
 }

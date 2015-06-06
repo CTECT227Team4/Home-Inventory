@@ -188,6 +188,13 @@ abstract class AzObject { // Abstract base class to parse JSON and put it into a
 			echo "Failed: " . $e->getMessage();
 		}
 	}
+	
+	public function getjson($con) {
+		$vars = array_keys(get_object_vars($this)); // Get just the var names
+		$sql = strtolower("SELECT `" . implode('`,`', $vars) . "` FROM " . get_class($this) . " WHERE ID = ?");
+		jsonspew($con, $sql, array($this->ID));
+	}
+	
 	public function write($con) {
 		$vars = array_keys(get_object_vars($this)); // Get just the var names
 		if ($this->ID) { // ID supplied, do an update
@@ -255,9 +262,7 @@ class Room extends AzObject { // object to hold room record
 	var $ID;
 	var $propertyID;
 	var $name;
-	var $type;
 	var $description;
-	var $image;
 	var $categoryID;
 }
 
