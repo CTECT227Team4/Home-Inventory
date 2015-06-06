@@ -246,7 +246,10 @@ try {
 				jsonspew($con, "SELECT City, State, County FROM zip z WHERE z.zipcode = ? LIMIT 1", array($zipcode));
 				break;
 			case 16: // Get categories for dropdown
-
+				echo '{"category":';
+				jsonspew ($con, "SELECT id, description FROM category WHERE parenttype = ?", array($parenttype));
+				echo "}";
+				break;
 			case 17: // GetEditSection
 				echo '{"section":';
 				jsonspew ($con, "SELECT propertyid, roomid, name, description, categoryid, notes FROM az.section WHERE ID = ?", array($sectionid));
