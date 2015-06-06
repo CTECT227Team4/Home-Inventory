@@ -2,8 +2,7 @@
 <?php $page_title = "Home Inventory - Add Property"; //sets title
 $page_heading = "Add Property"; //sets heading to appear on page
 require_once "inc/header.inc.php"; //starts session, includes general functions, populates header content
-?><script type="text/javascript" src="jquery/tipped.js"></script>    <!-- Tooltip plugin   -->
-  <link rel="stylesheet" type="text/css" href="jquery/tipped.css"/> <!-- Tooltip plugin CSS    -->
+?>
 	   	<script>
 			function packform() {
 				return $('form#add_property').serializeJSON();
@@ -22,7 +21,6 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 	  		});
 	   	</script>
 <!-- END HEADER CONTENT -->
-
 	<div class="content">
 	<div id="tabs">
 	  	<ul>
