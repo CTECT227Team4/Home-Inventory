@@ -800,8 +800,23 @@ span img {
 	margin-top: 0;
 }
 .password_tab p {
-	width: 40%;
+	width: 90%;
 	margin: 10px auto;
+}
+
+.password_tab input {
+	float: left;
+	width: 30%;
+	margin-bottom: 10px;
+}
+
+.password_tab label {
+	float: left;
+	width: 25%;
+}
+
+.password_tab label.error {
+	width: 40%;
 }
 
 #user_info input.error, {
@@ -813,6 +828,6 @@ span img {
 	color: #AD102A;
 	float: left;
 	padding-left: 10px;
-    width: 30%;
+    width: 40%;
     text-align: left;
 }

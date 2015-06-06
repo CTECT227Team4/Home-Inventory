@@ -44,6 +44,13 @@ $(document).ready(function() {
 							<option value="add_new_property">Add New Property</option>
 						</select>
 					</p>
+					<p class="tab_one_wide">
+						<label for="room_category">Category:</label>
+						<select name="room_category" id="categoryid">
+							<option value="-">-Select a Room Category-</option>
+							<option value="room_category">This needs to propagate from database</option>
+							<option value="add_new_category">Add New Category</option>
+					</p>
 					<p class="tab_one_wide_text">     
 						<label for="description1">Description:</label>
 						<textarea id="resizable" name="description1" ></textarea>

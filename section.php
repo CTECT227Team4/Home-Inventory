@@ -98,6 +98,13 @@ if (isset($_GET['sectionid'])) $sectionid = (int) $_GET['sectionid'];
 							<option value="0">-Select a Room-</option>
 						</select>
 					</p>	
+					<p class="tab_one_wide">
+						<label for="section_category">Category:</label>
+						<select name="section_category" id="categoryid">
+							<option value="-">-Select a Section Category-</option>
+							<option value="project_category">This needs to propagate from database</option>
+							<option value="add_new_category">Add New Category</option>
+					</p>
 					<p class="tab_one_wide_text">     
 						<label for="description">Description:</label>
 						<textarea id="description" name="description" ></textarea>

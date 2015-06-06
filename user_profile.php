@@ -46,19 +46,19 @@ $(document).ready(function() {
 				<div id="tabs-2" class="password_tab tabs_nav">
 
 				<h3>Please verify your current password:</h3>
-				<p class="two_wide">          <!--  makes two inputs on one line -->
+				<p class="one_wide">          <!--  makes two inputs on one line -->
 					<label for="currentPassword">Current Password:</label>
 					<input id="currentPassword" type="password" name="currentPassword">
 					<label for="password" class="error" id="currentError">Please enter current Password.</label>
 				</p>
 
 				<h3>Now please enter your new password and verify it:</h3>
-				<p class="two_wide">          <!--  makes two inputs on one line -->
+				<p class="one_wide">          <!--  makes two inputs on one line -->
 					<label for="password">Password:</label>
 					<input id="password" type="password" name="password">
 					<label for="password" class="error" id="passwordError">Please enter a Password.</label>
 				</p>
-				<p class="two_wide">             <!--  makes two inputs on one line, one with a long label -->
+				<p class="one_wide">             <!--  makes two inputs on one line, one with a long label -->
 					<label for="verifyPassword">Verify Password:</label>
 					<input id="verifyPassword" type="password" name="verifyPassword">
 					<label for="verifyPassword" class="error" id="verifyError">Please verify your Password.</label>
