@@ -38,7 +38,7 @@ if ($userid < 1) {
 try {
 	if ($con) {
 		switch ($webfunction) {
-			case 1: // GetProperties
+			case 1: // GetProperties for treeview
 				// I'm renaming the columns in the query to return the same name and case that the jstree control uses
 				//$sql = "SELECT CONCAT('P', p.id) AS id, name AS text, CONCAT ('$imageslocation', icon) AS icon FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN user u ON u.ID = up.userID LEFT OUTER JOIN category c ON c.ID = p.CategoryID WHERE up.userID = ?";
 				// Added in the thumbnail, if it's been uploaded
@@ -51,7 +51,7 @@ try {
 				jsonspew ($con, $sql, array($userid));
 				echo "]}]"; // End the array, then end the whole tree
 				break;
-			case 2: // GetRooms
+			case 2: // GetRooms for treeview
 				// locahost/az/main.php?F=2&propertyid=1
 				echo '[{"id":"P' . $propertyid . '","text": "Main House","icon": "./images/appraisal.png","state": {"opened" : "true"},"children":['; // The recordset is being returned as an array, so start the array
 				$sql = "SELECT CONCAT('R', r.id) AS id, name AS text, CONCAT ('$imageslocation', icon) AS icon FROM room r LEFT OUTER JOIN category c ON c.ID = r.CategoryID WHERE r.propertyID = ?";
@@ -248,9 +248,14 @@ try {
 			case 16: // Get categories for dropdown
 
 			case 17: // GetEditSection
-			echo '{"section":';
+				echo '{"section":';
 				jsonspew ($con, "SELECT propertyid, roomid, name, description, categoryid, notes FROM az.section WHERE ID = ?", array($sectionid));
 				echo "}";
+				break;
+			case 18: // GetEditRoom
+				$room = new Room();
+				$room->ID = $roomid;
+				echo $room->getjson($con);
 				break;
 			default: 
 				echo '{"error":"1","text":"Unknown function."}';
