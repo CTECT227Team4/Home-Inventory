@@ -1,7 +1,9 @@
 <?php # login.php
 include("inc/session.php");
 include("inc/functions.php");
- 
+
+if ($_SESSION["logged_in"]) redirect_to("landing.php");
+
 $userName = "";
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {

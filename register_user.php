@@ -2,44 +2,32 @@
 <?php require_once("/inc/session.php"); ?>
 <?php require_once("/inc/functions.php") ?>
 <?php require_once("../azconfig.php"); ?>
-<?php //require_once("/inc/validation_functions.php") ?>
 <?php
+
+if ($_SESSION["logged_in"]) redirect_to("landing.php");
+
 	if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
-			$username = $_POST["userName"];
-			// create new password hash - PHP 5.5
-			$password = password_hash($_POST["password"], PASSWORD_DEFAULT);
-			$firstName = $_POST["firstName"];
-			$lastName = $_POST["lastName"];
-			$email = $_POST["email"];
+		$username = $_POST["userName"];
+		// create new password hash - PHP 5.5
+		$password = password_hash($_POST["password"], PASSWORD_DEFAULT);
+		$firstName = $_POST["firstName"];
+		$lastName = $_POST["lastName"];
+		$email = $_POST["email"];
 
-			//to be used with PHP validation functions if desired - see inc/validation_functions.php
-			 	//$required_fields = array("username", "password", "firstName", "lastName", "email");
-				//validate_presences($required_fields);
-				//$fields_with_max_lengths = array("username" => 40, "password" => 50, "firstName" => 50, "lastName" => 50, "email" => 100);
-				//validate_max_lengths($fields_with_max_lengths);
-			//will need to check if username/email already exists
+			try {
+				$sql = "INSERT INTO user (userName, password, firstName, lastName, email, usertypeID) VALUES ('{$username}', '{$password}', '{$firstName}', '{$lastName}', '{$email}', 1)";
+				$stmt = $con->prepare($sql);
+				$stmt->execute();
+				$_SESSION["message"] = "User created.";
+				redirect_to("login.php");
+				echo "User <em>" . $username . "</em> created.";
+			} catch(PDOException $e) {
+			    echo $sql . "<br>" . $e->getMessage();
+			    $_SESSION["message"] = "User creation failed.";
+			    redirect_to("register_user.php");
+			} //end try catch
 
-
-			//if (empty($errors)) {
-
-				try {
-					$sql = "INSERT INTO user (userName, password, firstName, lastName, email, usertypeID) VALUES ('{$username}', '{$password}', '{$firstName}', '{$lastName}', '{$email}', 1)";
-					$stmt = $con->prepare($sql);
-					$stmt->execute();
-					$_SESSION["message"] = "User created.";
-					redirect_to("login.php");
-					echo "User <em>" . $username . "</em> created.";
-				} catch(PDOException $e) {
-				    echo $sql . "<br>" . $e->getMessage();
-				    $_SESSION["message"] = "User creation failed.";
-				    redirect_to("register_user.php");
-				} //end try catch
-
-			//} else {
-			//	$_SESSION["errors"] = $errors;
-			//	redirect_to("register_user.php");
-			//}
 	} //end if ($_SERVER['REQUEST_METHOD'] == "POST")
 
  ?>
@@ -67,11 +55,11 @@
 			<form action="register_user.php" method="post" name="register" id="registration">
 				<p class="two_wide">     <!--  makes two inputs on one line -->
 					<label for="firstName">First Name:</label>
-					<input id="firstName" type="text" name="firstName">    
+					<input id="firstName" type="text" name="firstName">
 				</p>
 				<p class="two_wide">      <!--  makes two inputs on one line -->
 					<label for="lastName">Last Name:</label>
-					<input id="lastName" type="text" name="lastName">       
+					<input id="lastName" type="text" name="lastName">
 				</p>
 				<p class="one_wide" class="space">
 					<label for="email">Email:</label>
