@@ -14,7 +14,7 @@ function packform() {
 $(document).ready(function() {
 	$( "#tabs" ).tabs();
 	$(function() {
-		$( "#resizable resizable2" ).resizable({
+		$( "#description notes" ).resizable({
 			handles: "se"
 		 });
 	});
@@ -48,16 +48,9 @@ $(document).ready(function() {
 							<option value="add_new_property">Add New Property</option>
 						</select>
 					</p>
-					<p class="tab_one_wide">
-						<label for="room_category">Category:</label>
-						<select name="room_category" id="categoryid">
-							<option value="-">-Select a Room Category-</option>
-							<option value="room_category">This needs to propagate from database</option>
-							<option value="add_new_category">Add New Category</option>
-					</p>
 					<p class="tab_one_wide_text">     
-						<label for="description1">Description:</label>
-						<textarea id="resizable" name="description1" ></textarea>
+						<label for="description">Description:</label>
+						<textarea id="description" name="description" ></textarea>
 					</p>				
 				</div>  <!-- end of tabs 1 -->
 
@@ -71,8 +64,8 @@ $(document).ready(function() {
 
 				<div id="tabs-4" class="notes_tab tabs_nav">
 					<p class="tab_one_wide_text">     
-						<label for="general_notes">Notes:</label>
-						<textarea id="resizable2" name="general_notes" ></textarea>					 
+						<label for="notes">Notes:</label>
+						<textarea id="notes" name="notes" ></textarea>					 
 					</p>	 
 				</div>	  <!-- end of tabs4 -->	
 

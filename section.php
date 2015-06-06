@@ -59,7 +59,7 @@ if (isset($_GET['sectionid'])) $sectionid = (int) $_GET['sectionid'];
 	 	  		});
 
 	 	  		$(function() {
-	 	    		$( "#resizable resizable2 resizable3 resizable" ).resizable({
+	 	    		$( "#description notes" ).resizable({
 	 	      			handles: "se"
 	 	   			 });
 	 	  		});
