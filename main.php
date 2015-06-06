@@ -16,8 +16,10 @@ $parameters = [];
 
 if (isset($_POST["json"])) $json = $_POST["json"];
 if (isset($_GET['F'])) $webfunction = $_GET['F'];
-if (isset($_GET['userid'])) $userid = $_GET['userid'];
-if (isset($_GET['propertyid'])) $propertyid = $_GET['propertyid'];
+// Removed from here, and just using session variable
+// if (isset($_GET['userid'])) $userid = $_GET['userid'];
+if (isset($_SESSION["user_id"])) $userid = (int) $_SESSION["user_id"];
+if (isset($_GET['propertyid'])) $propertyid = (int) $_GET['propertyid'];
 if (isset($_GET['sectionid'])) $sectionid = $_GET['sectionid'];
 if (isset($_GET['roomid'])) $roomid = $_GET['roomid'];
 if (isset($_GET['itemid'])) $itemid = $_GET['itemid'];
@@ -26,6 +28,12 @@ if (isset($_GET['zipcode'])) $zipcode = $_GET['zipcode'];
 header('Content-Type: application/json');
 // Moved $firstTime initialization to the top
 $firstTime = true;
+
+if ($userid < 1) {
+	echo '"error":"1","text":"Not logged in."';
+	exit;
+}
+
 try {
 	if ($con) {
 		switch ($webfunction) {
@@ -237,7 +245,11 @@ try {
 				echo "}";
 				break;
 			case 14: //getRooms for dropdown
-				echo "This hasn't been coded yet";
+				echo '{"rooms":[';
+				// No idea why this line doesn't work, no time to figure it out.
+				//jsonspew ($con, "SELECT r.ID, r.name FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN room r ON r.propertyID = p.ID WHERE up.userID = ? AND p.ID = ?;", array($userid, $propertyid));
+				jsonspew ($con, "SELECT r.ID, r.name FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN room r ON r.propertyID = p.ID WHERE up.userID = ? AND p.ID = " . $propertyid, array($userid));
+				echo "]}";
 				break;
 			case 15: // get City/State/County from zip code
 				jsonspew($con, "SELECT City, State, County FROM zip z WHERE z.zipcode = ? LIMIT 1", array($zipcode));

@@ -10,10 +10,21 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 			}
 		
 	   		$(document).ready(function() {
-				$.getJSON("main.php?F=12&userid=24",function(obj) {
+				$.getJSON("main.php?F=12",function(obj) {
 					 $.each(obj.properties, function(key, value) {
 						$("#propertyid").append("<option value=" + value.ID + ">" + value.name  + "</option>");
 					 });
+				});
+				
+				$("#propertyid").change(function () {
+					// Set the value on read, if available
+					$.getJSON("main.php?F=14&propertyid=" + this.value, function(obj) {
+						$("#roomid").empty();
+						$("#roomid").append("<option value=0>-Select a Room-</option>");
+						 $.each(obj.rooms, function(key, value) {
+							$("#roomid").append("<option value=" + value.ID + ">" + value.name + "</option>");
+						 });
+					});
 				});
 				
 	 	  		$(function() {
@@ -54,9 +65,7 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 					<p class="tab_one_wide">
 						<label for="roomid">Room:</label>
 						<select name="roomid" id="roomid">
-							<option value="-">-Select a Room-</option>
-							<option value="room1">This needs to propagate from database</option>
-							<option value="add_new_room">Add New Room</option>
+							<option value="0">-Select a Room-</option>
 						</select>
 					</p>	
 					<p class="tab_one_wide_text">     

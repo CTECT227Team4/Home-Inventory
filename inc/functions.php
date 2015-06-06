@@ -11,7 +11,7 @@
 	function sqlparms($string, $data) {
 		$indexed = $data == array_values($data);
 		foreach($data as $k=>$v) {
-			if(is_string($v)) $v="'$v'";
+			if(is_string($v)) $v = "'$v'";
 			if($indexed) $string = preg_replace('/\?/',$v,$string,1);
 			else $string = str_replace(":$k",$v,$string);
 		}
@@ -45,6 +45,7 @@
     		}
 
 			$stmt->setFetchMode (PDO::FETCH_ASSOC); // This should default the fetch to return name->value that can be output directly to JSON easier
+			//echo sqlparms($sql, array_values($parameters));
     		$stmt->execute();
     		return $stmt;
     	} catch (Exception $e) { // Echo the message in JSON and exit
@@ -57,15 +58,14 @@
     function writeRecordset($con, $sql, $parameters) {
     	try {
     		$paramcount = 1;
-			echo sqlparms($sql, array_values($parameters));
-			//$sql = sqlparms($sql, array_values($parameters));
+			//echo sqlparms($sql, array_values($parameters));
     		// $parameters is passed in as an array, go through it and add them all
 			$stmt = $con->prepare($sql);
 			foreach ($parameters as $parameter) {
     			$stmt->bindParam($paramcount++, $parameter);
     		}
     		$stmt->execute();
-			print_r($con->errorInfo());
+			//print_r($con->errorInfo());
     		return $stmt;
     	} catch (Exception $e) { // Echo the message in JSON and exit
     		echo '"error":"' . $e->getCode() . '","text":"' . $e->getMessage() . '"';
