@@ -21,17 +21,33 @@ if (isset($_GET['sectionid'])) $sectionid = (int) $_GET['sectionid'];
 				echo "var sectionid = $sectionid;"
 				?>
 				
-				function getaroom(url) {
+				function getaroom(myUrl) { // Get list of rooms for drop down
+					$.ajax({
+						url: myUrl,
+						dataType: 'json',
+						async: false,
+						//data: myData,
+						success: function(obj) {
+							$("#roomid").empty();
+							$("#roomid").append("<option value=0>-Select a Room-</option>");
+							$.each(obj.rooms, function(key, value) {
+								$("#roomid").append("<option value=" + value.ID + ">" + value.name + "</option>");
+							});
+						}
+					});
+				
+				/*
 					$.getJSON(url, function(obj) {
 						$("#roomid").empty();
 						$("#roomid").append("<option value=0>-Select a Room-</option>");
-						 $.each(obj.rooms, function(key, value) {
+						$.each(obj.rooms, function(key, value) {
 							$("#roomid").append("<option value=" + value.ID + ">" + value.name + "</option>");
-						 });
+						});
 					});
+					*/
 				}
 				
-				function populate(url) {
+				function populate(url) { // Fill in form values
 					if (userid != 0 && sectionid != 0) {
 						$.getJSON(url, function(obj) {
 							$.each(obj.section, function(key, value) {
@@ -42,7 +58,7 @@ if (isset($_GET['sectionid'])) $sectionid = (int) $_GET['sectionid'];
 					}
 				}
 
-				$.getJSON("main.php?F=12", function(obj) {
+				$.getJSON("main.php?F=12", function(obj) { // Fill in properties
 					 $.each(obj.properties, function(key, value) {
 						$("#propertyid").append("<option value=" + value.ID + ">" + value.name  + "</option>");
 					 });
@@ -120,7 +136,7 @@ if (isset($_GET['sectionid'])) $sectionid = (int) $_GET['sectionid'];
 				<div id="tabs-4" class="notes_tab tabs_nav">
 					<p class="tab_one_wide_text">     
 						<label for="notes">Notes:</label>
-						<textarea id="resizable2" name="notes" ></textarea>					 
+						<textarea id="notes" name="notes" ></textarea>					 
 					</p>	 
 				</div>	  <!-- end of tabs4 -->	
 
