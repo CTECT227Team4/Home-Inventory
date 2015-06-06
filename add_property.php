@@ -17,7 +17,6 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 	 	      			handles: "se"
 	 	   			 });
 	 	  		});  //  end resizable notes fields
-	 	  		$('#name').focus();  // puts the cursor in the property name field upon load.
 	  		});
 	   	</script>
 <!-- END HEADER CONTENT -->

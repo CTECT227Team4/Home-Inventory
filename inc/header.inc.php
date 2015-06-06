@@ -42,7 +42,7 @@ require_once("../az/inc/functions.php"); ?>
 								echo "'s Properties";
 								} //endif ?>
 				</h1>
-				<h2><?php echo $page_heading; ?></h2>
+				<h2 id="header_session_subtitle"><?php echo $page_heading; ?></h2>
 			</div>  <!-- end of header_title -->
 			<?php require_once ("/inc/nav.inc.php"); ?>
 		</header> <!-- End Header -->

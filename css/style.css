@@ -186,6 +186,12 @@ header {
 /*    text-transform: uppercase;	*/
     font-size: 2.5rem;
     font-family: 'Lakesight', cursive;
+	margin-bottom: 10px;
+}
+
+#header_session_subtitle{
+    font-size: 1.8rem;
+    font-family: 'Lakesight', cursive;	
 }
 
 nav {	
@@ -713,17 +719,17 @@ p.centered_button {
 }
 
 .add_file {
-	top: 125px;
+	top: 100px;
 }
 
 .scan_file {
-	top: 175px;
+	top: 150px;
 }
 
 .scan_under_construction {
 	position: absolute;
 	right: 20px;
-	top: 208px;
+	top: 183px;
 	font-size: 10px;
 	line-height: 14px;
 	color: #333333;	
