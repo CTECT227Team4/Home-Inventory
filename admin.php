@@ -11,19 +11,19 @@ require_once "inc/header.inc.php";
 
 <section class="get_all_clients">
 
-	<div>
-	<br><br><br>
+	<div class="users_table">
 		<h2>All Users</h2>
-
-		<table>
+		<hr class="border">
+		<table id="all_users">
 			<tr>
-				<th>ID</th>
+				<th>User ID</th>
 				<th>Username</th>
 				<th>First Name</th>
 				<th>Last Name</th>
 				<th>Email Address</th>
 				<th>User Type</th>
 			</tr>
+
 			<?php
 				$sql = "SELECT id, userName, firstName, lastName, email, usertypeID FROM user";
 				$parameters = [];
@@ -39,7 +39,6 @@ require_once "inc/header.inc.php";
 				}
 			?>
 		</table>
-
 	</div>
 </section>
 

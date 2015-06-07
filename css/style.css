@@ -30,7 +30,7 @@ html, body {
 }
 
 html {
-	background-color: #e7ffb8;
+	background-color: #e7ffb8;    /*  Light-light Green  */
 }
 
 ::selection {
@@ -865,4 +865,31 @@ span img {
 	width: 5%;
 }
 
+
+/*  ---------------------------  ADMIN ------------------------  */
+
+.users_table {
+	width: 100%;
+	clear: both;
+
+}
+
+.users_table table {
+	width 90%;
+	margin: 0 auto;
+
+}
+
+.users_table table {
+	font-size: .75rem;
+}
+
+.border {
+	border-top: solid 4px #90C32E;     	/* Medium Green */	
+	margin-bottom: 20px;
+}
+
+#all_users tr:nth-child(even) {
+	background-color: #e7ffb8;    /*  Light-light Green  */
+}
 
