@@ -138,6 +138,42 @@
 		}
 	} //end find_user_by_userName
 
+	function find_user_by_token($token) {
+		global $con;
+
+		$sql = "SELECT * ";
+		$sql .= "FROM user ";
+		$sql .= "WHERE token = '{$token}' ";
+		$sql .= "LIMIT 1";
+
+		$parameters = [$token];
+
+		$user_set = getRecordset($con, $sql, $parameters);
+		if ($user = $user_set->fetch(PDO::FETCH_ASSOC)) {
+			return $user;
+		} else {
+			return null;
+		}
+	} //end find_user_by_token
+
+	function check_token_expired($token) {
+		global $con;
+
+		$sql = "SELECT * ";
+		$sql .= "FROM user ";
+		$sql .= "WHERE token = '{$token}' ";
+		$sql .= "AND TIME(token_expire) > NOW()";
+
+		$parameters = [$token];
+
+		$user_set = getRecordset($con, $sql, $parameters);
+		if ($user = $user_set->fetch(PDO::FETCH_ASSOC)) {
+			return TRUE;
+		} else {
+			return null;
+		}
+	} //end check_token_expired
+
 	function attempt_login($userName, $password) {
 		//find user, then password
 		$user = find_user_by_userName($userName);
