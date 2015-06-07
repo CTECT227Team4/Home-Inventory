@@ -126,11 +126,13 @@
 
 		$sql = "SELECT * ";
 		$sql .= "FROM user ";
+		// $sql .= "WHERE userName = '{$safe_userName}' ";
 		$sql .= "WHERE userName = '{$userName}' ";
 		$sql .= "LIMIT 1";
 
-		$parameters = [$userName];
-		$user_set = getRecordset($con, $sql, $parameters);
+		// $user_set = getRecordset($con, $sql, $safe_userName);
+		$user_set = getRecordset($con, $sql, $userName);
+		//I think this part will need rewritten
 		if ($user = $user_set->fetch(PDO::FETCH_ASSOC)) {
 			return $user;
 		} else {
@@ -192,7 +194,9 @@ abstract class AzObject { // Abstract base class to parse JSON and put it into a
 	public function getjson($con) {
 		$vars = array_keys(get_object_vars($this)); // Get just the var names
 		$sql = strtolower("SELECT `" . implode('`,`', $vars) . "` FROM " . get_class($this) . " WHERE ID = ?");
+		echo '{"' . get_class($this) . '":';
 		jsonspew($con, $sql, array($this->ID));
+		echo "}";
 	}
 	
 	public function write($con) {
