@@ -140,10 +140,7 @@ a {
 	clear: both;
 	width: 100%;
 	position: relative;
-	margin-top: 30px;
 }
-
-
 
 /* -------------------- TURN-OFFS  ---------------------- */
 .no_print {
@@ -175,17 +172,12 @@ a {
 	margin: 0 auto;
 }
 
-
-
-
-
 /*  -------------------  HEADINGS  -----------------------  */
 
 .print_headings {
 	position: relative;
 	width: 90%;
 	margin: 0 auto;
-	border-bottom: 2px solid #90C32E;     /*medium green*/
 	font-size: 20pt;
 	font-weight: 700;
 }
@@ -201,9 +193,9 @@ a {
 	width: 50%;
 }
 
-
 .print_data {
 	text-align: left;
+	border-top: 2px solid #90C32E;     /*medium green*/
 
 }
 
