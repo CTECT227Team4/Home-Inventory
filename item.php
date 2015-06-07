@@ -10,6 +10,15 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 			function packform() {
 				return $('form#add_item').serializeJSON();
 			}
+			
+			$.getJSON("main.php?F=16&parenttype=4", function(obj) { // Fill in categegories, 4 is item
+				$("#categoryid").empty(); // Clear the list each call
+				$.each(obj.categories, function(key, value) {
+					$("#categoryid").append("<option value=" + value.ID + ">" + value.name  + "</option>");
+				});		
+				//fillproperties();
+			});
+				
 	   		$(document).ready(function() {
 				var userid = <?=$userid?>;
 				var itemid = <?=$itemid?>;
