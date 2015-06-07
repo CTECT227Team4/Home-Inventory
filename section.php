@@ -14,10 +14,8 @@ if (isset($_GET['sectionid'])) $sectionid = (int) $_GET['sectionid'];
 			}
 		
 	   		$(document).ready(function() {
-				<?php
-				echo "var userid = $userid;";
-				echo "var sectionid = $sectionid;"
-				?>
+				var userid = <?=$userid?>;
+				var sectionid = <?=$sectionid?>;
 				
 				function getaroom(url, roomid) { // Get list of rooms for drop down
 					$.getJSON(url, function(obj) {
@@ -51,6 +49,7 @@ if (isset($_GET['sectionid'])) $sectionid = (int) $_GET['sectionid'];
 						populate("main.php?F=17&sectionid=" + sectionid);
 					});
 				}
+				
 				$.getJSON("main.php?F=16&parenttype=3", function(obj) { // Fill in categegories, 3 is section
 					$("#categoryid").empty(); // Clear the list each call
 					$.each(obj.categories, function(key, value) {
@@ -79,7 +78,7 @@ if (isset($_GET['sectionid'])) $sectionid = (int) $_GET['sectionid'];
 	<div class="content">
 
 		<div id="tabs">
-			<form id="add_section"><input type="hidden" id="id" name="id">
+			<form id="add_section"><input type="hidden" id="id" name="id" value="<?=$sectionid?>">
 			  	<ul>
 				    <li><a href="#tabs-1">Section</a></li>
 				    <li><a href="#tabs-2">Multimedia</a></li>
@@ -106,8 +105,8 @@ if (isset($_GET['sectionid'])) $sectionid = (int) $_GET['sectionid'];
 						</select>
 					</p>	
 					<p class="tab_one_wide">
-						<label for="section_category">Category:</label>
-						<select name="section_category" id="categoryid">
+						<label for="categoryid">Category:</label>
+						<select name="categoryid" id="categoryid"></select>
 					</p>
 					<p class="tab_one_wide_text">     
 						<label for="description">Description:</label>
