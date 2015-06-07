@@ -1,4 +1,4 @@
-<nav>
+<nav class="no_print">
 	<div class="dropdown">
 	    <button><a href="landing.php">Inventory</a></button>     <!-- trigger button -->
 	</div>  <!-- end dropdown -->
