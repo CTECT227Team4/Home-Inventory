@@ -14,15 +14,12 @@ if (isset($_GET['sectionid'])) $sectionid = (int) $_GET['sectionid'];
 			}
 		
 	   		$(document).ready(function() {
-				<?php
-				echo "var userid = $userid;";
-				echo "var sectionid = $sectionid;"
-				?>
+				var userid = <?=$userid?>;
+				var sectionid = <?=$sectionid?>;
 				
 				function getaroom(url, roomid) { // Get list of rooms for drop down
 					$.getJSON(url, function(obj) {
 						$("#roomid").empty(); // Clear the list each call
-						$("#roomid").append("<option value=0>-Select a Room-</option>"); // Add default option back
 						$.each(obj.rooms, function(key, value) { // Go through JSON return and append all elements
 							$("#roomid").append("<option value=" + value.ID + ">" + value.name + "</option>");
 						});
@@ -43,11 +40,22 @@ if (isset($_GET['sectionid'])) $sectionid = (int) $_GET['sectionid'];
 					}
 				}
 
-				$.getJSON("main.php?F=12", function(obj) { // Fill in properties
-					 $.each(obj.properties, function(key, value) {
-						$("#propertyid").append("<option value=" + value.ID + ">" + value.name  + "</option>");
-					 });
-					 populate("main.php?F=17&sectionid=" + sectionid);
+				function fillproperties () {
+					$.getJSON("main.php?F=12", function(obj) { // Fill in properties
+						$("#propertyid").empty(); // Clear the list each call
+						$.each(obj.properties, function(key, value) {
+							$("#propertyid").append("<option value=" + value.ID + ">" + value.name  + "</option>");
+						});
+						populate("main.php?F=17&sectionid=" + sectionid);
+					});
+				}
+				
+				$.getJSON("main.php?F=16&parenttype=3", function(obj) { // Fill in categegories, 3 is section
+					$("#categoryid").empty(); // Clear the list each call
+					$.each(obj.categories, function(key, value) {
+						$("#categoryid").append("<option value=" + value.ID + ">" + value.name  + "</option>");
+					});		
+					fillproperties();
 				});
 				
 				$("#propertyid").change(function () {
@@ -70,7 +78,7 @@ if (isset($_GET['sectionid'])) $sectionid = (int) $_GET['sectionid'];
 	<div class="content">
 
 		<div id="tabs">
-			<form id="add_section"><input type="hidden" id="id" name="id">
+			<form id="add_section"><input type="hidden" id="id" name="id" value="<?=$sectionid?>">
 			  	<ul>
 				    <li><a href="#tabs-1">Section</a></li>
 				    <li><a href="#tabs-2">Multimedia</a></li>
@@ -97,11 +105,8 @@ if (isset($_GET['sectionid'])) $sectionid = (int) $_GET['sectionid'];
 						</select>
 					</p>	
 					<p class="tab_one_wide">
-						<label for="section_category">Category:</label>
-						<select name="section_category" id="categoryid">
-							<option value="-">-Select a Section Category-</option>
-							<option value="project_category">This needs to propagate from database</option>
-							<option value="add_new_category">Add New Category</option>
+						<label for="categoryid">Category:</label>
+						<select name="categoryid" id="categoryid"></select>
 					</p>
 					<p class="tab_one_wide_text">     
 						<label for="description">Description:</label>

@@ -1,10 +1,10 @@
-<?php # add_room.php
+<?php # room.php
 $page_title = "Home Inventory - Add Room"; //sets title
 $page_heading = "Add Room"; //sets heading to appear on page
 require_once "inc/header.inc.php";
 
 $roomid = 0;
-if (isset($_GET['roomid'])) $sectionid = (int) $_GET['roomid'];
+if (isset($_GET['roomid'])) $roomid = (int) $_GET['roomid'];
 
 ?><script>
 function packform() {
@@ -12,6 +12,42 @@ function packform() {
 }
 
 $(document).ready(function() {
+	var userid = <?=$userid?>;
+	var roomid = <?=$roomid?>;
+	
+	function populate(url) { // Fill in form values
+		if (userid != 0 && roomid != 0) {
+			$.getJSON(url, function(obj) {
+				//var propertyid = 0; // Default to 0, cache for later
+				$.each(obj.Room, function(key, value) {
+					//if (key == "propertyid") propertyid = value; // Cache the propertyid value for the following line
+					//if (key == "roomid") getaroom("main.php?F=14&propertyid=" + propertyid, value);
+					//else
+					$("#" + key).val(value);
+				});
+			});
+		}
+	}
+
+	function fillproperties () {
+		$.getJSON("main.php?F=12", function(obj) { // Fill in properties
+			$("#propertyid").empty(); // Clear the list each call
+			$.each(obj.properties, function(key, value) {
+				$("#propertyid").append("<option value=" + value.ID + ">" + value.name  + "</option>");
+			});
+			populate("main.php?F=18&roomid=" + roomid);
+		});
+	}
+	
+	$.getJSON("main.php?F=16&parenttype=4", function(obj) { // Fill in categegories, 4 is room
+		$("#categoryid").empty(); // Clear the list each call
+		$.each(obj.categories, function(key, value) {
+			$("#categoryid").append("<option value=" + value.ID + ">" + value.name  + "</option>");
+		});		
+		fillproperties();
+	});
+
+	
 	$( "#tabs" ).tabs();
 	$(function() {
 		$( "#description notes" ).resizable({
@@ -40,13 +76,14 @@ $(document).ready(function() {
 						<input id="name" type="text" name="name">    
 					</p>
 					<p class="tab_one_wide">
-						<label for="property_name">Property:</label>
+						<label for="propertyid">Property:</label>
 						<!-- We will want the value to be the propertyID -->
-						<select name="property_name" id="property_name">
-							<option value="-">-Select a Property-</option>
-							<option value="property1">This needs to propagate from database</option>
-							<option value="add_new_property">Add New Property</option>
+						<select name="propertyid" id="propertyid">
 						</select>
+					</p>
+					<p class="tab_one_wide">
+						<label for="categoryid">Category:</label>
+						<select name="categoryid" id="categoryid"></select>
 					</p>
 					<p class="tab_one_wide_text">     
 						<label for="description">Description:</label>
