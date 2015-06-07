@@ -7,48 +7,38 @@ $nav_context = "inventory";
 require_once "inc/header.inc.php";
 ?>
 
-Get All Clients
-
 <section class="get_all_clients">
 
-	<div class="products">
+	<div>
+	<br><br><br>
 		<h2>All Users</h2>
+
+		<table>
+			<tr>
+				<th>ID</th>
+				<th>Username</th>
+				<th>First Name</th>
+				<th>Last Name</th>
+				<th>Email Address</th>
+				<th>User Type</th>
+			</tr>
 			<?php
 				$sql = "SELECT id, userName, firstName, lastName, email, usertypeID FROM user";
 				$parameters = [];
+
 				$users = getRecordset($con,$sql,$parameters);
-				// $user_set = $users->fetchAll(PDO::FETCH_ASSOC);
-				foreach ($users as $key => $value) {
-					echo $key . ":" . $value . "<br>";
+				foreach ($users as $user) {
+					echo "<tr>";
+					foreach ($user as $user_info) {
+						echo "<td>" . $user_info . "</td>";
+					}
+					echo "</tr>";
 				}
 			?>
+		</table>
 
-
-			<table>
-			First Name    Last Name    E-Mail     
-
-
-			</table>
-
-		</div>
-	</section>
-
-
-
-	<section class="get_all_users">
-		<h2>All Users</h2>
-
-	FirstName	LastName	E-Mail	Type of User
-
-
-
-	Edit
-
-
-
-
-
-
+	</div>
+</section>
 
 </body>
 </html>
