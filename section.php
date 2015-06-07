@@ -1,11 +1,10 @@
 <?php # add_section.php
-$page_title = "Home Inventory - Add Section"; //sets title
-$page_heading = "Add Section"; //sets heading to appear on page
-require_once "inc/header.inc.php"; //starts session, includes general functions, populates header content
-
 $sectionid = 0;
 if (isset($_GET['sectionid'])) $sectionid = (int) $_GET['sectionid'];
 
+$page_title = "Home Inventory - " . ($sectionid ? "Edit" : "Add") . " Section"; //sets title
+$page_heading = ($sectionid ? "Edit" : "Add") . " Section"; //sets heading to appear on page
+require_once "inc/header.inc.php"; //starts session, includes general functions, populates header content
 ?><script type="text/javascript" src="jquery/tipped.js"></script>    <!-- Tooltip plugin -->
 	 <link rel="stylesheet" type="text/css" href="jquery/tipped.css"/> 
 	   	<script>
@@ -31,7 +30,7 @@ if (isset($_GET['sectionid'])) $sectionid = (int) $_GET['sectionid'];
 					if (userid != 0 && sectionid != 0) {
 						$.getJSON(url, function(obj) {
 							var propertyid = 0; // Default to 0, cache for later
-							$.each(obj.section, function(key, value) {
+							$.each(obj.Section, function(key, value) {
 								if (key == "propertyid") propertyid = value; // Cache the propertyid value for the following line
 								if (key == "roomid") getaroom("main.php?F=14&propertyid=" + propertyid, value);
 								else $("#" + key).val(value);

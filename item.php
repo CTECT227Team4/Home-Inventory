@@ -1,18 +1,23 @@
-<?php # add_item.php ?>
-<?php $page_title = "Home Inventory - Add Item"; //sets title ?>
-<?php $page_heading = "Add Item" //sets heading to appear on page ?>
-<?php require_once "inc/header.inc.php"; //starts session, includes general functions, populates header content ?>
-
-	 <script type="text/javascript" src="jquery/tipped.js"></script>    <!-- Tooltip plugin -->
+<?php # add_item.php
+$itemid = 0;
+if (isset($_GET['itemid'])) $itemid = (int) $_GET['itemid'];
+$page_title = "Home Inventory - " . ($itemid ? "Edit" : "Add") . " Item"; //sets title
+$page_heading = ($itemid ? "Edit" : "Add") . " Item"; //sets heading to appear on page
+require_once "inc/header.inc.php"; //starts session, includes general functions, populates header content
+?><script type="text/javascript" src="jquery/tipped.js"></script>    <!-- Tooltip plugin -->
 	 <link rel="stylesheet" type="text/css" href="jquery/tipped.css"/> <!-- Tooltip plugin CSS-->
 	   	<script>
 			function packform() {
 				return $('form#add_item').serializeJSON();
 			}
 	   		$(document).ready(function() {
+				var userid = <?=$userid?>;
+				var itemid = <?=$itemid?>;
+				
 	 	  		$(function() {
 	 	    		$( "#tabs" ).tabs();
 	 	  		});   // end jquery ui tabs plugin
+				
 	 	  		$(function() {
 	 	    		$( "#resizable resizable2 resizable3 resizable" ).resizable({
 	 	      			handles: "se"
@@ -44,36 +49,20 @@
 						<input id="name" type="text" name="name">    
 					</p>
 					<p class="tab_one_wide">
-						<label for="property_name">Property:  <span class="simple-tooltip" title="The property where the item is located."><img src="images/info.png"></span></label>
-						<select name="property_name" id="property_name">
-							<option value="-">-Select a Property-</option>
-							<option value="property1">This needs to propagate from database</option>
-							<option value="add_new_property">Add New Property</option>
-						</select>
+						<label for="propertyid">Property:  <span class="simple-tooltip" title="The property where the item is located."><img src="images/info.png"></span></label>
+						<select name="propertyid" id="propertyid"></select>
 					</p>
 					<p class="tab_two_wide">
-						<label for="section_name">Section:  <span class="simple-tooltip" title="The section where the item is located."><img src="images/info.png"></span></label>
-						<select name="section_name" id="section_name">
-							<option value="-">-Select a Section-</option>
-							<option value="section1">This needs to propagate from database</option>
-							<option value="add_new_section">Add New Section</option>
-						</select>
+						<label for="sectionid">Section:  <span class="simple-tooltip" title="The section where the item is located."><img src="images/info.png"></span></label>
+						<select name="sectionid" id="sectionid"></select>
 					</p>
 					<p class="tab_two_wide">
-						<label for="room_name">Room:  <span class="simple-tooltip" title="The room where the item is located."><img src="images/info.png"></span></label>
-						<select name="room_name" id="room_name">
-							<option value="-">-Select a Room-</option>
-							<option value="room1">This needs to propagate from database</option>
-							<option value="add_new_room">Add New Room</option>
-						</select>
+						<label for="roomid">Room:  <span class="simple-tooltip" title="The room where the item is located."><img src="images/info.png"></span></label>
+						<select name="roomid" id="roomid"></select>
 					</p>					
 					<p class="tab_one_wide">     <!--  makes two inputs on one line -->
-						<label for="category">Category: <span class="simple-tooltip" title="Select a category from the drop down menu that can be a helpful way to sort your items."><img src="images/info.png"></span></label></label>
-						<select name="category" id="category">
-							<option value="-">-Select a Category-</option>
-							<option value="Category1">Category 1</option>
-							<option value="Category2">Category 2</option>
-						</select>
+						<label for="categoryid">Category: <span class="simple-tooltip" title="Select a category from the drop down menu that can be a helpful way to sort your items."><img src="images/info.png"></span></label></label>
+						<select name="categoryid" id="categoryid"></select>
 					</p>
 					<p class="tab_two_wide">     <!--  makes two inputs on one line -->
 						<label for="manufacturer">Manufacturer:</label>
@@ -84,8 +73,8 @@
 						<input id="brand" type="text" name="brand">       
 					</p>
 					<p class="tab_two_wide">     <!--  makes two inputs on one line -->
-						<label for="modelNumber">Model #:</label>
-						<input id="modelNumber" type="text" name="modelNumber">    
+						<label for="modelnumber">Model #:</label>
+						<input id="modelnumber" type="text" name="modelnumber">    
 					</p>
 					<p class="tab_two_wide">      <!--  makes two inputs on one line -->
 						<label for="serialNumber">Serial #:</label>
@@ -114,20 +103,20 @@
 				<div id="tabs-2" class="value_tab tabs_nav">
 
 						<p class="tab_two_wide">      <!--  makes two inputs on one line -->
-							<label for="purchase_date">Purchase Date:</label>
-							<input id="purchase_date" type="text" name="purchase_date">       
+							<label for="purchasedate">Purchase Date:</label>
+							<input id="purchasedate" type="text" name="purchasedate">       
 						</p>
 						<p class="tab_two_wide">      <!--  makes two inputs on one line -->
-							<label for="purchase_price">Purchase Price:</label>
-							<input id="purchase_price" type="text" name="purchase_price">       
+							<label for="purchaseprice">Purchase Price:</label>
+							<input id="purchaseprice" type="text" name="purchaseprice">       
 						</p>
 						<p class="tab_one_wide">      <!--  makes two inputs on one line -->
-							<label for="purchased_from">Purchased From:  <span class="simple-tooltip" title="The store that you purchased the item from."><img src="images/info.png"></span></label>
-							<input id="purchased_from" type="text" name="purchased_from">       
+							<label for="purchasedfrom">Purchased From:  <span class="simple-tooltip" title="The store that you purchased the item from."><img src="images/info.png"></span></label>
+							<input id="purchasedfrom" type="text" name="purchasedfrom">       
 						</p>
 						<p class="tab_one_wide">      <!--  makes two inputs on one line -->
-							<label for="paid_with">Paid for With:  <span class="simple-tooltip" title="The method which you paid for the item, i.e., credit card, etc."><img src="images/info.png"></span></label>
-							<input id="paid_with" type="text" name="paid_with">       
+							<label for="paymentMethod">Paid for With:  <span class="simple-tooltip" title="The method which you paid for the item, i.e., credit card, etc."><img src="images/info.png"></span></label>
+							<input id="paymentMethod" type="text" name="paymentMethod">       
 						</p>
 						<p class="tab_one_wide">      <!--  makes two inputs on one line -->
 							<label for="estimated_value">Est. Replacement:  <span class="simple-tooltip" title="This is your best guess of what it would cost to replace this item."><img src="images/info.png"></span></label>
@@ -186,8 +175,8 @@
 							</select>
 						</p>
 						<p class="tab_one_wide">      <!--  makes two inputs on one line -->
-							<label for="warranty_expiration">Expiration Date:</label>
-							<input id="warranty_expiration" type="text" name="warranty_expiration">       
+							<label for="warrantyExpirationDate">Expiration Date:</label>
+							<input id="warrantyExpirationDate" type="text" name="warrantyExpirationDate">
 						</p>
 						<p class="tab_one_wide">      <!--  makes two inputs on one line -->
 							<label for="warranty_type">Type of Warranty:  <span class="simple-tooltip" title="Examples -- lifetime, extended, etc."><img src="images/info.png"></span></label>

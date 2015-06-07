@@ -295,7 +295,7 @@ class Section extends AzObject { // object to hold section record
 	var $roomID;
 	var $description;
 	var $notes;
-	var $categoryID;  // In the database, not on the form, don't recall what it's for
+	var $categoryID;
 }
 
 class Room extends AzObject { // object to hold room record
@@ -313,18 +313,32 @@ class Item extends AzObject { // object to hold item record
 	var $sectionID;
 	var $name;
 	var $categoryID;
-	var $description;
 	var $manufacturer;
 	var $brand;
-	var $modelNumber;
+	var $modelnumber;
 	var $serialNumber;
 	var $condition;
 	var $beneficiary;
-	var $purchaseDate;
-	var $purchasePrice;
-	var $purchasedFrom;
+	var $description1;
+	var $purchasedate;
+	var $purchaseprice;
+	var $purchasedfrom;
 	var $paymentMethod;
 	var $warrantyExpirationDate;
 	var $warrantyType;
+	var $warranty_attached;
+	var $repaired_by;
+	var $repair_date;
+	var $repair_cost;
+	var $repair_attached;
+	var $repair_description3;
+	var $general_notes;
+	var $estimated_value;
+	var $appraised_value;
+	var $appraisal_date;
+	var $appraiser;
+	var $appraisal_attached;
+	var $description2;
+	var $warranty_question;
 }	 
 ?>

@@ -9,7 +9,7 @@
 				<li><a href="add_property.php">Add Property</a></li>
 				<li><a href="room.php">Add Room</a></li>
 				<li><a href="section.php">Add Section</a></li>
-				<li><a href="add_item.php">Add Item</a></li>
+				<li><a href="item.php">Add Item</a></li>
 			</ul>
 	</div>  <!-- end dropdown -->
 

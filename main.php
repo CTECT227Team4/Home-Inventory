@@ -253,14 +253,23 @@ try {
 				echo ',{"ID":"-1","name":"-Add a Category-"}]}';
 				break;
 			case 17: // GetEditSection
-				echo '{"section":';
-				jsonspew ($con, "SELECT propertyid, roomid, name, description, categoryid, notes FROM az.section WHERE ID = ?", array($sectionid));
-				echo "}";
+				$section = new Section();
+				$section->ID = $sectionid;
+				echo $section->getjson($con);
+
+				//echo '{"section":';
+				//jsonspew ($con, "SELECT propertyid, roomid, name, description, categoryid, notes FROM az.section WHERE ID = ?", array($sectionid));
+				//echo "}";
 				break;
 			case 18: // GetEditRoom
 				$room = new Room();
 				$room->ID = $roomid;
 				echo $room->getjson($con);
+				break;
+			case 19: // GetEditItem
+				$item = new Item();
+				$item->ID = $itemid;
+				echo $item->getjson($con);
 				break;
 			default: 
 				echo '{"error":"1","text":"Unknown function."}';
