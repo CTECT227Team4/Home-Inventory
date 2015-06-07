@@ -39,15 +39,20 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 	<script>
 		$(document).ready(function(){
 			$('#userName').focus();
+			$()
 		});  // end of ready function
+
+
+
 	</script>   
 </head>
 <body>
 	<div class="page_wrapper">
-	<?php echo message(); ?>
 	<section class="content">
 		<div class="login_wrapper">
-			<h1>Hi <!-- <?php echo $_SESSION["firstName"]; ?>  --> <h1>
+			<h2>
+				<?php echo message(); ?> 
+			<h2>
 			<h1>Welcome to A-Z Home Inventory</h1>
 			<h2>Please sign-in:</h2>
 			<form action="login.php" method="post" id="login">

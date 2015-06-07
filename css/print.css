@@ -142,10 +142,6 @@ a {
 	position: relative;
 }
 
-/* -------------------- TURN-OFFS  ---------------------- */
-.no_print {
-	display: none;
-}
 
 /*  -------------------  HEADER  -----------------------  */
 .side_logo {
@@ -182,25 +178,88 @@ a {
 	font-weight: 700;
 }
 
-.heading1 {
-	float: left;
-	width: 50%;
-}
-
 .heading2 {
-	float: right;
-	text-align: right;
-	width: 50%;
+	font-size: 16pt;
+}
+.border {
+	border-top: solid 4px #90C32E;     	/* Medium Green */	
+	margin-bottom: 20px;
 }
 
 .print_data {
 	text-align: left;
-	border-top: 2px solid #90C32E;     /*medium green*/
-
 }
 
-.print_categories {
-
+.inventory_by_property {
+	width: 90%;
+	margin: 0 auto 20px auto;
 }
 
+.inventory_by_property th, .inventory_by_property td {
+	padding: 0 10px 0 5px;
+}
+
+.inventory_by_property .room {
+	background-color: #D7FE8B;       /*Light Green */
+}
+
+.inventory_by_property .section {
+	background-color: #e7ffb8;    /*  Light-light Green  */
+}
+
+.buttons {
+	width: 90%;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.report_buttons {
+   background: #D7FE8B;               /* Light Green   */
+    color: #333333;
+	border: solid 2px #90C32E;     	/* Medium Green */	
+	padding: 5px;
+	margin: 0 10px 20px 10px;	
+}
+
+.report_buttons:hover {
+    background-color: #90C32E;     	/* Medium Green */
+    color: #FFFFFF;
+}
+
+@media print {
+
+	/* -------------------- TURN-OFFS  ---------------------- */
+	.no_print {
+		display: none;
+	}
+
+	.side_logo {
+		padding-top: 30px;
+		width: 175px;
+	}
+
+	.header_title {
+		width: 475px;
+	}
+
+	#header_session_name {
+		font-size: 24pt;
+	}
+
+	.property_image {
+		width: 150px;
+		margin: -10px auto 20px auto;
+	}
+	.heading1 {
+		font-size: 16pt;
+	}
+
+	.heading2 {
+		font-size: 14pt;
+	}
+
+	body {
+		font-size: 12pt;
+	}
+}   /*end of print media-query*/
 

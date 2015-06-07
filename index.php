@@ -40,11 +40,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>     <!-- jQuery CDN -->
 
-	<script>
-		$(document).ready(function(){
-			 	$('#userName').focus();   // puts the cursor in the UserName field on load
-		});  // end of ready function
-	</script>   
 </head>
 <body>
 	<div class="page_wrapper">

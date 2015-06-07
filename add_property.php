@@ -66,6 +66,7 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 						<option value="-">-Select a Property Category-</option>
 						<option value="project_category">This needs to propagate from database</option>
 						<option value="add_new_category">Add New Category</option>
+					</select>
 				</p>
 				<p class="tab_one_wide short">      <!--  makes two inputs on one line -->
 					<label for="year_built">Year Built:</label>
