@@ -224,31 +224,33 @@ try {
 				echo "}]"; // End the whole tree
 				break;
 			case 12: // Get list of properties for drop down
-				echo '{"properties":[';
+				echo '{"properties":[{"ID":"0","name":"-Select a Property-"},';
 				jsonspew ($con, "SELECT ID, name FROM property p INNER JOIN user_property up ON p.ID = up.propertyID WHERE up.userID = ?", array($userid));
-				echo "]}";
+				echo ',{"ID":"-1","name":"-Add a Property-"}]}';
 				break;
 			case 13: // Get list of sections for drop down
-				echo '{"sections":[';
+				echo '{"sections":[{"ID":"0","name":"-Select a Section-"},';
 				// No idea why this line doesn't work, no time to figure it out.
 				//jsonspew ($con, "SELECT s.ID AS ID, s.name AS name FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN section s ON p.ID = s.propertyID WHERE  up.userID = ? AND p.ID = ?", array($userid, $propertyid));
 				jsonspew ($con, "SELECT s.ID AS ID, s.name AS name FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN section s ON p.ID = s.propertyID WHERE  up.userID = ? AND p.ID = " . $propertyid, array($userid));
-				echo "]}";
+				echo ',{"ID":"-1","name":"-Add a Section-"}]}';
 				break;
 			case 14: //getRooms for dropdown
-				echo '{"rooms":[';
+				echo '{"rooms":[{"ID":"0","name":"-Select a Room-"},';
 				// No idea why this line doesn't work, no time to figure it out.
 				//jsonspew ($con, "SELECT r.ID, r.name FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN room r ON r.propertyID = p.ID WHERE up.userID = ? AND p.ID = ? ORDER BY r.ID ASC", array($userid, $propertyid));
 				jsonspew ($con, "SELECT r.ID, r.name FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN room r ON r.propertyID = p.ID WHERE up.userID = ? AND p.ID = " . $propertyid, array($userid));
-				echo "]}";
+				echo ',{"ID":"-1","name":"-Add a Room-"}]}';
 				break;
 			case 15: // get City/State/County from zip code
-				jsonspew($con, "SELECT City, State, County FROM zip z WHERE z.zipcode = ? LIMIT 1", array($zipcode));
+				echo '{"zipcode":';
+				jsonspew($con, "SELECT city, state, county FROM zip z WHERE z.zipcode = ? LIMIT 1", array($zipcode));
+				echo "}";
 				break;
 			case 16: // Get categories for dropdown
-				echo '{"category":';
-				jsonspew ($con, "SELECT id, description FROM category WHERE parenttype = ?", array($parenttype));
-				echo "}";
+				echo '{"categories":[{"ID":"0","name":"-Select a Category-"},';
+				jsonspew ($con, "SELECT ID, description AS name FROM category WHERE parenttype = ? AND userid IN (1," . $userid . ")", array($parenttype));
+				echo ',{"ID":"-1","name":"-Add a Category-"}]}';
 				break;
 			case 17: // GetEditSection
 				echo '{"section":';

@@ -43,10 +43,12 @@ $(document).ready(function() {
 						<label for="property_name">Property:</label>
 						<!-- We will want the value to be the propertyID -->
 						<select name="property_name" id="property_name">
-							<option value="-">-Select a Property-</option>
-							<option value="property1">This needs to propagate from database</option>
-							<option value="add_new_property">Add New Property</option>
+							<option value="0">-Select a Property-</option>
 						</select>
+					</p>
+					<p class="tab_one_wide">
+						<label for="section_category">Category:</label>
+						<select name="section_category" id="categoryid">
 					</p>
 					<p class="tab_one_wide_text">     
 						<label for="description">Description:</label>
