@@ -94,7 +94,7 @@
 		global $con;
 
 		$sql = "SELECT * ";
-		$sql .= "FROM admins ";
+		$sql .= "FROM user ";
 		$sql .= "ORDER BY userName ASC";
 
 		$user_set = getRecordset($con, $sql);
@@ -126,13 +126,10 @@
 
 		$sql = "SELECT * ";
 		$sql .= "FROM user ";
-		// $sql .= "WHERE userName = '{$safe_userName}' ";
 		$sql .= "WHERE userName = '{$userName}' ";
 		$sql .= "LIMIT 1";
 
-		// $user_set = getRecordset($con, $sql, $safe_userName);
 		$user_set = getRecordset($con, $sql, $userName);
-		//I think this part will need rewritten
 		if ($user = $user_set->fetch(PDO::FETCH_ASSOC)) {
 			return $user;
 		} else {

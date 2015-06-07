@@ -12,10 +12,15 @@ Get All Clients
 <section class="get_all_clients">
 
 	<div class="products">
-		<h2>Insurance Clients of <?php Session Information ?> Who Use A-Z Home Inventory Program</h2>
-			<?php  
-				$q = "SELECT * FROM users WHERE 'agent' = 'session name of the agent' ORDER BY lastName ASC";
-				$r = mysqli_query($dbc, $q);
+		<h2>All Users</h2>
+			<?php
+				$sql = "SELECT id, userName, firstName, lastName, email, usertypeID FROM user";
+				$parameters = [];
+				$users = getRecordset($con,$sql,$parameters);
+				// $user_set = $users->fetchAll(PDO::FETCH_ASSOC);
+				foreach ($users as $key => $value) {
+					echo $key . ":" . $value . "<br>";
+				}
 			?>
 
 
