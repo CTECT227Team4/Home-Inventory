@@ -7,6 +7,8 @@ $nav_context = "inventory";
 require_once "inc/header.inc.php";
 ?>
 
+<div class="message"></div>
+
 <section class="get_all_clients">
 
 	<div>
@@ -32,6 +34,7 @@ require_once "inc/header.inc.php";
 					foreach ($user as $user_info) {
 						echo "<td>" . $user_info . "</td>";
 					}
+					echo "<td><a href=\"edit_user.php?id={$user["id"]}\">Edit</a></td>";
 					echo "</tr>";
 				}
 			?>
