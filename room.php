@@ -1,4 +1,4 @@
-<?php # add_room.php
+<?php # room.php
 $page_title = "Home Inventory - Add Room"; //sets title
 $page_heading = "Add Room"; //sets heading to appear on page
 require_once "inc/header.inc.php";
