@@ -7,22 +7,42 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 ?><script type="text/javascript" src="jquery/tipped.js"></script>    <!-- Tooltip plugin -->
 	 <link rel="stylesheet" type="text/css" href="jquery/tipped.css"/> <!-- Tooltip plugin CSS-->
 	   	<script>
+			var userid = <?=$userid?>;
+			var itemid = <?=$itemid?>;
+
 			function packform() {
 				return $('form#add_item').serializeJSON();
 			}
-			
-			$.getJSON("main.php?F=16&parenttype=4", function(obj) { // Fill in categegories, 4 is item
-				$("#categoryid").empty(); // Clear the list each call
-				$.each(obj.categories, function(key, value) {
-					$("#categoryid").append("<option value=" + value.ID + ">" + value.name  + "</option>");
-				});		
-				//fillproperties();
-			});
-				
+
+			function populate(url) { // Fill in form values
+				if (userid != 0 && itemid != 0) {
+					$.getJSON(url, function(obj) {
+						$.each(obj.Item, function(key, value) {
+							$("#" + key).val(value);
+						});
+					});
+				}
+			}
+
+			function fillproperties () {
+				$.getJSON("main.php?F=12", function(obj) { // Fill in properties
+					$("#propertyid").empty(); // Clear the list each call
+					$.each(obj.properties, function(key, value) {
+						$("#propertyid").append("<option value=" + value.ID + ">" + value.name  + "</option>");
+					});
+					populate("main.php?F=19&itemid=" + itemid);
+				});
+			}
+
 	   		$(document).ready(function() {
-				var userid = <?=$userid?>;
-				var itemid = <?=$itemid?>;
-				
+				$.getJSON("main.php?F=16&parenttype=4", function(obj) { // Fill in categegories, 4 is item
+					$("#categoryid").empty(); // Clear the list each call
+					$.each(obj.categories, function(key, value) {
+						$("#categoryid").append("<option value=" + value.ID + ">" + value.name  + "</option>");
+					});		
+					fillproperties();
+				});
+
 	 	  		$(function() {
 	 	    		$( "#tabs" ).tabs();
 	 	  		});   // end jquery ui tabs plugin

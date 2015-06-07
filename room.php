@@ -16,11 +16,7 @@ $(document).ready(function() {
 	function populate(url) { // Fill in form values
 		if (userid != 0 && roomid != 0) {
 			$.getJSON(url, function(obj) {
-				//var propertyid = 0; // Default to 0, cache for later
 				$.each(obj.Room, function(key, value) {
-					//if (key == "propertyid") propertyid = value; // Cache the propertyid value for the following line
-					//if (key == "roomid") getaroom("main.php?F=14&propertyid=" + propertyid, value);
-					//else
 					$("#" + key).val(value);
 				});
 			});
@@ -37,7 +33,7 @@ $(document).ready(function() {
 		});
 	}
 	
-	$.getJSON("main.php?F=16&parenttype=4", function(obj) { // Fill in categegories, 4 is room
+	$.getJSON("main.php?F=16&parenttype=2", function(obj) { // Fill in categegories, 2 is room
 		$("#categoryid").empty(); // Clear the list each call
 		$.each(obj.categories, function(key, value) {
 			$("#categoryid").append("<option value=" + value.ID + ">" + value.name  + "</option>");

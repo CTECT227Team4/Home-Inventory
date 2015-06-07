@@ -31,7 +31,7 @@ header('Content-Type: application/json');
 $firstTime = true;
 
 if ($userid < 1) {
-	echo '"error":"1","text":"Not logged in."';
+	echo '"error":"3","text":"Not logged in."';
 	exit;
 }
 
@@ -256,10 +256,6 @@ try {
 				$section = new Section();
 				$section->ID = $sectionid;
 				echo $section->getjson($con);
-
-				//echo '{"section":';
-				//jsonspew ($con, "SELECT propertyid, roomid, name, description, categoryid, notes FROM az.section WHERE ID = ?", array($sectionid));
-				//echo "}";
 				break;
 			case 18: // GetEditRoom
 				$room = new Room();
@@ -270,6 +266,11 @@ try {
 				$item = new Item();
 				$item->ID = $itemid;
 				echo $item->getjson($con);
+				break;
+			case 20: // GetEditProperty
+				$property = new Property();
+				$property->ID = $propertyid;
+				echo $property->getjson($con);			
 				break;
 			default: 
 				echo '{"error":"1","text":"Unknown function."}';
