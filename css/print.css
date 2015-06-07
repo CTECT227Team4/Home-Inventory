@@ -1,0 +1,214 @@
+/*     This is the Print CSS Style Sheet    */
+
+
+* {
+   margin: 0;
+   padding: 0;
+   -webkit-box-sizing: border-box;
+   -moz-box-sizing: border-box;
+   box-sizing: border-box;
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+	display:block;
+}
+
+img, embed, object, video {
+  max-width: 100%;
+}
+
+html, body {
+	background-color: #FFFFFF;	/* white */
+	font-size: 18px;			/* used as the basis for all font sizes, margins, paddings, widths, etc.) */
+	line-height: 1.4;			/* one and a half times the font height */
+	font-family: 'Lato', sans-serif; 
+	font-weight: 400;			/* normal */
+	color: #333333;				/* dk. grey specified by client  */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	max-width: 960px;
+	margin: 0 auto;
+	height: 1500px;
+}
+
+html {
+	background-color: #e7ffb8;
+}
+
+::selection {
+  background: #90C32E;
+  color: #FFFFFF;
+  text-shadow: none;
+}
+
+input.middle:focus {
+    outline-width: 0;
+}
+
+input:focus, select:focus, textarea:focus, button:focus {
+    outline: #90C32E;
+}
+
+/*  ----------------    COLOR PALLETTE    ---------------- */
+
+/*#004800 Used for headings
+#90C32E Used for panel backgrounds
+#333333 Used for text
+#387929 Available for use as applicable
+#ad102a For Errors   
+#D7FE8B For Light Green backgrounds in tab headers, etc.
+
+*/
+
+
+/*  ----------------    TYPOGRAPHY        ----------------*/
+
+/*   Loading TTF fonts specified by client FUTURA Normal and Futura Bold   */
+
+@import url(http://allfont.net/css/?fonts=futura-normal);
+
+@font-face {
+	font-family: Lakesight;
+	src: url("../fonts/Lakesight_PersonalUseOnly.ttf");
+}
+
+@font-face {
+    font-family: Futura;
+    src: url("../fonts/futura.ttf");
+}
+
+@font-face {
+    font-family: FuturaBold;
+    src: url("../fonts/FuturaBold.ttf");
+}
+
+@font-face {
+    font-family: futuraItalic;
+    src: url("../fonts/futuraItalic.ttf");
+}
+
+@font-face {
+	font-family: 'futura-md-bt-bold';
+	src: url("../fonts/futura-md-bt-bold.ttf");
+}
+/*  ----------------    STANDARD SETTINGS     ---------------- */
+
+h1 {
+	font-size: 1.8rem;		/* 40px/18px */
+	font-family: 'Futura';
+	color: #004800;     /*  Dark green specified by client   */
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-bottom: 20px;
+	font-family: 'Futura';
+	color: #004800;     /*  Dark green specified by client   */
+	text-align: center;	
+
+}
+
+h3 {
+	font-size: 1.2rem;
+	margin-bottom: 20px;
+	font-family: 'Lato', sans-serif;
+	font-weight: 700;
+	color: #004800;     /*  Dark green specified by client   */
+	text-align: center;	
+}
+
+p {
+	font-size: 1.4rem;
+	color: #333333;     /*Dark grey specified by client     */
+}
+a {
+	color: inherit;
+	text-decoration: none;
+}
+
+/*  ----------------    BODY     ---------------- */
+
+.page_wrapper {
+	position: relative;
+	width: 100%;
+	margin-bottom: 50px;
+}
+
+.content {
+	clear: both;
+	width: 100%;
+	position: relative;
+	margin-top: 30px;
+}
+
+
+
+/* -------------------- TURN-OFFS  ---------------------- */
+.no_print {
+	display: none;
+}
+
+/*  -------------------  HEADER  -----------------------  */
+.side_logo {
+	width: 330px;
+	float: left;
+	margin-left: 30px;
+	margin-top: 30px;
+}
+
+.header_title {
+	width: 600px;
+	float: right;
+	position: relative;
+}
+
+#header_session_name {
+	text-align: center;
+	font-family: 'Lakesight';
+	font-size: 32pt;
+}
+
+.property_image {
+	width: 200px;
+	margin: 0 auto;
+}
+
+
+
+
+
+/*  -------------------  HEADINGS  -----------------------  */
+
+.print_headings {
+	position: relative;
+	width: 90%;
+	margin: 0 auto;
+	border-bottom: 2px solid #90C32E;     /*medium green*/
+	font-size: 20pt;
+	font-weight: 700;
+}
+
+.heading1 {
+	float: left;
+	width: 50%;
+}
+
+.heading2 {
+	float: right;
+	text-align: right;
+	width: 50%;
+}
+
+
+.print_data {
+	text-align: left;
+
+}
+
+.print_categories {
+
+}
+
+

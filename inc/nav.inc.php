@@ -1,4 +1,4 @@
-<nav>
+<nav class="no_print">
 	<div class="dropdown">
 	    <button><a href="landing.php">Inventory</a></button>     <!-- trigger button -->
 	</div>  <!-- end dropdown -->
@@ -9,7 +9,7 @@
 				<li><a href="add_property.php">Add Property</a></li>
 				<li><a href="room.php">Add Room</a></li>
 				<li><a href="section.php">Add Section</a></li>
-				<li><a href="add_item.php">Add Item</a></li>
+				<li><a href="item.php">Add Item</a></li>
 			</ul>
 	</div>  <!-- end dropdown -->
 
