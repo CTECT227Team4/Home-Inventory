@@ -26,6 +26,12 @@ if (isset($_SESSION["user_id"])) $userid = (int) $_SESSION["user_id"];
 	<script type="text/javascript" language="javascript" src="./jquery/jquery.dataTables.js"></script> <!-- Grid init -->
 	<script src="./jquery/jstree.min.js"></script> <!-- Tree init -->
 	<script src="jquery/jquery.serialize-object.min.js"></script> <!-- JSON helper init -->
+	<script>
+		$("document").ready(function(){
+		  	onClick=" window.print();
+	      	return false";
+		});
+	</script>
 </head>
 <body>
 	<div class="page_wrapper">
@@ -53,37 +59,86 @@ if (isset($_SESSION["user_id"])) $userid = (int) $_SESSION["user_id"];
 
 			<div class="print_headings">
 				<p class="heading1">Addams Family Home</p>
-				<p class="heading2">0001 Cemetery Lane</p>
+				<p class="heading2">0001 Cemetery Lane, Hollywood, CA</p>
+				<hr class="border">
 			</div>    <!-- end of print_headings -->
+
+			<div class="buttons no_print">
+
+				<button class="report_buttons"><a href="#" onClick=" window.print(); return false">Print this page</a></button>
+				<button class="report_buttons"><a href="reports.php">Close This Page</a></button>
+
+			</div>
 			<div class="print_data">
 				<div class="print_categories">
-					<p>Room</p>
-						<p>Sections</p>
-							<p>Items</p>
-						<p>Sections</p>
-							<p>Items</p>
-					<p>Room</p>
-						<p>Sections</p>
-							<p>Items</p>
-						<p>Sections</p>
-							<p>Items</p>
+					<table class="inventory_by_property">
+						<tr class="room">
+							<th>Room Name</th>
+							<th>Room Description</th>
+							<th>Est. Replacement Cost</th>
+						</tr>
+						<tr>
+							<td>Item Name</td>
+							<td>Item Description</td>
+							<td>$</td>
+						</tr>
+						<tr>
+							<td>Item Name</td>
+							<td>Item Description</td>
+							<td>$</td>
+						</tr>
+						<tr>
+							<td>Item Name</td>
+							<td>Item Description</td>
+							<td>$</td>
+						</tr>
+						<tr class="section">
+							<th>Section Name</th>
+							<th>Room Description</th>
+							<th>Est. Replacement Cost</th>
+						</tr>
+						<tr>
+							<td>Item Name</td>
+							<td>Item Description</td>
+							<td>$</td>
+						</tr>
+						<tr>
+							<td>Item Name</td>
+							<td>Item Description</td>
+							<td>$</td>
+						</tr>
+						<tr class="room">
+							<th>Room Name</th>
+							<th>Room Description</th>
+							<th>Est. Replacement Cost</th>
+						</tr>
+						<tr>
+							<td>Item Name</td>
+							<td>Item Description</td>
+							<td>$</td>
+						</tr>
+						<tr>
+							<td>Item Name</td>
+							<td>Item Description</td>
+							<td>$</td>
+						</tr>
+						<tr>
+							<td>Item Name</td>
+							<td>Item Description</td>
+							<td>$</td>
+						</tr>
+					</table>   <!-- end of property_by_inventory table -->
+
 				</div>   <!-- end of print_categories -->
+
 			</div>   <!--  end of print_data -->
-
-
-<button><a href="#" onClick=" window.print(); return false">Print this page</a></button>
-
+			<div class="buttons no_print">
+				<hr class="border">
+				<button class="report_buttons"><a href="#" onClick=" window.print(); return false">Print this page</a></button>
+				<button class="report_buttons"><a href="reports.php">Close This Page</a></button>
+			</div>
 		</div>   <!--  end of content -->
 	</div>   <!-- end of wrapper -->
-
-
-<script>
-	$("document").ready(function(){
-	  	onClick=" window.print();
-      	return false";
-	});
-</script>
-
 
 </body>
 </html>

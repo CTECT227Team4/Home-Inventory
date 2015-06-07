@@ -19,7 +19,7 @@
 					$sql = "INSERT INTO user (userName, password, firstName, lastName, email, usertypeID) VALUES ('{$username}', '{$password}', '{$firstName}', '{$lastName}', '{$email}', 1)";
 					$stmt = $con->prepare($sql);
 					$stmt->execute();
-					$_SESSION["message"] = "User created.";
+					$_SESSION["message"] = "New User was successfully created."; // inserts into the login heading
 					redirect_to("login.php");
 					echo "User <em>" . $username . "</em> created.";
 				} catch(PDOException $e) {
