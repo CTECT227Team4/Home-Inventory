@@ -7,19 +7,27 @@ $nav_context = "inventory";
 
 require_once "inc/header.inc.php";
 
-$id = $_GET["id"];
+$userID = $_GET["id"];
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
 	$id = $_GET["id"];
 	$type = $_POST["usertypeID"];
-	$password = password_hash($_POST["password"], PASSWORD_DEFAULT);
+	$properties = $_POST["properties"];
+	if (isset($_POST["password"])) $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
 
 	$sql = "UPDATE user SET usertypeID={$type}, password='{$password}' WHERE ID={$id}";
 	$parameters = [$type, $password, $id];
 
-	echo $sql;
-
 	$update_user = writeRecordSet($con, $sql, $parameters);
+
+	foreach ($properties as $property) {
+		$sql = "INSERT INTO user_property (userID, propertyID) VALUES ({$id}, {$property})";
+
+		$parameters = [$userID, $property];
+
+		$update_user_property = writeRecordSet($con, $sql, $parameters);
+	echo $sql;
+	}
 }
 ?>
 
@@ -27,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
 	<div>
 	<br><br><br>
-		<h2>Edit User <?php echo $id; ?></h2>
+		<h2>Edit User <?php echo $userID; ?></h2>
 	<div class="users_table">
 
 		<table>
@@ -41,8 +49,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 				<th>User Type</th>
 			</tr>
 			<?php
-				$sql = "SELECT id, userName, firstName, lastName, email, usertypeID FROM user WHERE id=$id";
-				$parameters = [$id];
+				$sql = "SELECT id, userName, firstName, lastName, email, usertypeID FROM user WHERE id=$userID";
+				$parameters = [$userID];
 
 				$users = getRecordset($con,$sql,$parameters);
 				foreach ($users as $user) {
@@ -73,10 +81,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
 			$sql = "SELECT propertyID, name, address, zip, description FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN user u ON u.ID = up.userID WHERE up.userID = ?";
 
-				$parameters = [$id];
+				$parameters = [$userID];
 
-				$properties = getRecordset($con,$sql,$parameters);
-				foreach ($properties as $property) {
+				$this_user_properties = getRecordset($con,$sql,$parameters);
+				foreach ($this_user_properties as $property) {
 					echo "<tr>";
 					foreach ($property as $property_info) {
 						echo "<td>" . $property_info . "</td>";
@@ -89,8 +97,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 		</table>
 		</div>
 
-		<form action="edit_user.php?id=<?php echo $id; ?>" method="POST">
-			<fieldset>
+		<form action="edit_user.php?id=<?php echo $userID; ?>" method="POST">
+			<!-- <fieldset> -->
+
 				<label for="usertypeID">User Type:</label><br>
 				<input type="radio" name="usertypeID" value="1" checked>User<br>
 				<input type="radio" name="usertypeID" value="2">Tech Support<br>
@@ -103,8 +112,29 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 				<label for="verify_password">Verify New Password:</label><br>
 				<input type="password" name="verify_password"><br>
 
+				<div class="checkboxes">
+					<br>
+					<?php 
+
+					$sql = "SELECT propertyID, name, address, zip FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN user u ON u.ID = up.userID WHERE up.userID != ?";
+
+					$all_properties = getRecordset($con,$sql,$parameters);
+					foreach ($all_properties as $property) {
+						// foreach ($property as $property_info) {
+							echo "<input type=\"checkbox\" name=\"properties[]\" value=\"" . $property['propertyID'] . "\">" . $property["name"];
+
+							// echo $property_info;
+						// }
+						echo "<br>";
+					}
+
+					 ?>
+					 </div>
+
 				<input type="submit" name="submit" value="Update User">
-			</fieldset>
+
+
+			<!-- </fieldset> -->
 		</form>
 
 	</div>
