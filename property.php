@@ -7,11 +7,36 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 			function packform() {
 				return $('form#add_property').serializeJSON();
 			}
+			
+			function getazip(zipcode) {
+				if (zipcode > 0) {
+					alert (zipcode);
+					$.getJSON("main.php?F=15&zipcode=" + zipcode, function(obj) { // Fill in categegories, 1 is property
+						$.each(obj.zipcode, function(key, value) {
+							$("#" + value.ID).val(value.name);
+						});		
+						// more filling in stuff
+					});
+				}
+			}
 
 	   		$(document).ready(function() {
-	 	  		$(function() {
+				$("#zip").blur(function() {
+					getazip(this.value);
+				});
+				
+	 	  		$.getJSON("main.php?F=16&parenttype=1", function(obj) { // Fill in categegories, 1 is item
+					$("#categoryid").empty(); // Clear the list each call
+					$.each(obj.categories, function(key, value) {
+						$("#categoryid").append("<option value=" + value.ID + ">" + value.name  + "</option>");
+					});		
+					//getazip(90210);
+				});
+				
+				$(function() {
 	 	    		$( "#tabs" ).tabs();
 	 	  		});   // end jquery ui tabs plugin
+				
 	 	  		$(function() {
 	 	    		$( "#resizable resizable2 resizable3 resizable" ).resizable({
 	 	      			handles: "se"
@@ -61,12 +86,8 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 					<input id="state" type="text" name="state">       
 				</p>
 				<p class="tab_one_wide">
-					<label for="property_category">Category:</label>
-					<select name="property_category" id="categoryid">
-						<option value="-">-Select a Property Category-</option>
-						<option value="project_category">This needs to propagate from database</option>
-						<option value="add_new_category">Add New Category</option>
-					</select>
+					<label for="categoryid">Category:</label>
+					<select name="categoryid" id="categoryid"></select>
 				</p>
 				<p class="tab_one_wide short">      <!--  makes two inputs on one line -->
 					<label for="year_built">Year Built:</label>

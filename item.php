@@ -58,11 +58,6 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 				});
 			}
 
-			$("#propertyid").change(function () {
-				if (this.value == -1) window.open("property.php","_self")
-				else getaroom("main.php?F=14&propertyid=" + this.value, 0);
-			});
-				
 	   		$(document).ready(function() {
 				$.getJSON("main.php?F=16&parenttype=4", function(obj) { // Fill in categegories, 4 is item
 					$("#categoryid").empty(); // Clear the list each call
@@ -72,7 +67,12 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 					fillproperties();
 				});
 
-	 	  		$(function() {
+				$("#propertyid").change(function () {
+					if (this.value == -1) window.open("property.php","_self")
+					else getaroom("main.php?F=14&propertyid=" + this.value, 0);
+				});
+				
+				$(function() {
 	 	    		$( "#tabs" ).tabs();
 	 	  		});   // end jquery ui tabs plugin
 				
