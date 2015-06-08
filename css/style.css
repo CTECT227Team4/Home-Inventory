@@ -540,7 +540,6 @@ margin-top: -10px;
 	color: #333333;
 	font-size: 1rem;
 	outline: 2px solid #90C32E;
-	padding: 5px;
 	border: none;
 }
 .viewwidget button {
@@ -699,10 +698,18 @@ margin-top: -10px;
 	overflow: hidden;
 }
 
-p.centered_button {
+.centered_button {
 	display: block;
 	text-align: center;
 	clear: both;
+}
+
+.centered_button button {
+	padding: 5px 20px;
+	background-color: #D7FE8B;            /* Light Green   */;
+	color: #333333;
+	font-size: 1rem;
+	border: 2px solid #90C32E;
 }
 
 .simple_tooltip i{
@@ -732,24 +739,22 @@ p.centered_button {
 	top: 150px;
 }
 
-.scan_under_construction {
+p.scan_under_construction {
 	position: absolute;
 	right: 20px;
 	top: 183px;
-	font-size: 10px;
-	line-height: 14px;
+	font-size: 8px;
 	color: #333333;	
 }
 .scan_under_construction img {
 	width: 1rem;
 }
 
-
 span img {
 	width: 1rem;
 }
 
-@media screen and (max-width:950px) {
+/*@media screen and (max-width:950px) {
 
 	.tab_one_wide label, .tab_two_wide label, .tab_two_long_wide label, .tab_one_wide_text label, .tab_one_xwide label {
 	    width: 35%;
@@ -760,7 +765,7 @@ span img {
 	  	width: 60%;
 	  	margin-bottom: 20px;
 	}
-}
+}*/
 
 /*             ----------------------------------   POP-UP PHOTO  -----------------------------------         */
 

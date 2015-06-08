@@ -212,7 +212,7 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 					<p> Add the multimedia grid </p>
 					<p><button class="add_file"><a href="#">Add File</a></button></p>
 					<p><button class="scan_file"><a href="#">Scan Photo</a></button></p>
-					<p class="scan_under_construction"><img src="images/under-construction.png" alt="under construction icon"> Under <br>Construction </p>
+					<p class="scan_under_construction"><img src="images/under-construction.png" alt="under construction icon"> Under Construction </p>
 				</div>   <!-- end of tabs3 -->
 
 				<div id="tabs-4" class="documents_tab tabs_nav">
@@ -220,7 +220,7 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 					<p> Add the multimedia grid </p>
 					<p><button class="add_file"><a href="#">Add File</a></button></p>
 					<p><button class="scan_file"><a href="#">Scan Photo</a></button></p>
-					<p class="scan_under_construction"><img src="images/under-construction.png" alt="under construction icon"> Under <br>Construction </p>
+					<p class="scan_under_construction"><img src="images/under-construction.png" alt="under construction icon"> Under Construction </p>
 				</div>    <!-- end of tabs4 -->
 
 				<div id="tabs-5" class="warranty_tab tabs_nav">
@@ -286,8 +286,7 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 				</div>	  <!-- end of tabs7 -->	
 
 					<p class="centered_button">
-						<button type="button" onclick="alert(packform())">Save</button>
-						<input type="submit" value="Submit"  id="add_item_submit">
+						<button type="button" onclick="alert(packform())" id="add_item_submit">Save</button>
 					</p>		
 			</form>   <!--  end of form -->
 		</div>	<!-- end of tabs -->	
