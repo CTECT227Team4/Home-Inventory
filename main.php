@@ -225,7 +225,7 @@ try {
 				break;
 			case 12: // Get list of properties for drop down
 				echo '{"properties":[{"ID":"0","name":"-Select a Property-"},';
-				jsonspew ($con, "SELECT ID, name FROM property p INNER JOIN user_property up ON p.ID = up.propertyID WHERE up.userID = ?", array($userid));
+				jsonspew ($con, "SELECT ID, name FROM property p INNER JOIN user_property up ON p.ID = up.propertyID WHERE name <> '' AND name IS NOT NULL AND up.userID = ?", array($userid));
 				echo ',{"ID":"-1","name":"-Add a Property-"}]}';
 				break;
 			case 13: // Get list of sections for drop down
