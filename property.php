@@ -123,7 +123,7 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 				<p> Add the multimedia grid </p>
 				<p><button class="add_file"><a href="#">Add File</a></button></p>
 				<p><button class="scan_file"><a href="#">Scan Photo</a></button></p>
-				<p class="scan_under_construction"><img src="images/under-construction.png" alt="under construction icon"> Under <br>Construction </p>
+				<p class="scan_under_construction"><img src="images/under-construction.png" alt="under construction icon"> Under Construction </p>
 		</div>    <!-- end tab 3 -->
 
 		<div id="tabs-4" class="documents_tab tabs_nav">
@@ -131,7 +131,7 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 				<p> Add the multimedia grid </p>
 				<p><button class="add_file"><a href="#">Add File</a></button></p>
 				<p><button class="scan_file"><a href="#">Scan Photo</a></button></p>
-				<p class="scan_under_construction"><img src="images/under-construction.png" alt="under construction icon"> Under <br>Construction </p> 
+				<p class="scan_under_construction"><img src="images/under-construction.png" alt="under construction icon"> Under Construction </p> 
 		</div>     <!-- end tab 4 -->
 
 		<div id="tabs-5" class="notes_tab tabs_nav">

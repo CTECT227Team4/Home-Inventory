@@ -71,8 +71,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 				<p class="forgot">
 					<button class="forgotten"><a href="request_pw_reset.php">Forgotten your password or username?</a></button>
 				</p>
-				<p>
-					<input type="submit" value="Submit" class="centered_button" id="submit" name="submit">
+				<p class="centered_button">
+					<input type="submit" value="Submit" id="submit" name="submit">
 				</p>
 			</form>
 		</div>    <!-- end of login_wrapper -->
