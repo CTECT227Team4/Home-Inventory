@@ -13,12 +13,36 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 			function packform() {
 				return $('form#add_item').serializeJSON();
 			}
+		
+			function getaroom(url, roomid) { // Get list of rooms for drop down
+				$.getJSON(url, function(obj) {
+					$("#roomid").empty(); // Clear the list each call
+					$.each(obj.rooms, function(key, value) { // Go through JSON return and append all elements
+						$("#roomid").append("<option value=" + value.ID + ">" + value.name + "</option>");
+					});
+					$("#roomid").val(roomid); // After the list is filled use the passed in roomid
+				});
+			}
 
+			function getasection(url, sectionid) { // Get list of sections for drop down
+				$.getJSON(url, function(obj) {
+					$("#sectionid").empty(); // Clear the list each call
+					$.each(obj.sections, function(key, value) { // Go through JSON return and append all elements
+						$("#sectionid").append("<option value=" + value.ID + ">" + value.name + "</option>");
+					});
+					$("#sectionid").val(sectionid); // After the list is filled use the passed in roomid
+				});
+			}
+			
 			function populate(url) { // Fill in form values
-				if (userid != 0 && itemid != 0) {
+				if (userid != 0 && sectionid != 0) {
 					$.getJSON(url, function(obj) {
+						var propertyid = 0; // Default to 0, cache for later
 						$.each(obj.Item, function(key, value) {
-							$("#" + key).val(value);
+							if (key == "propertyid") propertyid = value; // Cache the propertyid value for the following line
+							if (key == "roomid") getaroom("main.php?F=14&propertyid=" + propertyid, value);
+							if (key == "sectionid") getasection("main.php?F=13&propertyid=" + propertyid, value);
+							else $("#" + key).val(value);
 						});
 					});
 				}
@@ -34,6 +58,11 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 				});
 			}
 
+			$("#propertyid").change(function () {
+				if (this.value == -1) window.open("property.php","_self")
+				else getaroom("main.php?F=14&propertyid=" + this.value, 0);
+			});
+				
 	   		$(document).ready(function() {
 				$.getJSON("main.php?F=16&parenttype=4", function(obj) { // Fill in categegories, 4 is item
 					$("#categoryid").empty(); // Clear the list each call
@@ -106,17 +135,17 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 						<input id="modelnumber" type="text" name="modelnumber">    
 					</p>
 					<p class="tab_two_wide">      <!--  makes two inputs on one line -->
-						<label for="serialNumber">Serial #:</label>
-						<input id="serialNumber" type="text" name="serialNumber">       
+						<label for="serialnumber">Serial #:</label>
+						<input id="serialnumber" type="text" name="serialnumber">
 					</p>
 					<p class="tab_two_wide">     <!--  makes two inputs on one line -->
 						<label for="condition">Condition:  </label>
 						<select name="condition" id="condition">
 							<option value="-">-Select a Condition-</option>
-							<option value="New">New</option>
-							<option value="Excellent">Excellent</option>
-							<option value="Good">Good</option>
-							<option value="Poor">Poor</option>
+							<option value="1">New</option>
+							<option value="2">Excellent</option>
+							<option value="3">Good</option>
+							<option value="4">Poor</option>
 						</select>
 					</p>
 					<p class="tab_two_wide">      <!--  makes two inputs on one line -->
@@ -125,7 +154,7 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 					</p>
 					<p class="tab_one_wide_text">     
 						<label for="description1">Description:</label>
-						<textarea id="resizable" name="description1" ></textarea>
+						<textarea id="description1" name="description1" ></textarea>
 					</p>				
 				</div>  <!-- end of tabs 1 -->
 
@@ -144,8 +173,8 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 							<input id="purchasedfrom" type="text" name="purchasedfrom">       
 						</p>
 						<p class="tab_one_wide">      <!--  makes two inputs on one line -->
-							<label for="paymentMethod">Paid for With:  <span class="simple-tooltip" title="The method which you paid for the item, i.e., credit card, etc."><img src="images/info.png"></span></label>
-							<input id="paymentMethod" type="text" name="paymentMethod">       
+							<label for="paymentmethod">Paid for With:  <span class="simple-tooltip" title="The method which you paid for the item, i.e., credit card, etc."><img src="images/info.png"></span></label>
+							<input id="paymentmethod" type="text" name="paymentmethod">
 						</p>
 						<p class="tab_one_wide">      <!--  makes two inputs on one line -->
 							<label for="estimated_value">Est. Replacement:  <span class="simple-tooltip" title="This is your best guess of what it would cost to replace this item."><img src="images/info.png"></span></label>
@@ -167,13 +196,13 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 						<label for="appraisal_attached">Appraisal Documents:</label>
 							<select name="appraisal_attached" id="appraisal_attached">
 								<option value="-">-Is a Copy of the Appraisal Attached in Documents?-</option>
-								<option value="Yes">Yes</option>
-								<option value="No">No</option>
+								<option value="1">Yes</option>
+								<option value="0">No</option>
 							</select>
 						</p>
 						<p class="tab_one_wide_text">     
 							<label for="description2">Description:</label>
-							<textarea id="resizable2" name="description2" ></textarea>
+							<textarea id="description2" name="description2" ></textarea>
   						</p>	
 
 				</div>   <!-- end of tabs2 -->
@@ -199,24 +228,24 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 						<label for="warranty_question">Warranty:</label>
 							<select name="warranty_question" id="warranty_question">
 								<option value="-">-Is a Warranty in Effect Now?-</option>
-								<option value="Yes">Yes</option>
-								<option value="No">No</option>
+								<option value="1">Yes</option>
+								<option value="0">No</option>
 							</select>
 						</p>
 						<p class="tab_one_wide">      <!--  makes two inputs on one line -->
-							<label for="warrantyExpirationDate">Expiration Date:</label>
-							<input id="warrantyExpirationDate" type="text" name="warrantyExpirationDate">
+							<label for="warrantyexpirationdate">Expiration Date:</label>
+							<input id="warrantyexpirationdate" type="text" name="warrantyexpirationdate">
 						</p>
 						<p class="tab_one_wide">      <!--  makes two inputs on one line -->
-							<label for="warranty_type">Type of Warranty:  <span class="simple-tooltip" title="Examples -- lifetime, extended, etc."><img src="images/info.png"></span></label>
-							<input id="warranty_type" type="text" name="warranty_type">       
+							<label for="warrantytype">Type of Warranty:  <span class="simple-tooltip" title="Examples -- lifetime, extended, etc."><img src="images/info.png"></span></label>
+							<input id="warrantytype" type="text" name="warrantytype">
 						</p>
 						<p class="tab_one_wide">     <!--  makes two inputs on one line -->
 						<label for="warranty_attached">Warranty Documents:</label>
 							<select name="warranty_attached" id="warranty_attached">
 								<option value="-">-Is a Copy of the Warranty Attached in Documents?-</option>
-								<option value="Yes">Yes</option>
-								<option value="No">No</option>
+								<option value="1">Yes</option>
+								<option value="0">No</option>
 							</select>
 						</p>
 				</div>	  <!-- end of tabs5 -->
@@ -239,19 +268,19 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 						<label for="repair_attached">Repair Documents:</label>
 							<select name="repair_attached" id="repair_attached">
 								<option value="-">-Is a Copy of the Repair Receipt Attached in Documents?-</option>
-								<option value="Yes">Yes</option>
-								<option value="No">No</option>
+								<option value="1">Yes</option>
+								<option value="0">No</option>
 							</select>
 						</p>
 						<p class="tab_one_wide_text">      <!--  makes two inputs on one line -->
 							<label for="repair_description3">Repair Description:</label>
-							<textarea id="resizable3" name="repair_description3"> </textarea>      
+							<textarea id="repair_description3" name="repair_description3"> </textarea>      
 						</p>
 				</div>	<!-- end of tabs6 --> 
 				<div id="tabs-7" class="notes_tab tabs_nav">
 					<p class="tab_one_wide_text">     
 						<label for="general_notes">Notes:</label>
-						<textarea id="resizable4" name="general_notes" ></textarea>
+						<textarea id="general_notes" name="general_notes" ></textarea>
 						 
 					</p>	 
 				</div>	  <!-- end of tabs7 -->	
