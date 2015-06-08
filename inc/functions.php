@@ -235,7 +235,7 @@ abstract class AzObject { // Abstract base class to parse JSON and put it into a
 	
 	public function write($con) {
 		$vars = array_keys(get_object_vars($this)); // Get just the var names
-		if ($this->ID) { // ID supplied, do an update
+		if ($this->ID > 0) { // ID supplied, do an update
 			$sql = 'UPDATE ' . get_class($this) . ' SET ';
 			foreach ($vars AS $key) {
 				$sql .= "`$key` = ?,";
@@ -253,7 +253,7 @@ abstract class AzObject { // Abstract base class to parse JSON and put it into a
 		}
 
 		try {
-			//echo sqlparms($sql, $vars);
+			echo sqlparms($sql, $vars);
 			//echo_r($vars);
 			$sql = sqlparms($sql, $vars); // Completely unsafe, PHP's type handling is so completely fucked up!
 			writeRecordset($con, $sql, array());
@@ -304,10 +304,10 @@ class Section extends AzObject { // object to hold section record
 
 class Room extends AzObject { // object to hold room record
 	var $ID;
-	var $propertyID;
+	var $propertyid = 0;
 	var $name;
 	var $description;
-	var $categoryID;
+	var $categoryid = 0;
 }
 
 class Item extends AzObject { // object to hold item record

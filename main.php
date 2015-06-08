@@ -192,16 +192,8 @@ try {
 				redirect_to("landing.php");
 				break;
 			case 10: // WriteItem
-				// Without ID, do insert
-				//$json = '{"propertyID":"1","roomID":"1","sectionID":"1","name":"Test Thing","categoryID":"1","description":"Some testing.","manufacturer":"Sony","brand":"Sony","modelNumber":"ABC123","serialNumber":"123456","condition":"1","beneficiary":"None","purchaseDate":"2015-1-1","purchasePrice":"200","purchasedFrom":"store","paymentMethod":"VISA","warrantyExpirationDate":"2017-1-1","warrantyType":"good type"}';
-				// With ID, do update
-				//$json = '{"ID":"1","propertyID":"1","roomID":"1","sectionID":"1","name":"Test Thing","categoryID":"1","description":"Some testing.","manufacturer":"Sony","brand":"Sony","modelNumber":"ABC123","serialNumber":"123456","condition":"1","beneficiary":"None","purchaseDate":"2015-1-1","purchasePrice":"200","purchasedFrom":"store","paymentMethod":"VISA","warrantyExpirationDate":"2017-1-1","warrantyType":"good type"}';
-				// Testing for delete, only an ID is needed
-				//$json = '{"ID":"1"}';
-				//$json = '{"ID":"0","name":"This is a test","propertyid":"0","categoryid":"0","manufacturer":"","brand":"","modelnumber":"","serialnumber":"","condition":"0","beneficiary":"","description1":"","purchasedate":"","purchaseprice":"","purchasedfrom":"","paymentmethod":"","estimated_value":"","appraised_value":"","appraisal_date":"","appraiser":"","appraisal_attached":"0","description2":"","warranty_question":"0","warrantyexpirationdate":"","warrantytype":"","warranty_attached":"0","repaired_by":"","repair_date":"","repair_cost":"","repair_attached":"0","repair_description3":" ","general_notes":""}';
 				$item = new Item($json);
 				echo $item->write($con);
-				//$item->delete($con);
 				break;
 			case 11: // GetCategories
 				// locahost/az/main.php?F=11&parentType=1
@@ -234,14 +226,14 @@ try {
 				// No idea why this line doesn't work, no time to figure it out.
 				//jsonspew ($con, "SELECT s.ID AS ID, s.name AS name FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN section s ON p.ID = s.propertyID WHERE  up.userID = ? AND p.ID = ?", array($userid, $propertyid));
 				jsonspew ($con, "SELECT s.ID AS ID, s.name AS name FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN section s ON p.ID = s.propertyID WHERE  up.userID = ? AND p.ID = " . $propertyid, array($userid));
-				echo ',{"ID":"-1","name":"-Add a Section-"}]}';
+				echo ',{"ID":"99999","name":"-Add a Section-"}]}';
 				break;
 			case 14: //getRooms for dropdown
 				echo '{"rooms":[{"ID":"0","name":"-Select a Room-"},';
 				// No idea why this line doesn't work, no time to figure it out.
 				//jsonspew ($con, "SELECT r.ID, r.name FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN room r ON r.propertyID = p.ID WHERE up.userID = ? AND p.ID = ? ORDER BY r.ID ASC", array($userid, $propertyid));
 				jsonspew ($con, "SELECT r.ID, r.name FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN room r ON r.propertyID = p.ID WHERE up.userID = ? AND p.ID = " . $propertyid, array($userid));
-				echo ',{"ID":"-1","name":"-Add a Room-"}]}';
+				echo ',{"ID":"99999","name":"-Add a Room-"}]}';
 				break;
 			case 15: // get City/State/County from zip code
 				echo '{"zipcode":';
@@ -251,7 +243,7 @@ try {
 			case 16: // Get categories for dropdown
 				echo '{"categories":[{"ID":"0","name":"-Select a Category-"},';
 				jsonspew ($con, "SELECT ID, description AS name FROM category WHERE parenttype = ? AND userid IN (1," . $userid . ")", array($parenttype));
-				echo ',{"ID":"-1","name":"-Add a Category-"}]}';
+				echo ',{"ID":"99999","name":"-Add a Category-"}]}';
 				break;
 			case 17: // GetEditSection
 				$section = new Section();
@@ -272,6 +264,19 @@ try {
 				$property = new Property();
 				$property->ID = $propertyid;
 				echo $property->getjson($con);			
+				break;
+			case 21: // WriteRoom
+			$json = '{"ID":"0","name":"Test room","propertyid":"1","categoryid":"10","description":"Testing 123","notes":""}';
+				$room = new Room($json);
+				echo $room->write($con);
+				break;
+			case 22: // WriteSection
+				$section = new Section($json);
+				echo $section->write($con);
+				break;
+			case 23: // WriteProperty
+				$property = new Property($json);
+				echo $property->write($con);
 				break;
 			default: 
 				echo '{"error":"1","text":"Unknown function."}';

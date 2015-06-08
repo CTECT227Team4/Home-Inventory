@@ -12,14 +12,13 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 
 			function packform() {
 				var json = $('form#add_item').serializeJSON();
-				alert (json);
+				//alert (json);
 				$.ajax ({type: "POST", dataType: "text", url: 'main.php?F=10', 
 					data: 'json=' + json,
 					error: function (jqXHR, status, errormsg) {
 						alert ("Error\nStatus:" + status + "\nError Msg: " + errormsg);
 					},
 					success: function (data, status) {
-						//var obj = JSON.pas
 						alert("Data: " + data + "\nStatus: " + status); 
 					}
 				})

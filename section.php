@@ -58,7 +58,7 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 				});
 				
 				$("#propertyid").change(function () {
-					if (this.value == -1) window.open("property.php","_self");
+					if (this.value == 99999) window.open("property.php","_self");
 					else getaroom("main.php?F=14&propertyid=" + this.value, 0);
 				});
 
@@ -137,7 +137,8 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 				</div>	  <!-- end of tabs4 -->	
 
 					<p class="centered_button">
-						<button type="button" onclick="alert(packform())" id="add_property_submit">Save</button>
+						<button type="button" onclick="alert(packform())">Save</button>
+						<input type="submit" value="Submit"  id="add_item_submit">
 					</p>		
 			</form>   <!--  end of form -->
 		</div>	<!-- end of tabs -->	

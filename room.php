@@ -6,7 +6,17 @@ $page_heading = ($roomid ? "Edit" : "Add") . " Room"; //sets heading to appear o
 require_once "inc/header.inc.php";
 ?><script>
 function packform() {
-	return $('form#add_room').serializeJSON();
+	var json = $('form#add_room').serializeJSON();
+	//alert (json);
+	$.ajax ({type: "POST", dataType: "text", url: 'main.php?F=21', 
+		data: 'json=' + json,
+		error: function (jqXHR, status, errormsg) {
+			alert ("Error\nStatus:" + status + "\nError Msg: " + errormsg);
+		},
+		success: function (data, status) {
+			alert("Data: " + data + "\nStatus: " + status); 
+		}
+	})
 }
 
 $(document).ready(function() {
@@ -42,7 +52,7 @@ $(document).ready(function() {
 	});
 
 	$("#propertyid").change(function () {
-		if (this.value == -1) window.open("property.php","_self");
+		if (this.value == 99999) window.open("property.php","_self");
 	});
 	
 	$( "#tabs" ).tabs();
@@ -59,6 +69,7 @@ $(document).ready(function() {
 
 		<div id="tabs">
 			<form method="Post" action="main.php?F=8" id="add_room">
+			<input id="ID" type="hidden" name="ID" value="<?=$roomid?>">
 			  	<ul>
 				    <li><a href="#tabs-1">Room</a></li>
 				    <li><a href="#tabs-2">Multimedia</a></li>
