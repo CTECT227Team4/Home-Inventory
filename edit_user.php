@@ -9,6 +9,18 @@ require_once "inc/header.inc.php";
 
 $userID = $_GET["id"];
 
+/* ==== Check if REMOVE PROPERTY ==== */
+if (isset($_GET["action"]) && $_GET["action"] == "remove") {
+	$propertyID = $_GET["property"];
+
+	$sql = "DELETE FROM user_property WHERE userID = {$userID} AND propertyID = {$propertyID} LIMIT 1";
+
+	$parameters = [$userID, $propertyID];
+
+	writeRecordSet($con, $sql, $parameters);
+}
+
+/* ==== Check if POST ==== */
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
 	$id = $_GET["id"];
 	$type = $_POST["usertypeID"];
@@ -49,6 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 				<th>User Type</th>
 			</tr>
 			<?php
+				/* ==== Get/output information about this user ==== */
 				$sql = "SELECT id, userName, firstName, lastName, email, usertypeID FROM user WHERE id=$userID";
 				$parameters = [$userID];
 
@@ -69,16 +82,17 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 	<div class="users_table">
 
 		<table>
-			<tr><th colspan="5"><h3>Properties</h3></th></tr>
+			<tr><th colspan="6"><h3>Properties</h3></th></tr>
 			<tr>
 				<th>Property ID</th>
 				<th>Name</th>
 				<th>Address</th>
 				<th>Zip Code</th>
 				<th>Description</th>
+				<th>Action</th>
 			</tr>
 			<?php
-
+			/*==== Echo properties this user currently has with option to remove each one ===*/
 			$sql = "SELECT propertyID, name, address, zip, description FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN user u ON u.ID = up.userID WHERE up.userID = ?";
 
 				$parameters = [$userID];
@@ -89,6 +103,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 					foreach ($property as $property_info) {
 						echo "<td>" . $property_info . "</td>";
 					}
+					echo "<td><a href=\"edit_user.php?id={$userID}&property={$property["propertyID"]}&action=remove\">Remove</a>";
 					echo "</tr>";
 				}
 
@@ -114,8 +129,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
 				<div class="checkboxes">
 					<br>
-					<?php 
-
+					<label for="properties">Add Properties:</label>
+					<br>
+					<?php
+					/* ==== Echo all other properties as check boxes.  Check to add user to this property. ====*/
 					$sql = "SELECT propertyID, name, address, zip FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN user u ON u.ID = up.userID WHERE up.userID != ?";
 
 					$all_properties = getRecordset($con,$sql,$parameters);
