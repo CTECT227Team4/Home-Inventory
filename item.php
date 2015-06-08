@@ -11,7 +11,18 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 			var itemid = <?=$itemid?>;
 
 			function packform() {
-				return $('form#add_item').serializeJSON();
+				var json = $('form#add_item').serializeJSON();
+				alert (json);
+				$.ajax ({type: "POST", dataType: "text", url: 'main.php?F=10', 
+					data: 'json=' + json,
+					error: function (jqXHR, status, errormsg) {
+						alert ("Error\nStatus:" + status + "\nError Msg: " + errormsg);
+					},
+					success: function (data, status) {
+						//var obj = JSON.pas
+						alert("Data: " + data + "\nStatus: " + status); 
+					}
+				})
 			}
 		
 			function getaroom(url, roomid) { // Get list of rooms for drop down
@@ -68,7 +79,7 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 				});
 
 				$("#propertyid").change(function () {
-					if (this.value == -1) window.open("property.php","_self")
+					if (this.value == 99999) window.open("property.php","_self");
 					else getaroom("main.php?F=14&propertyid=" + this.value, 0);
 				});
 				
@@ -90,6 +101,7 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 
 		<div id="tabs">
 			<form method="Post" action="process_add_property.php" id="add_item">
+				<input id="ID" type="hidden" name="ID" value="<?=$itemid?>">
 			  	<ul>
 				    <li><a href="#tabs-1">Item</a></li>
 				    <li><a href="#tabs-2">Value</a></li>
@@ -101,7 +113,6 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 
 			  	</ul>
 			  	<div id="tabs-1" class="item_tab tabs_nav">
-
 		  			<p class="tab_one_wide">
 						<label for="name">Item Name: <span class="simple-tooltip" title="This can be anything that is a meaningful name to you."><img src="images/info.png"></span></label> 
 						<input id="name" type="text" name="name">    
@@ -141,7 +152,7 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 					<p class="tab_two_wide">     <!--  makes two inputs on one line -->
 						<label for="condition">Condition:  </label>
 						<select name="condition" id="condition">
-							<option value="-">-Select a Condition-</option>
+							<option value="0">-Select a Condition-</option>
 							<option value="1">New</option>
 							<option value="2">Excellent</option>
 							<option value="3">Good</option>
@@ -195,9 +206,9 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 						<p class="tab_one_wide">     <!--  makes two inputs on one line -->
 						<label for="appraisal_attached">Appraisal Documents:</label>
 							<select name="appraisal_attached" id="appraisal_attached">
-								<option value="-">-Is a Copy of the Appraisal Attached in Documents?-</option>
+								<option value="0">-Is a Copy of the Appraisal Attached in Documents?-</option>
 								<option value="1">Yes</option>
-								<option value="0">No</option>
+								<option value="2">No</option>
 							</select>
 						</p>
 						<p class="tab_one_wide_text">     
@@ -227,9 +238,9 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 						<p class="tab_one_wide">     <!--  makes two inputs on one line -->
 						<label for="warranty_question">Warranty:</label>
 							<select name="warranty_question" id="warranty_question">
-								<option value="-">-Is a Warranty in Effect Now?-</option>
+								<option value="0">-Is a Warranty in Effect Now?-</option>
 								<option value="1">Yes</option>
-								<option value="0">No</option>
+								<option value="2">No</option>
 							</select>
 						</p>
 						<p class="tab_one_wide">      <!--  makes two inputs on one line -->
@@ -243,9 +254,9 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 						<p class="tab_one_wide">     <!--  makes two inputs on one line -->
 						<label for="warranty_attached">Warranty Documents:</label>
 							<select name="warranty_attached" id="warranty_attached">
-								<option value="-">-Is a Copy of the Warranty Attached in Documents?-</option>
+								<option value="0">-Is a Copy of the Warranty Attached in Documents?-</option>
 								<option value="1">Yes</option>
-								<option value="0">No</option>
+								<option value="2">No</option>
 							</select>
 						</p>
 				</div>	  <!-- end of tabs5 -->
@@ -267,24 +278,23 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 						<p class="tab_one_wide">     <!--  makes two inputs on one line -->
 						<label for="repair_attached">Repair Documents:</label>
 							<select name="repair_attached" id="repair_attached">
-								<option value="-">-Is a Copy of the Repair Receipt Attached in Documents?-</option>
+								<option value="0">-Is a Copy of the Repair Receipt Attached in Documents?-</option>
 								<option value="1">Yes</option>
-								<option value="0">No</option>
+								<option value="2">No</option>
 							</select>
 						</p>
 						<p class="tab_one_wide_text">      <!--  makes two inputs on one line -->
 							<label for="repair_description3">Repair Description:</label>
 							<textarea id="repair_description3" name="repair_description3"> </textarea>      
 						</p>
-				</div>	<!-- end of tabs6 --> 
+				</div><!-- end of tabs6 --> 
 				<div id="tabs-7" class="notes_tab tabs_nav">
 					<p class="tab_one_wide_text">     
 						<label for="general_notes">Notes:</label>
 						<textarea id="general_notes" name="general_notes" ></textarea>
 						 
 					</p>	 
-				</div>	  <!-- end of tabs7 -->	
-
+				</div><!-- end of tabs7 -->
 					<p class="centered_button">
 						<button type="button" onclick="alert(packform())" id="add_item_submit">Save</button>
 					</p>		

@@ -58,7 +58,8 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 				});
 				
 				$("#propertyid").change(function () {
-					getaroom("main.php?F=14&propertyid=" + this.value, 0);
+					if (this.value == -1) window.open("property.php","_self");
+					else getaroom("main.php?F=14&propertyid=" + this.value, 0);
 				});
 
 	 	  		$(function() {

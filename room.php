@@ -41,6 +41,9 @@ $(document).ready(function() {
 		fillproperties();
 	});
 
+	$("#propertyid").change(function () {
+		if (this.value == -1) window.open("property.php","_self");
+	});
 	
 	$( "#tabs" ).tabs();
 	$(function() {

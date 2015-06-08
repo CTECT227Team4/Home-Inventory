@@ -62,7 +62,8 @@
     		// $parameters is passed in as an array, go through it and add them all
 			$stmt = $con->prepare($sql);
 			foreach ($parameters as $parameter) {
-    			$stmt->bindParam($paramcount++, $parameter);
+				$parameter = $parameter . '';
+				$stmt->bindParam($paramcount++, $parameter);
     		}
     		$stmt->execute();
 			//print_r($con->errorInfo());
@@ -246,14 +247,20 @@ abstract class AzObject { // Abstract base class to parse JSON and put it into a
 			array_splice($vars, 0, 1); // Delete the first element (Will be 'ID')
 			$sql = 'INSERT INTO ' . get_class($this) . ' (`' . implode('`,`', $vars) . '`) VALUES (' . str_repeat("?,", count($vars)) . ")";
 			$sql = str_replace("?,)", "?)", $sql); // Remove trailing ',' from str_repeat above
+			$this->brand = "";
 			$vars = array_values(get_object_vars($this)); // Get just the var values
 			array_splice($vars, 0, 1); // Delete the first element, just a blank ID field
 		}
 
 		try {
-			writeRecordset($con, $sql, $vars);
+			//echo sqlparms($sql, $vars);
+			//echo_r($vars);
+			$sql = sqlparms($sql, $vars); // Completely unsafe, PHP's type handling is so completely fucked up!
+			writeRecordset($con, $sql, array());
+			//writeRecordset($con, $sql, $vars);  // Correct way to handle it if PHP's typing can be figured out.
+			return ('"error":"0","text":"Write successful."');
 		} catch (Exception $e) {
-			echo "Failed: " . $e->getMessage();
+			return ('"error":"' . $e->getCode() . '","text":"' . $e->getMessage() . '"');
 		}
 	}
 }
@@ -305,24 +312,24 @@ class Room extends AzObject { // object to hold room record
 
 class Item extends AzObject { // object to hold item record
 	var $ID;
-	var $propertyID;
-	var $roomID;
-	var $sectionID;
+	var $propertyid = 0;
+	var $roomid = 0;
+	var $sectionid = 0;
 	var $name;
-	var $categoryID;
+	var $categoryid;
 	var $manufacturer;
 	var $brand;
 	var $modelnumber;
-	var $serialNumber;
+	var $serialnumber;
 	var $condition;
 	var $beneficiary;
 	var $description1;
 	var $purchasedate;
 	var $purchaseprice;
 	var $purchasedfrom;
-	var $paymentMethod;
-	var $warrantyExpirationDate;
-	var $warrantyType;
+	var $paymentmethod;
+	var $warrantyexpirationdate;
+	var $warrantytype;
 	var $warranty_attached;
 	var $repaired_by;
 	var $repair_date;

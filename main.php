@@ -26,7 +26,7 @@ if (isset($_GET['itemid'])) $itemid = (int) $_GET['itemid'];
 if (isset($_GET['parenttype'])) $parenttype = (int) $_GET['parenttype'];
 if (isset($_GET['zipcode'])) $zipcode = (int) $_GET['zipcode'];
 
-header('Content-Type: application/json');
+//header('Content-Type: application/json');
 // Moved $firstTime initialization to the top
 $firstTime = true;
 
@@ -193,13 +193,14 @@ try {
 				break;
 			case 10: // WriteItem
 				// Without ID, do insert
-				$json = '{"propertyID":"1","roomID":"1","sectionID":"1","name":"Test Thing","categoryID":"1","description":"Some testing.","manufacturer":"Sony","brand":"Sony","modelNumber":"ABC123","serialNumber":"123456","condition":"1","beneficiary":"None","purchaseDate":"2015-1-1","purchasePrice":"200","purchasedFrom":"store","paymentMethod":"VISA","warrantyExpirationDate":"2017-1-1","warrantyType":"good type"}';
+				//$json = '{"propertyID":"1","roomID":"1","sectionID":"1","name":"Test Thing","categoryID":"1","description":"Some testing.","manufacturer":"Sony","brand":"Sony","modelNumber":"ABC123","serialNumber":"123456","condition":"1","beneficiary":"None","purchaseDate":"2015-1-1","purchasePrice":"200","purchasedFrom":"store","paymentMethod":"VISA","warrantyExpirationDate":"2017-1-1","warrantyType":"good type"}';
 				// With ID, do update
 				//$json = '{"ID":"1","propertyID":"1","roomID":"1","sectionID":"1","name":"Test Thing","categoryID":"1","description":"Some testing.","manufacturer":"Sony","brand":"Sony","modelNumber":"ABC123","serialNumber":"123456","condition":"1","beneficiary":"None","purchaseDate":"2015-1-1","purchasePrice":"200","purchasedFrom":"store","paymentMethod":"VISA","warrantyExpirationDate":"2017-1-1","warrantyType":"good type"}';
 				// Testing for delete, only an ID is needed
 				//$json = '{"ID":"1"}';
+				//$json = '{"ID":"0","name":"This is a test","propertyid":"0","categoryid":"0","manufacturer":"","brand":"","modelnumber":"","serialnumber":"","condition":"0","beneficiary":"","description1":"","purchasedate":"","purchaseprice":"","purchasedfrom":"","paymentmethod":"","estimated_value":"","appraised_value":"","appraisal_date":"","appraiser":"","appraisal_attached":"0","description2":"","warranty_question":"0","warrantyexpirationdate":"","warrantytype":"","warranty_attached":"0","repaired_by":"","repair_date":"","repair_cost":"","repair_attached":"0","repair_description3":" ","general_notes":""}';
 				$item = new Item($json);
-				$item->write($con);				
+				echo $item->write($con);
 				//$item->delete($con);
 				break;
 			case 11: // GetCategories
@@ -226,7 +227,7 @@ try {
 			case 12: // Get list of properties for drop down
 				echo '{"properties":[{"ID":"0","name":"-Select a Property-"},';
 				jsonspew ($con, "SELECT ID, name FROM property p INNER JOIN user_property up ON p.ID = up.propertyID WHERE name <> '' AND name IS NOT NULL AND up.userID = ?", array($userid));
-				echo ',{"ID":"-1","name":"-Add a Property-"}]}';
+				echo ',{"ID":"99999","name":"-Add a Property-"}]}';
 				break;
 			case 13: // Get list of sections for drop down
 				echo '{"sections":[{"ID":"0","name":"-Select a Section-"},';
