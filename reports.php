@@ -9,6 +9,9 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 		<h3>Reports Available</h3>
 		<ul>
 			<li><a href="print1.php">Inventory By Property</a></li>
+				<p>
+					
+				</p>
 			<li><a href="print2.php">Inventory By Category</a></li>		
 			<li><a href="print3.php">Inventory By Room</a></li>	
 			<li><a href="print4.php">Beneficiary Designations</a></li>
