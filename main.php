@@ -289,15 +289,22 @@ try {
 				-- LEFT JOIN category c ON c.ID = r.categoryID
 				-- WHERE c.parentType = 2 AND up.userID = 24
 				WHERE up.userid = 24*/
+				$sql = "SELECT r.ID, p.name AS Property, r.Name AS Room, r.Description, r.CategoryID, r.Notes FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN room r ON r.propertyID = p.ID WHERE up.userid = ?";
 				echo '{"data":[';
-				$sql = "SELECT r.ID, p.name AS Property, r.Name, r.Description, r.CategoryID, r.Notes FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN room r ON r.propertyID = p.ID WHERE up.userid = ?";
 				jsonspew($con, $sql, array($userid));
 				echo "]}";
 				break;
-				break;
 			case 26: // DataTables Sections
+				$sql = "SELECT s.ID, p.name AS Property, s.Name AS Section, s.roomID, s.Description, s.CategoryID, s.Notes FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN section s ON s.propertyID = p.ID WHERE up.userid = ?";
+				echo '{"data":[';
+				jsonspew($con, $sql, array($userid));
+				echo "]}";
 				break;
 			case 27: // DataTables Items
+				$sql = "SELECT i.ID,i.propertyID,roomID,sectionID,i.`name`,i.categoryID,description1,manufacturer,brand,modelNumber,serialNumber,`condition`,beneficiary,purchaseDate,purchasePrice,purchasedFrom,paymentMethod,warrantyExpirationDate,warrantyType,warranty_attached,repaired_by,repair_date,repair_cost,repair_attached,repair_description3,general_notes,estimated_value,appraised_value,appraisal_date,appraiser,appraisal_attached,description2,warranty_question FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN item i ON i.propertyID = p.ID WHERE up.userid = ?";
+				echo '{"data":[';
+				jsonspew($con, $sql, array($userid));
+				echo "]}";
 				break;				
 			default: 
 				echo '{"error":"1","text":"Unknown function."}';
