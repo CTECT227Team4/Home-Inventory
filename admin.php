@@ -23,17 +23,22 @@ require_once "inc/header.inc.php";
 				<th>Last Name</th>
 				<th>Email Address</th>
 				<th>User Type</th>
+				<th>Insurance Agent</th>
 			</tr>
 
 			<?php
-				$sql = "SELECT id, userName, firstName, lastName, email, usertypeID FROM user";
+				$sql = "SELECT user.id, user.userName, user.firstName, user.lastName, user.email, user.usertypeID, insurance.agent FROM user LEFT JOIN insurance ON user.id=insurance.userID ORDER BY user.id ASC";
 				$parameters = [];
 
 				$users = getRecordset($con,$sql,$parameters);
 				foreach ($users as $user) {
 					echo "<tr>";
 					foreach ($user as $user_info) {
-						echo "<td>" . $user_info . "</td>";
+						if ($user_info == null) {
+							echo "<td>None</td>";
+						} else {
+							echo "<td>" . $user_info . "</td>";
+						}
 					}
 					echo "<td><a href=\"edit_user.php?id={$user["id"]}\">Edit</a></td>";
 					echo "</tr>";
