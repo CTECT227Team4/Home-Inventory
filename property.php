@@ -15,11 +15,10 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 			
 			function getazip(zipcode) {
 				if (zipcode > 0) {
-					alert (zipcode);
 					$.getJSON("main.php?F=15&zipcode=" + zipcode, function(obj) { // Fill in categegories, 1 is property
-						$.each(obj.zipcode, function(key, value) {
-							$("#" + value.ID).val(value.name);
-						});		
+						$("#county").val(obj.zipcode.county);
+						$("#city").val(obj.zipcode.city);
+						$("#state").val(obj.zipcode.state);
 						// more filling in stuff
 					});
 				}
@@ -29,6 +28,7 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 				if (userid != 0 && propertyid != 0) {
 					$.getJSON(url, function(obj) {
 						$.each(obj.Property, function(key, value) {
+							if (key == "zip") getazip(value);
 							$("#" + key).val(value);
 						});
 					});
@@ -136,16 +136,17 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 		<div id="tabs-3" class="multimedia_tab tabs_nav">
 				<h3>Current Photos Attached To This Property:</h3>
 				<p> Add the multimedia grid </p>
-				<p><a href="#"><button class="add_file">Add File</button></a></p>
-				<p><a href="#"><button class="add_file">Scan Photo</button></a></p>
+				<p><button class="add_file"><a href="#">Add File</a></button></p>
+				<p><button class="scan_file"><a href="#">Scan Photo</a></button></p>
 				<p class="scan_under_construction"><img src="images/under-construction.png" alt="under construction icon"> Under Construction </p>
 		</div>    <!-- end tab 3 -->
 
 		<div id="tabs-4" class="documents_tab tabs_nav">
 				<h3>Current Documents Attached To This Property:</h3>
 				<p> Add the multimedia grid </p>
-				<p><a href="#"><button class="add_file">Add File</button></a></p>
-				<p><a href="#"><button class="add_file">Scan Photo</button></a></p>				<p class="scan_under_construction"><img src="images/under-construction.png" alt="under construction icon"> Under Construction </p> 
+				<p><button class="add_file"><a href="#">Add File</a></button></p>
+				<p><button class="scan_file"><a href="#">Scan Photo</a></button></p>
+				<p class="scan_under_construction"><img src="images/under-construction.png" alt="under construction icon"> Under Construction </p> 
 		</div>     <!-- end tab 4 -->
 
 		<div id="tabs-5" class="notes_tab tabs_nav">
