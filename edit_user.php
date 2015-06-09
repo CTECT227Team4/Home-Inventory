@@ -9,6 +9,9 @@ require_once "inc/header.inc.php";
 
 $userID = $_GET["id"];
 
+// 4 = admin
+check_access($userID, 4);
+
 /* ==== Check if REMOVE PROPERTY ==== */
 if (isset($_GET["action"]) && $_GET["action"] == "remove") {
 	$propertyID = $_GET["property"];
