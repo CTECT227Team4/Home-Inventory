@@ -306,7 +306,7 @@ nav {
 	color: #ad102a;     /*   Dark Red color for :link pseudo;  */
 }
 
-#login button, #login_header button, .forgot button {
+#login button, #login_header button, .forgot a {
 	background-color: #D7FE8B;          /*Light Green */
 	color: #333333;
 	font-size: 1.2rem;
