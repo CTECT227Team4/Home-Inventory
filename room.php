@@ -14,7 +14,7 @@ function packform() {
 			alert ("Error\nStatus:" + status + "\nError Msg: " + errormsg);
 		},
 		success: function (data, status) {
-			alert("Data: " + data + "\nStatus: " + status); 
+			alert("Data: " + data + "\nStatus: " + status);
 		}
 	})
 }
@@ -123,7 +123,7 @@ $(document).ready(function() {
 				</div>	  <!-- end of tabs4 -->	
 
 					<p class="centered_button">
-						<button type="button" onclick="alert(packform())" id="add_property_submit">Save</button>
+						<button type="button" onclick="packform()" id="add_property_submit">Save</button>
 					</p>		
 			</form>   <!--  end of form -->
 		</div>	<!-- end of tabs -->	

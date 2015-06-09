@@ -253,14 +253,18 @@ abstract class AzObject { // Abstract base class to parse JSON and put it into a
 		}
 
 		try {
-			echo sqlparms($sql, $vars);
+			$unsafe = true;
+			//echo sqlparms($sql, $vars);
 			//echo_r($vars);
-			$sql = sqlparms($sql, $vars); // Completely unsafe, PHP's type handling is so completely fucked up!
-			writeRecordset($con, $sql, array());
-			//writeRecordset($con, $sql, $vars);  // Correct way to handle it if PHP's typing can be figured out.
-			return ('"error":"0","text":"Write successful."');
+			if ($unsafe) {
+				$sql = sqlparms($sql, $vars); // Completely unsafe, PHP's type handling is so completely fucked up!
+				writeRecordset($con, $sql, array());
+			} else {
+				writeRecordset($con, $sql, $vars);  // Correct way to handle it if PHP's typing can be figured out.
+			}
+			return ('{"errorobj":{"error":"0","text":"Write successful."}}');
 		} catch (Exception $e) {
-			return ('"error":"' . $e->getCode() . '","text":"' . $e->getMessage() . '"');
+			return ('{"error":"' . $e->getCode() . '","text":"' . $e->getMessage() . '"}');
 		}
 	}
 }
@@ -302,11 +306,20 @@ class Section extends AzObject { // object to hold section record
 	var $categoryID;
 }
 
+/*
 class Room extends AzObject { // object to hold room record
 	var $ID;
 	var $propertyid = 0;
 	var $name;
 	var $description;
+	var $categoryid = 0;
+}*/
+
+class Room extends AzObject { // object to hold room record
+	var $ID = 0;
+	var $propertyid = 0;
+	var $name = null;
+	var $description = null;
 	var $categoryid = 0;
 }
 

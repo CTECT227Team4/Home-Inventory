@@ -26,7 +26,7 @@ if (isset($_GET['itemid'])) $itemid = (int) $_GET['itemid'];
 if (isset($_GET['parenttype'])) $parenttype = (int) $_GET['parenttype'];
 if (isset($_GET['zipcode'])) $zipcode = (int) $_GET['zipcode'];
 
-//header('Content-Type: application/json');
+header('Content-Type: application/json');
 // Moved $firstTime initialization to the top
 $firstTime = true;
 
@@ -266,7 +266,6 @@ try {
 				echo $property->getjson($con);			
 				break;
 			case 21: // WriteRoom
-			$json = '{"ID":"0","name":"Test room","propertyid":"1","categoryid":"10","description":"Testing 123","notes":""}';
 				$room = new Room($json);
 				echo $room->write($con);
 				break;
