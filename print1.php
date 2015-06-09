@@ -2,7 +2,7 @@
 $page_title = "Home Inventory - Printable"; //sets title
 $page_heading = "Print Inventory By Property"; //sets heading to appear on page
 
-require_once("/inc/session.php");
+require_once("inc/session.php");
 require_once("../az/inc/functions.php");
 
 if (!isset($_SESSION["userName"]) || !isset($_SESSION["user_id"]) || !isset($_SESSION["logged_in"])) redirect_to("login.php"); 

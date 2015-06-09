@@ -43,7 +43,7 @@ if (isset($_SESSION["user_id"])) $userid = (int) $_SESSION["user_id"];
 				</h1>
 				<h2 id="header_session_subtitle"><?php echo $page_heading; ?></h2>
 			</div>  <!-- end of header_title -->
-			<?php require_once ("/inc/nav.inc.php"); ?>
+			<?php require_once ("inc/nav.inc.php"); ?>
 		</header> <!-- End Header -->
 		<?php if (isset($min_type)) {
 			check_access($userid, $min_type);
