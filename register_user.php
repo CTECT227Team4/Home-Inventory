@@ -1,6 +1,6 @@
 <?php # register_user.php ?>
-<?php require_once("/inc/session.php"); ?>
-<?php require_once("/inc/functions.php") ?>
+<?php require_once("inc/session.php"); ?>
+<?php require_once("inc/functions.php") ?>
 <?php require_once("../azconfig.php"); ?>
 
 <?php
