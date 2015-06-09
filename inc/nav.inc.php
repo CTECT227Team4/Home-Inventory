@@ -1,6 +1,6 @@
 <nav class="no_print">
 	<div class="dropdown">
-	    <button><a href="landing.php">Inventory</a></button>     <!-- trigger button -->
+	    <a href="landing.php"><button>Inventory</button></a>
 	</div>  <!-- end dropdown -->
 
 	<div class="dropdown">
@@ -14,7 +14,7 @@
 	</div>  <!-- end dropdown -->
 
 	<div class="dropdown">
-		<button><a href="reports.php">Reports</a></button>
+		<a href="reports.php"><button>Reports</button></a>
 	</div>  <!-- end dropdown -->
 
 	<div class="dropdown">
