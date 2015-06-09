@@ -136,16 +136,16 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 		<div id="tabs-3" class="multimedia_tab tabs_nav">
 				<h3>Current Photos Attached To This Property:</h3>
 				<p> Add the multimedia grid </p>
-				<p><button class="add_file"><a href="#">Add File</a></button></p>
-				<p><button class="scan_file"><a href="#">Scan Photo</a></button></p>
+				<p><button class="add_file" type="button"><a href="#">Add File</a></button></p>
+				<p><button class="scan_file" type="button"><a href="#">Scan Photo</a></button></p>
 				<p class="scan_under_construction"><img src="images/under-construction.png" alt="under construction icon"> Under Construction </p>
 		</div>    <!-- end tab 3 -->
 
 		<div id="tabs-4" class="documents_tab tabs_nav">
 				<h3>Current Documents Attached To This Property:</h3>
 				<p> Add the multimedia grid </p>
-				<p><button class="add_file"><a href="#">Add File</a></button></p>
-				<p><button class="scan_file"><a href="#">Scan Photo</a></button></p>
+				<p><button class="add_file" type="button"><a href="#">Add File</a></button></p>
+				<p><button class="scan_file" type="button"><a href="#">Scan Photo</a></button></p>
 				<p class="scan_under_construction"><img src="images/under-construction.png" alt="under construction icon"> Under Construction </p> 
 		</div>     <!-- end tab 4 -->
 
