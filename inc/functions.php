@@ -166,7 +166,7 @@
 		$sql = "SELECT * ";
 		$sql .= "FROM user ";
 		$sql .= "WHERE token = '{$token}' ";
-		$sql .= "AND TIME(token_expire) > NOW()";
+		$sql .= "AND TIME(token_expire) < NOW()";
 
 		$parameters = [$token];
 

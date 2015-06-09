@@ -9,12 +9,13 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
 		$token = $_GET["reset"];
 
 		$found_token = find_user_by_token($token);
-		print_r($found_token);
+		// print_r($found_token);
 		$unexpired_token = check_token_expired($token);
 
 		if ($found_token && $unexpired_token) {
 			$_SESSION["user_id"] = $found_token["ID"];
 			$_SESSION["userName"] = $found_token["userName"];
+			echo "<h2>Token found<h2>";
 		} else {
 			//failure
 			redirect_to("login.php");
