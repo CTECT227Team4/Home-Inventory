@@ -277,6 +277,17 @@ try {
 				$property = new Property($json);
 				echo $property->write($con);
 				break;
+			case 24: // DataTables Properties
+				echo "[";
+				jsonspew($con, "SELECT ID, name, address, zip, description FROM property p INNER JOIN user_property up ON p.ID = up.propertyID AND up.userID = ?", array($userid), "data");
+				echo "]";
+				break;
+			case 25: // DataTables Rooms
+				break;
+			case 26: // DataTables Sections
+				break;
+			case 27: // DataTables Items
+				break;				
 			default: 
 				echo '{"error":"1","text":"Unknown function."}';
 		}

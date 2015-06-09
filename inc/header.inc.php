@@ -19,8 +19,8 @@ if (isset($_SESSION["user_id"])) $userid = (int) $_SESSION["user_id"];
 	<script src="jquery/jquery-ui.min.js"></script>
 	<link rel="stylesheet" href="jquery/jquery-ui.min.css">
 	<!--  <script src="jquery/nav_mouse.js"></script> Navigation Mouseover Script -->
-	<script type="text/javascript" language="javascript" src="./jquery/jquery.dataTables.js"></script> <!-- Grid init -->
-	<script src="./jquery/jstree.min.js"></script> <!-- Tree init -->
+	<script type="text/javascript" language="javascript" src="jquery/jquery.dataTables.js"></script> <!-- Grid init -->
+	<script src="jquery/jstree.min.js"></script> <!-- Tree init -->
 	<script src="jquery/jquery.serialize-object.min.js"></script> <!-- JSON helper init -->
 </head>
 <body>

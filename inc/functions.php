@@ -18,13 +18,16 @@
 		return $string;
 	}
 	
-	function jsonspew ($con, $sql, $parameters) {
+	function jsonspew ($con, $sql, $parameters, $name = "") {
+		// Optional parameter $name, if you want to name each row a datatype.  Used for datatables grid
 		$firstTime = true;
 		$rs = getRecordset($con, $sql, $parameters);
 		foreach ($rs as $row) {
 			if ($firstTime) $firstTime = !$firstTime;
 			else echo ",";
-			print json_encode($row, JSON_UNESCAPED_SLASHES);
+			if ($name != "") echo '{"' . $name . '":';
+			echo json_encode($row, JSON_UNESCAPED_SLASHES);
+			if ($name != "") echo '}';
 		}
 	}
 
