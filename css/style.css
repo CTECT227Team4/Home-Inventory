@@ -167,6 +167,7 @@ header {
 
 .side_logo {
 	float: left;
+	width: 280px;
 	margin-top: 28px;
 	margin-bottom: 30px;
 }
@@ -178,7 +179,8 @@ header {
 }*/
 
 .header_title {
-	float: left;
+	width: 550px;
+	float: right;
 	margin: 40px auto 30px auto;
 }
 

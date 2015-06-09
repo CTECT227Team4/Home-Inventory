@@ -137,8 +137,7 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 				</div>	  <!-- end of tabs4 -->	
 
 					<p class="centered_button">
-						<button type="button" onclick="alert(packform())">Save</button>
-						<input type="submit" value="Submit"  id="add_item_submit">
+						<button type="button" onclick="alert(packform())" id="add_item_submit">Save</button>
 					</p>		
 			</form>   <!--  end of form -->
 		</div>	<!-- end of tabs -->	
