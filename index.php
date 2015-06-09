@@ -69,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
 				</p>
 				<p class="forgot">
-					<a href="request_pw_reset.php"><button class="forgotten">Forgotten your password or username?</button></a>
+					<a href="request_pw_reset.php" class="forgotten">Forgotten your password?</a>
 				</p>
 				<p class="centered_button">
 					<input type="submit" value="Submit" id="submit" name="submit">

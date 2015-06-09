@@ -53,10 +53,10 @@ function toggleView() { // Toggle tree vs grid views
 
 function initprop (init) {
 	if (init) $('#grid-basic').DataTable().destroy();
-	document.getElementById("grid-basic").innerHTML = "<thead><tr><th>ID</th><th>Name</th><th>Address</th><th>Zip</th><th>Description</th></tr></thead><tfoot><tr><th>ID</th><th>Name</th><th>Address</th><th>Zip</th><th>Description</th></tr></tfoot>";		
+	document.getElementById("grid-basic").innerHTML = "<thead><tr><th>Name</th><th>Address</th><th>City</th><th>State</th><th>Zip</th><th>Description</th></tr></thead><tfoot><tr><th>Name</th><th>Address</th><th>City</th><th>State</th><th>Zip</th><th>Description</th></tr></tfoot>";		
 	$('#grid-basic').DataTable({
 		"ajax": "main.php?F=24",
-		"columns": [{"data":"ID"},{"data":"Name"},{"data":"Address"},{"data":"Zip"},{"data":"Description"}]
+		"columns": [{"data":"Name"},{"data":"Address"},{"data":"City"},{"data":"State"},{"data":"Zip"},{"data":"Description"}]
 	});	
 }
 

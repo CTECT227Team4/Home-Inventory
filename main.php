@@ -279,7 +279,8 @@ try {
 				break;
 			case 24: // DataTables Properties
 				echo '{"data":[';
-				jsonspew($con, "SELECT ID, CONCAT('<a href=\"property.php?propertyid=', ID, '\">', Name, '</a>') AS Name, Address, Zip, Description FROM property p INNER JOIN user_property up ON p.ID = up.propertyID AND up.userID = ?", array($userid));
+//				jsonspew($con, "SELECT ID, CONCAT('<a href=\"property.php?propertyid=', ID, '\">', Name, '</a>') AS Name, Address, Zip, Description FROM property p INNER JOIN user_property up ON p.ID = up.propertyID AND up.userID = ?", array($userid));
+				jsonspew($con, "SELECT CONCAT('<a href=\"property.php?propertyid=', ID, '\">', Name, '</a>') AS Name, Address, City, State, Zip, Description FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN zip z ON z.zipcode = p.zip WHERE up.userID = ?", array($userid));
 				echo "]}";
 				break;
 			case 25: // DataTables Rooms
