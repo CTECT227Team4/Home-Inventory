@@ -2,15 +2,13 @@
 $page_title = "A-Z Home Inventory";
 $page_heading = "Edit User";
 $nav_context = "inventory";
+$min_type = 4;
 // $nav_context sets the first nav item to be the grid/tree view toggler
 // This value is *case sensitive*
 
 require_once "inc/header.inc.php";
 
 $userID = $_GET["id"];
-
-// 4 = admin
-check_access($userID, 4);
 
 /* ==== Check if REMOVE PROPERTY ==== */
 if (isset($_GET["action"]) && $_GET["action"] == "remove") {
@@ -27,7 +25,6 @@ if (isset($_GET["action"]) && $_GET["action"] == "remove") {
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
 	$id = $_GET["id"];
 	$type = $_POST["usertypeID"];
-	$properties = $_POST["properties"];
 	if (isset($_POST["password"])) $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
 
 	$sql = "UPDATE user SET usertypeID={$type}, password='{$password}' WHERE ID={$id}";
@@ -35,15 +32,17 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
 	$update_user = writeRecordSet($con, $sql, $parameters);
 
-	foreach ($properties as $property) {
-		$sql = "INSERT INTO user_property (userID, propertyID) VALUES ({$id}, {$property})";
+	if (isset($_POST["properties"])) {
+		$properties = $_POST["properties"];
+		foreach ($properties as $property) {
+			$sql = "INSERT INTO user_property (userID, propertyID) VALUES ({$id}, {$property})";
 
-		$parameters = [$userID, $property];
+			$parameters = [$userID, $property];
 
-		$update_user_property = writeRecordSet($con, $sql, $parameters);
-	echo $sql;
-	}
-}
+			$update_user_property = writeRecordSet($con, $sql, $parameters);
+		} //end foreach
+	} //endif
+} //endif
 ?>
 
 <section class="get_all_clients">

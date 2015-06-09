@@ -2,6 +2,7 @@
 $page_title = "A-Z Home Inventory";
 $page_heading = "Administration";
 $nav_context = "inventory";
+$min_type = 4;
 // $nav_context sets the first nav item to be the grid/tree view toggler
 // This value is *case sensitive*
 require_once "inc/header.inc.php";
