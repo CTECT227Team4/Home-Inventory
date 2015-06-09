@@ -90,7 +90,7 @@
 				</p>
 			</form>
 				<p class="forgot">
-					<button class="forgotten"><a href="login.php">Oops, I'd like to return to the Login Page</a> </button>      <!-- centers the text -->
+					<a href="login.php"><button class="forgotten">Oops, I'd like to return to the Login Page</button></a>     <!-- centers the text -->
 				</p>
 		</div>    <!--  end of registration wrapper -->
 	</div>    <!-- end of page wrapper -->

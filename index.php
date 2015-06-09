@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 			<h1>Welcome to A-Z Home Inventory</h1>
 			<div id="login_header"><span class="red_text"><h2>New User? </span>   
 				<?php 
-					echo "<button class=\"register\"><a id=\"register_link\" href=\"register_user.php\">Please Register</a></button>";
+					echo "<a id=\"register_link\" href=\"register_user.php\"><button class=\"register\">Please Register</button></a>";
 				?>
 			</div>
 			<h2>or Please sign-in:</h2>
@@ -69,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
 				</p>
 				<p class="forgot">
-					<button class="forgotten"><a href="request_pw_reset.php">Forgotten your password or username?</a></button>
+					<a href="request_pw_reset.php"><button class="forgotten">Forgotten your password or username?</button></a>
 				</p>
 				<p class="centered_button">
 					<input type="submit" value="Submit" id="submit" name="submit">
