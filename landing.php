@@ -22,32 +22,13 @@ require_once "inc/header.inc.php";
 		<div id="gridmain" class="dispwindow">
 			<div id="gridviewwidget" class="viewwidget">
 				<br><p>
-					<button class="gridMainButton" onclick="">Properties</button>
-					<button class="gridMainButton" onclick="">Rooms</button>
-					<button class="gridMainButton" onclick="">Sections</button>
-					<button class="gridMainButton" onclick="">Items</button>
+					<button class="gridMainButton" onclick="initprop(true)">Properties</button>
+					<button class="gridMainButton" onclick="initroom(true)">Rooms</button>
+					<button class="gridMainButton" onclick="initsection(true)">Sections</button>
+					<button class="gridMainButton" onclick="inititem(true)">Items</button>
 				</p>
 				<div id="gridview">
 					<table id="grid-basic" class="display" cellspacing="0" width="100%">
-										<thead>
-						<tr>
-							<th>ID</th>
-							<th>Name</th>
-							<th>Address</th>
-							<th>Zip</th>
-							<th>Description</th>
-						</tr>
-					</thead>
-
-					<tfoot>
-						<tr>
-							<th>ID</th>
-							<th>Name</th>
-							<th>Address</th>
-							<th>Zip</th>
-							<th>Description</th>
-						</tr>
-					</tfoot>
 					</table>
 				</div>
 			</div>
@@ -69,26 +50,52 @@ function toggleView() { // Toggle tree vs grid views
 		toggler.textContent = "Inventory Tree View";
 	}
 }
+
+function initprop (init) {
+	if (init) $('#grid-basic').DataTable().destroy();
+	document.getElementById("grid-basic").innerHTML = "<thead><tr><th>ID</th><th>Name</th><th>Address</th><th>Zip</th><th>Description</th></tr></thead><tfoot><tr><th>ID</th><th>Name</th><th>Address</th><th>Zip</th><th>Description</th></tr></tfoot>";		
+	$('#grid-basic').DataTable({
+		"ajax": "main.php?F=24",
+		"columns": [{"data":"ID"},{"data":"Name"},{"data":"Address"},{"data":"Zip"},{"data":"Description"}]
+	});	
+}
+
+function initroom (init) {
+	if (init) $('#grid-basic').DataTable().destroy();
+	document.getElementById("grid-basic").innerHTML = "<thead><tr><th>ID</th><th>Property</th><th>Name</th><th>Description</th><th>CategoryID</th><th>Notes</th></tr></thead><tfoot><tr><th>ID</th><th>Property</th><th>Name</th><th>Description</th><th>CategoryID</th><th>Notes</th></tr></tfoot>";
+	$('#grid-basic').DataTable({
+		"ajax": "main.php?F=25",
+		"columns": [{"data":"ID"},{"data":"Property"},{"data":"Name"},{"data":"Description"},{"data":"CategoryID"},{"data":"Notes"}]
+	});	
+}
+
+function initsection (init) {
+	if (init) $('#grid-basic').DataTable().destroy();
+	document.getElementById("grid-basic").innerHTML = "<thead><tr><th>ID</th><th>Property</th><th>Name</th><th>Description</th><th>CategoryID</th><th>Notes</th></tr></thead><tfoot><tr><th>ID</th><th>Property</th><th>Name</th><th>Description</th><th>CategoryID</th><th>Notes</th></tr></tfoot>";
+	$('#grid-basic').DataTable({
+		"ajax": "main.php?F=25",
+		"columns": [{"data":"ID"},{"data":"Property"},{"data":"Name"},{"data":"Description"},{"data":"CategoryID"},{"data":"Notes"}]
+	});	
+}
+
+function inititem (init) {
+	if (init) $('#grid-basic').DataTable().destroy();
+	document.getElementById("grid-basic").innerHTML = "<thead><tr><th>ID</th><th>Property</th><th>Name</th><th>Description</th><th>CategoryID</th><th>Notes</th></tr></thead><tfoot><tr><th>ID</th><th>Property</th><th>Name</th><th>Description</th><th>CategoryID</th><th>Notes</th></tr></tfoot>";
+	$('#grid-basic').DataTable({
+		"ajax": "main.php?F=25",
+		"columns": [{"data":"ID"},{"data":"Property"},{"data":"Name"},{"data":"Description"},{"data":"CategoryID"},{"data":"Notes"}]
+	});	
+}
+
 $(function () {
 	$('#gridmain').hide();
-	//$('#grid-basic').DataTable();
-	$('#grid-basic').DataTable({
-        "ajax": "main.php?F=24",
-		"columns": [
-			{ "data": "ID" },
-			{ "data": "Name" },
-			{ "data": "Address" },
-			{ "data": "Zip" },
-			{ "data": "Description" }
-		]
-    });
+
+	initprop(false);
+	
 	$('#treeview').jstree({
 		'core' : {
 			'data' : {
 				"url" : <?php
-					//$json = $_GET['id'];
-					//if ($json == null) $json = '1';
-					//echo "\"./$json.json\""; 
 					echo '"main.php?F=1&userid=' . $userid . '"';
 			?>,	"dataType" : "json" // needed only if you do not supply JSON headers
 			}

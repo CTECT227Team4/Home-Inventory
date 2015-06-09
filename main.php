@@ -283,6 +283,17 @@ try {
 				echo "]}";
 				break;
 			case 25: // DataTables Rooms
+			/* SELECT r.ID, p.name, r.name, r.description, r.categoryID, r.notes FROM property p
+				INNER JOIN user_property up ON p.ID = up.propertyID
+				INNER JOIN room r ON r.propertyID = p.ID 
+				-- LEFT JOIN category c ON c.ID = r.categoryID
+				-- WHERE c.parentType = 2 AND up.userID = 24
+				WHERE up.userid = 24*/
+				echo '{"data":[';
+				$sql = "SELECT r.ID, p.name AS Property, r.Name, r.Description, r.CategoryID, r.Notes FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN room r ON r.propertyID = p.ID WHERE up.userid = ?";
+				jsonspew($con, $sql, array($userid));
+				echo "]}";
+				break;
 				break;
 			case 26: // DataTables Sections
 				break;
