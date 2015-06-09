@@ -47,7 +47,7 @@ try {
 				// The jstree control requires unique ID's for each node.  Not exactly sure how we want to handle this.
 				// For now I put "U" for the user node, "P" for property, so we'll have "S"=section, "R"=room, "I"=item
 				echo '[{"id":"U' . $userid . '","text": "The Addams Family Properties","children":"true","icon": "./images/appraisal.png","state": {"opened" : "true"},"children":['; // The recordset is being returned as an array, so start the array
-				$sql = "SELECT CONCAT('P', p.id) AS id, p.name AS text, IF (a.ID != 0, CONCAT('showfile.php?ID=', a.ID, CONCAT('&parentType=1&item=',a.item,'&thumb=1')), CONCAT ('$imageslocation', icon)) AS icon FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN user u ON u.ID = up.userID LEFT OUTER JOIN category c ON c.ID = p.CategoryID LEFT OUTER JOIN (SELECT ID, item FROM attachment WHERE parentType = 1 AND mimetype LIKE 'image%' ORDER BY item LIMIT 1) a ON a.ID = p.id WHERE up.userID = ?";
+				$sql = "SELECT CONCAT('P', p.id) AS id, CONCAT('<a href=\"property.php?propertyid=', p.id ,'\">', p.name, '</a>') AS text, IF (a.ID != 0, CONCAT('showfile.php?ID=', a.ID, CONCAT('&parentType=1&item=',a.item,'&thumb=1')), CONCAT ('$imageslocation', icon)) AS icon FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN user u ON u.ID = up.userID LEFT OUTER JOIN category c ON c.ID = p.CategoryID LEFT OUTER JOIN (SELECT ID, item FROM attachment WHERE parentType = 1 AND mimetype LIKE 'image%' ORDER BY item LIMIT 1) a ON a.ID = p.id WHERE up.userID = ?";
 				jsonspew ($con, $sql, array($userid));
 				echo "]}]"; // End the array, then end the whole tree
 				break;
@@ -198,7 +198,7 @@ try {
 			case 11: // GetCategories
 				// locahost/az/main.php?F=11&parentType=1
 				$parentType = $_GET["parentType"];
-				$sql = "SELECT CONCAT('C', c.id) AS id, description AS text, CONCAT ('$imageslocation', icon) AS icon FROM category c WHERE c.parentType = ?";
+				$sql = "SELECT CONCAT('C', c.id) AS id, description AS text, CONCAT ('$imageslocation', icon) AS icon FROM category c WHERE c.description <> '' AND c.parentType = ?";
 
 				$parameters = [$parentType];
 
@@ -279,7 +279,7 @@ try {
 				break;
 			case 24: // DataTables Properties
 				echo '{"data":[';
-				jsonspew($con, "SELECT ID, Name, Address, Zip, Description FROM property p INNER JOIN user_property up ON p.ID = up.propertyID AND up.userID = ?", array($userid));
+				jsonspew($con, "SELECT ID, CONCAT('<a href=\"property.php?propertyid=', ID, '\">', Name, '</a>') AS Name, Address, Zip, Description FROM property p INNER JOIN user_property up ON p.ID = up.propertyID AND up.userID = ?", array($userid));
 				echo "]}";
 				break;
 			case 25: // DataTables Rooms

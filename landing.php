@@ -87,7 +87,6 @@ function inititem (init) {
 	});	
 }
 
-
 $(function () {
 	$('#gridmain').hide();
 

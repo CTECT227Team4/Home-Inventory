@@ -1,9 +1,14 @@
-<?php # add_property.php ?>
-<?php $page_title = "Home Inventory - Add Property"; //sets title
+<?php # add_property.php 
+$propertyid = 0;
+if (isset($_GET['propertyid'])) $propertyid = (int) $_GET['propertyid'];
+$page_title = "Home Inventory - Add Property"; //sets title
 $page_heading = "Add Property"; //sets heading to appear on page
 require_once "inc/header.inc.php"; //starts session, includes general functions, populates header content
 ?>
 	   	<script>
+			var userid = <?=$userid?>;
+			var propertyid = <?=$propertyid?>;
+				
 			function packform() {
 				return $('form#add_property').serializeJSON();
 			}
@@ -20,17 +25,27 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 				}
 			}
 
+			function populate(url) { // Fill in form values
+				if (userid != 0 && propertyid != 0) {
+					$.getJSON(url, function(obj) {
+						$.each(obj.Property, function(key, value) {
+							$("#" + key).val(value);
+						});
+					});
+				}
+			}
+			
 	   		$(document).ready(function() {
 				$("#zip").blur(function() {
 					getazip(this.value);
 				});
 				
-	 	  		$.getJSON("main.php?F=16&parenttype=1", function(obj) { // Fill in categegories, 1 is item
+	 	  		$.getJSON("main.php?F=16&parenttype=1", function(obj) { // Fill in categegories, 1 is property
 					$("#categoryid").empty(); // Clear the list each call
 					$.each(obj.categories, function(key, value) {
 						$("#categoryid").append("<option value=" + value.ID + ">" + value.name  + "</option>");
 					});		
-					//getazip(90210);
+					populate("main.php?F=20&propertyid=" + propertyid);
 				});
 				
 				$(function() {
