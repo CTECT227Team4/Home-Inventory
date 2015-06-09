@@ -29,35 +29,25 @@ require_once "inc/header.inc.php";
 				</p>
 				<div id="gridview">
 					<table id="grid-basic" class="display" cellspacing="0" width="100%">
-						<thead>
-							<tr>
-								<th data-column-id="id">Image</th>
-								<th data-column-id="sender" class="table-name">Name</th>
-								<th data-column-id="received" data-order="desc" class="table-desc">Description</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td ><img class="table-images"src="images/addams-home.jpg" height="64" width="64"></td>
-								<td class="table-name">Addams Family Home</td>
-								<td class="table-desc">0001 Cemetery Lane</td>
-							</tr>
-							<tr>
-								<td><img class="table-images"src="images/HauntedLakeHouse.jpg" height="64" width="64"></td>
-								<td class="table-name">Haunted Lake House</td>
-								<td class="table-desc">1313 Dead Lake</td>
-							</tr>
-							<tr>
-								<td><img class="table-images"src="images/shed.jpg" height="64" width="64"></td>
-								<td class="table-name">Scary Shed</td>
-								<td class="table-desc">in the Backyard</td>
-							</tr>
-							<tr>
-								<td></td>
-								<td class="table-name"><a href="#">Add New Property</a></td>
-								<td class="table-desc"></td>
-							</tr>
-						</tbody>
+										<thead>
+						<tr>
+							<th>ID</th>
+							<th>Name</th>
+							<th>Address</th>
+							<th>Zip</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+
+					<tfoot>
+						<tr>
+							<th>ID</th>
+							<th>Name</th>
+							<th>Address</th>
+							<th>Zip</th>
+							<th>Description</th>
+						</tr>
+					</tfoot>
 					</table>
 				</div>
 			</div>
@@ -81,7 +71,17 @@ function toggleView() { // Toggle tree vs grid views
 }
 $(function () {
 	$('#gridmain').hide();
-	$('#grid-basic').DataTable();
+	//$('#grid-basic').DataTable();
+	$('#grid-basic').DataTable({
+        "ajax": "main.php?F=24",
+		"columns": [
+			{ "data": "ID" },
+			{ "data": "Name" },
+			{ "data": "Address" },
+			{ "data": "Zip" },
+			{ "data": "Description" }
+		]
+    });
 	$('#treeview').jstree({
 		'core' : {
 			'data' : {

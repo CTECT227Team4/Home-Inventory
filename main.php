@@ -278,9 +278,9 @@ try {
 				echo $property->write($con);
 				break;
 			case 24: // DataTables Properties
-				echo "[";
-				jsonspew($con, "SELECT ID, name, address, zip, description FROM property p INNER JOIN user_property up ON p.ID = up.propertyID AND up.userID = ?", array($userid), "data");
-				echo "]";
+				echo '{"data":[';
+				jsonspew($con, "SELECT ID, Name, Address, Zip, Description FROM property p INNER JOIN user_property up ON p.ID = up.propertyID AND up.userID = ?", array($userid));
+				echo "]}";
 				break;
 			case 25: // DataTables Rooms
 				break;
