@@ -1,8 +1,8 @@
 <?php # add_property.php 
 $propertyid = 0;
 if (isset($_GET['propertyid'])) $propertyid = (int) $_GET['propertyid'];
-$page_title = "Home Inventory - Add Property"; //sets title
-$page_heading = "Add Property"; //sets heading to appear on page
+$page_title = "Home Inventory - " . ($propertyid ? "Edit" : "Add") . " Property"; //sets title
+$page_heading = ($propertyid ? "Edit" : "Add") . " Property"; //sets heading to appear on page
 require_once "inc/header.inc.php"; //starts session, includes general functions, populates header content
 ?>
 	   	<script>
@@ -136,7 +136,7 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 		<div id="tabs-3" class="multimedia_tab tabs_nav">
 				<h3>Current Photos Attached To This Property:</h3>
 				<p> Add the multimedia grid </p>
-				<p><button class="add_file"><a href="#">Add File</a></button></p>
+				<p><a href="upload.php?ID=<?=$propertyid?>&parentType=1" target="_blank"><button type="button" class="add_file">Add File</button></a></p>
 				<p><button class="scan_file"><a href="#">Scan Photo</a></button></p>
 				<p class="scan_under_construction"><img src="images/under-construction.png" alt="under construction icon"> Under Construction </p>
 		</div>    <!-- end tab 3 -->
@@ -144,8 +144,7 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 		<div id="tabs-4" class="documents_tab tabs_nav">
 				<h3>Current Documents Attached To This Property:</h3>
 				<p> Add the multimedia grid </p>
-				<p><button class="add_file"><a href="#">Add File</a></button></p>
-				<p><button class="scan_file"><a href="#">Scan Photo</a></button></p>
+				<p><a href="upload.php?ID=<?=$propertyid?>&parentType=1" target="_blank"><button type="button" class="add_file">Add File</button></a></p>				<p><button class="scan_file"><a href="#">Scan Photo</a></button></p>
 				<p class="scan_under_construction"><img src="images/under-construction.png" alt="under construction icon"> Under Construction </p> 
 		</div>     <!-- end tab 4 -->
 
