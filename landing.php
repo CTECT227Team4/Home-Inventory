@@ -53,7 +53,7 @@ function toggleView() { // Toggle tree vs grid views
 
 function initprop (init) {
 	if (init) $('#grid-basic').DataTable().destroy();
-	document.getElementById("grid-basic").innerHTML = "<thead><tr><th>Name</th><th>Address</th><th>City</th><th>State</th><th>Zip</th><th>Description</th></tr></thead><tfoot><tr><th>Name</th><th>Address</th><th>City</th><th>State</th><th>Zip</th><th>Description</th></tr></tfoot>";		
+	document.getElementById("grid-basic").innerHTML = "<thead><tr><th>Name</th><th>Address</th><th>City</th><th>State</th><th>Zip</th><th>Description</th></tr></thead><tfoot><tr><th><a href=\"property.php\">Add New Property</a></th><th>Address</th><th>City</th><th>State</th><th>Zip</th><th>Description</th></tr></tfoot>";
 	$('#grid-basic').DataTable({
 		"ajax": "main.php?F=24",
 		"columns": [{"data":"Name"},{"data":"Address"},{"data":"City"},{"data":"State"},{"data":"Zip"},{"data":"Description"}]
@@ -62,7 +62,7 @@ function initprop (init) {
 
 function initroom (init) {
 	if (init) $('#grid-basic').DataTable().destroy();
-	document.getElementById("grid-basic").innerHTML = "<thead><tr><th>Room</th><th>Property</th><th>Description</th><th>Category</th><th>Notes</th></tr></thead><tfoot><tr><th>Room</th><th>Property</th><th>Description</th><th>Category</th><th>Notes</th></tr></tfoot>";
+	document.getElementById("grid-basic").innerHTML = "<thead><tr><th>Room</th><th>Property</th><th>Description</th><th>Category</th><th>Notes</th></tr></thead><tfoot><tr><th><a href=\"room.php\">Add New Room</a></th><th>Property</th><th>Description</th><th>Category</th><th>Notes</th></tr></tfoot>";
 	$('#grid-basic').DataTable({
 		"ajax": "main.php?F=25",
 		"columns": [{"data":"Room"},{"data":"Property"},{"data":"Description"},{"data":"Category"},{"data":"Notes"}]
@@ -71,7 +71,7 @@ function initroom (init) {
 
 function initsection (init) {
 	if (init) $('#grid-basic').DataTable().destroy();
-	document.getElementById("grid-basic").innerHTML = "<thead><tr><th>Section</th><th>Property</th><th>Room</th><th>Description</th><th>CategoryID</th><th>Notes</th></tr></thead><tfoot><tr><th>Section</th><th>Property</th><th>Room</th><th>Description</th><th>CategoryID</th><th>Notes</th></tr></tfoot>";
+	document.getElementById("grid-basic").innerHTML = "<thead><tr><th>Section</th><th>Property</th><th>Room</th><th>Description</th><th>CategoryID</th><th>Notes</th></tr></thead><tfoot><tr><th><a href=\"section.php\">Add New Section</a></th><th>Property</th><th>Room</th><th>Description</th><th>CategoryID</th><th>Notes</th></tr></tfoot>";
 	$('#grid-basic').DataTable({
 		"ajax": "main.php?F=26",
 		"columns": [{"data":"Section"},{"data":"Property"},{"data":"Room"},{"data":"Description"},{"data":"CategoryID"},{"data":"Notes"}]
