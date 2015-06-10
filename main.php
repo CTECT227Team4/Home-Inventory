@@ -52,26 +52,24 @@ try {
 				$sql = "SELECT CONCAT('P', p.id) AS id, CONCAT('<a href=\"property.php?propertyid=', p.id ,'\">', p.name, '</a>') AS text, IF (a.ID != 0, CONCAT('showfile.php?ID=', a.ID, CONCAT('&parentType=1&item=',a.item,'&thumb=1')), CONCAT ('$imageslocation', icon)) AS icon ";
 				$sql .= "FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN user u ON u.ID = up.userID LEFT OUTER JOIN category c ON c.ID = p.CategoryID LEFT OUTER JOIN (SELECT ID, item FROM attachment WHERE parentType = 1 AND mimetype LIKE 'image%' ORDER BY item LIMIT 1) a ON a.ID = p.id WHERE up.userID = ?";
 				
-				$roomTime = true;
 				$rs = getRecordset($con, $sql, array($userid));
 				foreach ($rs as $row) {
-					if ($roomTime) $roomTime = !$roomTime;
+					if ($firstTime) $firstTime = !$firstTime;
 					else echo ",";
 					
 					$json = json_encode($row, JSON_UNESCAPED_SLASHES);
 					$json = substr($json, 0, strlen($json) - 1); // Strip off last '}' from the JSON encode and replace with children
 					echo  $json . ',"children": ['; 
-					$sql = "SELECT CONCAT('R', r.id) AS id, r.`name` AS text, IF (a.ID != 0, CONCAT('showfile.php?ID=', a.ID, CONCAT('&parentType=2&item=',a.item,'&thumb=1')), CONCAT ('$imageslocation', icon)) AS icon FROM room r INNER JOIN property p ON p.id = r.id INNER JOIN user_property up ON up.propertyID = p.id LEFT OUTER JOIN category c ON c.ID = r.CategoryID LEFT OUTER JOIN (SELECT ID, item FROM attachment WHERE parentType = 2 AND mimetype LIKE 'image%' ORDER BY item LIMIT 1) a ON a.ID = r.id WHERE up.userid = ? AND p.id = " . substr($row["id"],1);
+					$sql = "SELECT CONCAT('R', r.id) AS id, r.`name` AS text, IF (a.ID != 0, CONCAT('showfile.php?ID=', a.ID, CONCAT('&parentType=2&item=',a.item,'&thumb=1')), CONCAT ('$imageslocation', icon)) AS icon FROM room r INNER JOIN property p ON p.id = r.propertyid INNER JOIN user_property up ON up.propertyID = p.id LEFT OUTER JOIN category c ON c.ID = r.CategoryID LEFT OUTER JOIN (SELECT ID, item FROM attachment WHERE parentType = 2 AND mimetype LIKE 'image%' ORDER BY item LIMIT 1) a ON a.ID = r.id WHERE up.userid = ? AND p.id = " . substr($row["id"],1);
 					$rsroom = getRecordset($con, $sql, array($userid));
 					
-					//echo "\n\n$sql\n\n";
-					
+					$roomTime = true; // Reset each loop
 					foreach ($rsroom as $roomrow) {
+						if ($roomTime) $roomTime = !$roomTime;
+						else echo ",";
 						echo json_encode($roomrow, JSON_UNESCAPED_SLASHES);
 					}
 					echo "]}";
-					
-					//echo json_encode($row, JSON_UNESCAPED_SLASHES);
 				}
 				
 				//jsonspew ($con, $sql, array($userid));
