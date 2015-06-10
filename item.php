@@ -69,6 +69,22 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 			}
 
 	   		$(document).ready(function() {
+				$(function() {
+					$("#purchasedate").datepicker();
+				});
+				
+				$(function() {
+					$("#appraisal_date").datepicker();
+				});
+				
+				$(function() {
+					$("#warrantyexpirationdate").datepicker();
+				});
+				
+				$(function() {
+					$("#repair_date").datepicker();
+				});
+				
 				$.getJSON("main.php?F=16&parenttype=4", function(obj) { // Fill in categegories, 4 is item
 					$("#categoryid").empty(); // Clear the list each call
 					$.each(obj.categories, function(key, value) {

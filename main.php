@@ -26,7 +26,7 @@ if (isset($_GET['roomid'])) $roomid = (int) $_GET['roomid'];
 if (isset($_GET['itemid'])) $itemid = (int) $_GET['itemid'];
 if (isset($_GET['parenttype'])) $parenttype = (int) $_GET['parenttype'];
 if (isset($_GET['zipcode'])) $zipcode = (int) $_GET['zipcode'];
-if (isset($_GET['view'])) $viewstate = (int) $_GET['view'];
+if (isset($_GET['view'])) $viewstate = (int) $_GET['view'];  // Used to set the grid/tree view last state
 
 header('Content-Type: application/json');
 // Moved $firstTime initialization to the top
@@ -63,6 +63,9 @@ try {
 					echo  $json . ',"children": ['; 
 					$sql = "SELECT CONCAT('R', r.id) AS id, r.`name` AS text, IF (a.ID != 0, CONCAT('showfile.php?ID=', a.ID, CONCAT('&parentType=2&item=',a.item,'&thumb=1')), CONCAT ('$imageslocation', icon)) AS icon FROM room r INNER JOIN property p ON p.id = r.id INNER JOIN user_property up ON up.propertyID = p.id LEFT OUTER JOIN category c ON c.ID = r.CategoryID LEFT OUTER JOIN (SELECT ID, item FROM attachment WHERE parentType = 2 AND mimetype LIKE 'image%' ORDER BY item LIMIT 1) a ON a.ID = r.id WHERE up.userid = ? AND p.id = " . substr($row["id"],1);
 					$rsroom = getRecordset($con, $sql, array($userid));
+					
+					//echo "\n\n$sql\n\n";
+					
 					foreach ($rsroom as $roomrow) {
 						echo json_encode($roomrow, JSON_UNESCAPED_SLASHES);
 					}
