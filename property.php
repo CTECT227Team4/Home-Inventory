@@ -138,6 +138,7 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 				<p> Add the multimedia grid </p>
 				<p><a href="upload.php?ID=<?=$propertyid?>&parentType=1" target="_blank"><button type="button" class="add_file">Add File</button></a></p>
 				<p><button class="scan_file"><a href="#">Scan Photo</a></button></p>
+				<p><button class="scan_file" type="button"><a href="#">Scan Photo</a></button></p>
 				<p class="scan_under_construction"><img src="images/under-construction.png" alt="under construction icon"> Under Construction </p>
 		</div>    <!-- end tab 3 -->
 
@@ -145,6 +146,7 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 				<h3>Current Documents Attached To This Property:</h3>
 				<p> Add the multimedia grid </p>
 				<p><a href="upload.php?ID=<?=$propertyid?>&parentType=1" target="_blank"><button type="button" class="add_file">Add File</button></a></p>				<p><button class="scan_file"><a href="#">Scan Photo</a></button></p>
+				<p><button class="scan_file" type="button"><a href="#">Scan Photo</a></button></p>
 				<p class="scan_under_construction"><img src="images/under-construction.png" alt="under construction icon"> Under Construction </p> 
 		</div>     <!-- end tab 4 -->
 

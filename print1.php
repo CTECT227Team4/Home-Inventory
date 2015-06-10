@@ -65,8 +65,8 @@ if (isset($_SESSION["user_id"])) $userid = (int) $_SESSION["user_id"];
 
 			<div class="buttons no_print">
 
-				<button class="report_buttons"><a href="#" onClick=" window.print(); return false">Print this page</a></button>
-				<button class="report_buttons"><a href="reports.php">Close This Page</a></button>
+				<a href="#" onClick=" window.print(); return false"><button class="report_buttons" type="button">Print this page</button></a>
+				<a href="reports.php"><button class="report_buttons" type="button">Close This Page</button></a>
 
 			</div>
 			<div class="print_data">
@@ -134,8 +134,9 @@ if (isset($_SESSION["user_id"])) $userid = (int) $_SESSION["user_id"];
 			</div>   <!--  end of print_data -->
 			<div class="buttons no_print">
 				<hr class="border">
-				<button class="report_buttons"><a href="#" onClick=" window.print(); return false">Print this page</a></button>
-				<button class="report_buttons"><a href="reports.php">Close This Page</a></button>
+				<a href="#" onClick=" window.print(); return false"><button class="report_buttons" type="button">Print this page</button></a>
+				<a href="reports.php"><button class="report_buttons" type="button">Close This Page</button></a>
+
 			</div>
 		</div>   <!--  end of content -->
 	</div>   <!-- end of wrapper -->

@@ -132,7 +132,9 @@
 		$sql .= "WHERE userName = '{$userName}' ";
 		$sql .= "LIMIT 1";
 
-		$user_set = getRecordset($con, $sql, $userName);
+		$parameters = [$userName];
+
+		$user_set = getRecordset($con, $sql, $parameters);
 		if ($user = $user_set->fetch(PDO::FETCH_ASSOC)) {
 			return $user;
 		} else {
@@ -164,7 +166,7 @@
 		$sql = "SELECT * ";
 		$sql .= "FROM user ";
 		$sql .= "WHERE token = '{$token}' ";
-		$sql .= "AND TIME(token_expire) > NOW()";
+		$sql .= "AND TIME(token_expire) < NOW()";
 
 		$parameters = [$token];
 

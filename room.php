@@ -103,7 +103,7 @@ $(document).ready(function() {
 				<h3>Current Photos Attached To This Room:</h3>
 				<p> Add the multimedia grid </p>
 				<p><a href="upload.php?ID=<?=$roomid?>&parentType=2" target="_blank"><button type="button" class="add_file">Add File</button></a></p>
-				<p><a href="#"><button class="add_file">Scan Photo</button></a></p>
+				<p><a href="#"><button class="add_file" type="button">Scan Photo</button></a></p>
 				<p class="scan_under_construction"><img src="images/under-construction.png" alt="under construction icon"> Under Construction </p>
 				</div>   <!-- end of tabs2 -->
 
@@ -111,7 +111,7 @@ $(document).ready(function() {
 				<h3>Current Documents Attached To This Room:</h3>
 				<p> Add the multimedia grid </p>
 				<p><a href="upload.php?ID=<?=$roomid?>&parentType=2" target="_blank"><button type="button" class="add_file">Add File</button></a></p>
-				<p><a href="#"><button class="add_file">Scan Photo</button></a></p>
+				<p><a href="#"><button class="add_file" type="button">Scan Photo</button></a></p>
 				<p class="scan_under_construction"><img src="images/under-construction.png" alt="under construction icon"> Under Construction </p>
 				</div>    <!-- end of tabs3 -->
 

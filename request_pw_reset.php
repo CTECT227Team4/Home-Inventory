@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 				$userID = $found_user["ID"];
 				$token = password_hash($userID, PASSWORD_DEFAULT);
 
-				$message = "localhost/az/reset_password.php?reset=" . $token;
+				$message = "http://az.rosemaryperkins.com/reset_password.php?reset=" . $token;
 				$message = wordwrap($message, 70, "\r\n");
 
 				mail($email, "A-Z Home Inventory Reset", $message);
@@ -25,12 +25,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 				//two hours
 				$exp_date = time()+7200;
 
-				$parameters = [];
-
 				$sql = "UPDATE user SET token='{$token}',token_expire={$exp_date} WHERE ID={$userID}";
 				$parameters = [$token, $exp_date, $userID];
-
-				echo $sql;
 
 				writeRecordSet($con, $sql, $parameters);
 
@@ -38,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 			} else{
 				//failure
 				$_SESSION["message"] = "Username/email not found";
-				redirect_to("login.php");
+				// redirect_to("login.php");
 			} //endif
 
 } //end ($_SERVER['REQUEST_METHOD'] == "POST")
