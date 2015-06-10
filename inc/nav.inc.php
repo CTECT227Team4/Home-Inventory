@@ -1,4 +1,7 @@
-<nav class="no_print">
+<?php
+$usertypeID = 0;
+if (isset($_SESSION["usertypeID"])) $usertypeID = (int) $_SESSION["usertypeID"];
+?><nav class="no_print">
 	<div class="dropdown">
 	    <a href="landing.php"><button>Inventory</button></a>
 	</div>  <!-- end dropdown -->
@@ -24,7 +27,7 @@
 				<li><a href="user_profile.php#tabs-2">Change Password</a></li>
 				<li><a href="user_profile.php#tabs-3">Insurance</a></li>
 				<li><a href="logout.php">Logout</a></li>
-				<?php if ($_SESSION["usertypeID"] == 4) {
+				<?php if ($usertypeID == 4) {
 					echo "<li><a href=\"admin.php\">Admin Tools</a></li>";} ?>
 			</ul>
 	</div>   <!-- end dropdown -->

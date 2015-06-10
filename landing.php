@@ -77,10 +77,10 @@ function initroom (init) {
 
 function initsection (init) {
 	if (init) $('#grid-basic').DataTable().destroy();
-	document.getElementById("grid-basic").innerHTML = "<thead><tr><th>Section</th><th>Property</th><th>Room</th><th>Description</th><th>CategoryID</th><th>Notes</th></tr></thead><tfoot><tr><th><a href=\"section.php\">Add New Section</a></th><th>Property</th><th>Room</th><th>Description</th><th>CategoryID</th><th>Notes</th></tr></tfoot>";
+	document.getElementById("grid-basic").innerHTML = "<thead><tr><th>Section</th><th>Property</th><th>Room</th><th>Description</th><th>Category</th><th>Notes</th></tr></thead><tfoot><tr><th><a href=\"section.php\">Add New Section</a></th><th>Property</th><th>Room</th><th>Description</th><th>Category</th><th>Notes</th></tr></tfoot>";
 	$('#grid-basic').DataTable({
 		"ajax": "main.php?F=26",
-		"columns": [{"data":"Section"},{"data":"Property"},{"data":"Room"},{"data":"Description"},{"data":"CategoryID"},{"data":"Notes"}]
+		"columns": [{"data":"Section"},{"data":"Property"},{"data":"Room"},{"data":"Description"},{"data":"Category"},{"data":"Notes"}]
 	});	
 }
 

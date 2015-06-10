@@ -48,8 +48,9 @@ try {
 
 				// The jstree control requires unique ID's for each node.  Not exactly sure how we want to handle this.
 				// For now I put "U" for the user node, "P" for property, so we'll have "S"=section, "R"=room, "I"=item
-				echo '[{"id":"U' . $userid . '","text": "The Addams Family Properties","children":"true","icon": "./images/appraisal.png","state": {"opened" : "true"},"children":['; // The recordset is being returned as an array, so start the array
-				$sql = "SELECT CONCAT('P', p.id) AS id, CONCAT('<a href=\"property.php?propertyid=', p.id ,'\">', p.name, '</a>') AS text, IF (a.ID != 0, CONCAT('showfile.php?ID=', a.ID, CONCAT('&parentType=1&item=',a.item,'&thumb=1')), CONCAT ('$imageslocation', icon)) AS icon FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN user u ON u.ID = up.userID LEFT OUTER JOIN category c ON c.ID = p.CategoryID LEFT OUTER JOIN (SELECT ID, item FROM attachment WHERE parentType = 1 AND mimetype LIKE 'image%' ORDER BY item LIMIT 1) a ON a.ID = p.id WHERE up.userID = ?";
+				echo '[{"id":"U' . $userid . '","text": "' . $_SESSION["firstName"] . " " . $_SESSION["lastName"] . '\'s Properties","children":"true","icon": "./images/appraisal.png","state": {"opened" : "true"},"children":['; // The recordset is being returned as an array, so start the array
+				$sql = "SELECT CONCAT('P', p.id) AS id, CONCAT('<a href=\"property.php?propertyid=', p.id ,'\">', p.name, '</a>') AS text, IF (a.ID != 0, CONCAT('showfile.php?ID=', a.ID, CONCAT('&parentType=1&item=',a.item,'&thumb=1')), CONCAT ('$imageslocation', icon)) AS icon ";
+				$sql .= "FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN user u ON u.ID = up.userID LEFT OUTER JOIN category c ON c.ID = p.CategoryID LEFT OUTER JOIN (SELECT ID, item FROM attachment WHERE parentType = 1 AND mimetype LIKE 'image%' ORDER BY item LIMIT 1) a ON a.ID = p.id WHERE up.userID = ?";
 				jsonspew ($con, $sql, array($userid));
 				echo "]}]"; // End the array, then end the whole tree
 				break;
@@ -290,7 +291,7 @@ try {
 				echo "]}";
 				break;
 			case 26: // DataTables Sections
-				$sql = "SELECT CONCAT('<a href=\"property.php?propertyid=', p.ID, '\">', p.name, '</a>') AS Property, CONCAT('<a href=\"section.php?sectionid=', s.ID, '\">', s.name, '</a>') AS Section, CONCAT('<a href=\"room.php?roomid=', r.ID, '\">', r.name, '</a>') AS Room, s.Description, s.CategoryID, s.Notes FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN section s ON s.propertyID = p.ID INNER JOIN room r ON r.ID = s.roomID WHERE up.userid = ?";
+				$sql = "SELECT CONCAT('<a href=\"property.php?propertyid=', p.ID, '\">', p.name, '</a>') AS Property, CONCAT('<a href=\"section.php?sectionid=', s.ID, '\">', s.name, '</a>') AS Section, CONCAT('<a href=\"room.php?roomid=', r.ID, '\">', r.name, '</a>') AS Room, s.Description, c.Description AS Category, s.Notes FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN section s ON s.propertyID = p.ID INNER JOIN room r ON r.ID = s.roomID INNER JOIN category c ON c.ID = s.categoryID WHERE up.userid = ?";
 				echo '{"data":[';
 				jsonspew($con, $sql, array($userid));
 				echo "]}";
