@@ -19,6 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 				$_SESSION["userName"] = $found_user["userName"];
 				$_SESSION["firstName"] = $found_user["firstName"];
 				$_SESSION["lastName"] = $found_user["lastName"];
+				$_SESSION["usertypeID"] = $found_user["usertypeID"];
 				$_SESSION["logged_in"] = TRUE;
 				redirect_to("landing.php");
 			} else{

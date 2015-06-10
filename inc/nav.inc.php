@@ -24,6 +24,8 @@
 				<li><a href="user_profile.php#tabs-2">Change Password</a></li>
 				<li><a href="user_profile.php#tabs-3">Insurance</a></li>
 				<li><a href="logout.php">Logout</a></li>
+				<?php if ($_SESSION["usertypeID"] == 4) {
+					echo "<li><a href=\"admin.php\">Admin Tools</a></li>";} ?>
 			</ul>
 	</div>   <!-- end dropdown -->
 </nav>
