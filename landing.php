@@ -8,7 +8,7 @@ require_once "inc/header.inc.php";
 ?>
 	<div id="data_wrapper">
 		<div id="toggle_view_buttons">
-			<button id="toggler" href="javascript: void(0)" onclick="toggleView()">Inventory Grid View</button>
+			<button id="toggler" href="javascript: void(0)" onclick="toggleView(0)">Inventory Grid View</button>
 		</div>   <!-- end toggle view buttons -->
 		<div id="treemain" class="dispwindow">
 			<div id="treeviewwidget" class="viewwidget">
@@ -36,18 +36,24 @@ require_once "inc/header.inc.php";
 	</div> <!-- End of data_wrapper -->
 </div> <!-- End of page_wrapper -->
 <script>
-function toggleView() { // Toggle tree vs grid views
+function toggleView(viewstate) { // Toggle tree vs grid views
 	var treeview = document.getElementById('treemain');
 	var gridview = document.getElementById('gridmain');
 	var toggler =  document.getElementById('toggler');
+	
+	if (viewstate == 1) treeview.style.display = 'none';
+	else if (viewstate == 2) treeview.style.display = 'block';
+	
 	if (treeview.style.display == 'none') {
 		gridview.style.display = 'none'
 		treeview.style.display = 'block'
 		toggler.textContent = "Inventory Grid View";
+		$.get("main.php?F=28&view=1");  // Pass the view state back to main.php where it sets the session variable
 	} else {
 		gridview.style.display = 'block'
 		treeview.style.display = 'none'
 		toggler.textContent = "Inventory Tree View";
+		$.get("main.php?F=28&view=2");
 	}
 }
 
@@ -91,6 +97,7 @@ $(function () {
 	$('#gridmain').hide();
 
 	initprop(false);
+	toggleView(<?=$viewstate?>);
 	
 	$('#treeview').jstree({
 		'core' : {

@@ -4,6 +4,7 @@ require_once("../az/inc/functions.php");
 if (!isset($_SESSION["userName"]) || !isset($_SESSION["user_id"]) || !isset($_SESSION["logged_in"])) redirect_to("login.php"); 
 $userid = 0;
 if (isset($_SESSION["user_id"])) $userid = (int) $_SESSION["user_id"];
+if (isset($_SESSION["viewstate"])) $viewstate = (int) $_SESSION["viewstate"];
 ?><!DOCTYPE html>
 <html lang="en">
 <head>

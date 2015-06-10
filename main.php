@@ -14,6 +14,7 @@ $itemid = 0;
 $zipcode = 0;
 $parenttype = 0;
 $parameters = [];
+$viewstate = 0;
 
 if (isset($_POST["json"])) $json = $_POST["json"];
 // Casting all these to ints, so that invalid input can't be put in.
@@ -25,6 +26,7 @@ if (isset($_GET['roomid'])) $roomid = (int) $_GET['roomid'];
 if (isset($_GET['itemid'])) $itemid = (int) $_GET['itemid'];
 if (isset($_GET['parenttype'])) $parenttype = (int) $_GET['parenttype'];
 if (isset($_GET['zipcode'])) $zipcode = (int) $_GET['zipcode'];
+if (isset($_GET['view'])) $viewstate = (int) $_GET['view'];
 
 header('Content-Type: application/json');
 // Moved $firstTime initialization to the top
@@ -298,7 +300,10 @@ try {
 				echo '{"data":[';
 				jsonspew($con, $sql, array($userid));
 				echo "]}";
-				break;				
+				break;
+			case 28: // Set session tree/grid state
+				$_SESSION["viewstate"] = $viewstate;
+				break;
 			default: 
 				echo '{"error":"1","text":"Unknown function."}';
 		}
