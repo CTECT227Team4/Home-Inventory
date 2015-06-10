@@ -279,24 +279,16 @@ try {
 				break;
 			case 24: // DataTables Properties
 				echo '{"data":[';
-//				jsonspew($con, "SELECT ID, CONCAT('<a href=\"property.php?propertyid=', ID, '\">', Name, '</a>') AS Name, Address, Zip, Description FROM property p INNER JOIN user_property up ON p.ID = up.propertyID AND up.userID = ?", array($userid));
 				jsonspew($con, "SELECT CONCAT('<a href=\"property.php?propertyid=', ID, '\">', Name, '</a>') AS Name, Address, City, State, Zip, Description FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN zip z ON z.zipcode = p.zip WHERE up.userID = ?", array($userid));
 				echo "]}";
 				break;
 			case 25: // DataTables Rooms
-			/* SELECT r.ID, p.name, r.name, r.description, r.categoryID, r.notes FROM property p
-				INNER JOIN user_property up ON p.ID = up.propertyID
-				INNER JOIN room r ON r.propertyID = p.ID 
-				-- LEFT JOIN category c ON c.ID = r.categoryID
-				-- WHERE c.parentType = 2 AND up.userID = 24
-				WHERE up.userid = 24*/
-				$sql = "SELECT r.ID, p.name AS Property, r.Name AS Room, r.Description, r.CategoryID, r.Notes FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN room r ON r.propertyID = p.ID WHERE up.userid = ?";
 				echo '{"data":[';
-				jsonspew($con, $sql, array($userid));
+				jsonspew($con, "SELECT CONCAT('<a href=\"property.php?propertyid=', p.ID, '\">', p.name, '</a>') AS Property, CONCAT('<a href=\"room.php?roomid=', r.ID, '\">', r.name, '</a>') AS Room, r.Description, c.description AS Category, r.Notes FROM property p INNER JOIN user_property up ON p.ID = up.propertyID	INNER JOIN room r ON r.propertyID = p.ID LEFT JOIN category c ON c.ID = r.categoryID	WHERE c.parentType = 2 AND up.userid = ?", array($userid));
 				echo "]}";
 				break;
 			case 26: // DataTables Sections
-				$sql = "SELECT s.ID, p.name AS Property, s.Name AS Section, s.roomID, s.Description, s.CategoryID, s.Notes FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN section s ON s.propertyID = p.ID WHERE up.userid = ?";
+				$sql = "SELECT CONCAT('<a href=\"property.php?propertyid=', p.ID, '\">', p.name, '</a>') AS Property, CONCAT('<a href=\"section.php?sectionid=', s.ID, '\">', s.name, '</a>') AS Section, CONCAT('<a href=\"room.php?roomid=', r.ID, '\">', r.name, '</a>') AS Room, s.Description, s.CategoryID, s.Notes FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN section s ON s.propertyID = p.ID INNER JOIN room r ON r.ID = s.roomID WHERE up.userid = ?";
 				echo '{"data":[';
 				jsonspew($con, $sql, array($userid));
 				echo "]}";

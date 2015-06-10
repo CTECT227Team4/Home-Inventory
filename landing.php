@@ -62,19 +62,19 @@ function initprop (init) {
 
 function initroom (init) {
 	if (init) $('#grid-basic').DataTable().destroy();
-	document.getElementById("grid-basic").innerHTML = "<thead><tr><th>ID</th><th>Property</th><th>Room</th><th>Description</th><th>CategoryID</th><th>Notes</th></tr></thead><tfoot><tr><th>ID</th><th>Property</th><th>Name</th><th>Description</th><th>CategoryID</th><th>Notes</th></tr></tfoot>";
+	document.getElementById("grid-basic").innerHTML = "<thead><tr><th>Room</th><th>Property</th><th>Description</th><th>Category</th><th>Notes</th></tr></thead><tfoot><tr><th>Room</th><th>Property</th><th>Description</th><th>Category</th><th>Notes</th></tr></tfoot>";
 	$('#grid-basic').DataTable({
 		"ajax": "main.php?F=25",
-		"columns": [{"data":"ID"},{"data":"Property"},{"data":"Room"},{"data":"Description"},{"data":"CategoryID"},{"data":"Notes"}]
+		"columns": [{"data":"Room"},{"data":"Property"},{"data":"Description"},{"data":"Category"},{"data":"Notes"}]
 	});	
 }
 
 function initsection (init) {
 	if (init) $('#grid-basic').DataTable().destroy();
-	document.getElementById("grid-basic").innerHTML = "<thead><tr><th>ID</th><th>Property</th><th>Section</th><th>roomID</th><th>Description</th><th>CategoryID</th><th>Notes</th></tr></thead><tfoot><tr><th>ID</th><th>Property</th><th>Section</th><th>roomID</th><th>Description</th><th>CategoryID</th><th>Notes</th></tr></tfoot>";
+	document.getElementById("grid-basic").innerHTML = "<thead><tr><th>Section</th><th>Property</th><th>Room</th><th>Description</th><th>CategoryID</th><th>Notes</th></tr></thead><tfoot><tr><th>Section</th><th>Property</th><th>Room</th><th>Description</th><th>CategoryID</th><th>Notes</th></tr></tfoot>";
 	$('#grid-basic').DataTable({
 		"ajax": "main.php?F=26",
-		"columns": [{"data":"ID"},{"data":"Property"},{"data":"Section"},{"data":"roomID"},{"data":"Description"},{"data":"CategoryID"},{"data":"Notes"}]
+		"columns": [{"data":"Section"},{"data":"Property"},{"data":"Room"},{"data":"Description"},{"data":"CategoryID"},{"data":"Notes"}]
 	});	
 }
 
