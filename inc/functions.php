@@ -57,6 +57,7 @@
     	}
     } //end getRecordset
 
+    
     function writeRecordset($con, $sql, $parameters) {
     	try {
     		$paramcount = 1;
@@ -132,9 +133,7 @@
 		$sql .= "WHERE userName = '{$userName}' ";
 		$sql .= "LIMIT 1";
 
-		$parameters = [$userName];
-
-		$user_set = getRecordset($con, $sql, $parameters);
+		$user_set = getRecordset($con, $sql, $userName);
 		if ($user = $user_set->fetch(PDO::FETCH_ASSOC)) {
 			return $user;
 		} else {
@@ -166,7 +165,7 @@
 		$sql = "SELECT * ";
 		$sql .= "FROM user ";
 		$sql .= "WHERE token = '{$token}' ";
-		$sql .= "AND TIME(token_expire) < NOW()";
+		$sql .= "AND TIME(token_expire) > NOW()";
 
 		$parameters = [$token];
 
@@ -206,35 +205,17 @@
 		if(!logged_in()) {
 	// 		redirect_to("login.php");
 		}
-	}
-
-	function check_access($userID, $min_type) {
-		/* $min_type levels:
-			--- 1 = user
-			--- 2 = tech support
-			--- 3 = agent
-			--- 4 = admin
-		*/
-		global $con;
-		//Use userID to check user's type
-		$sql = "SELECT usertypeID FROM user WHERE ID={$userID} LIMIT 1";
-		$parameters = [$userID];
-		$result = getRecordset($con, $sql, $parameters);
-		$row = $result->fetch();
-		$type = (int) $row["usertypeID"];
-		//If the user's type is lower than the type required, echo an error message and kill the page
-		if ($type < $min_type) {
-			echo "<h1>You are not authorized to view this page.</h1>";
-			echo "<h2><a href=\"index.php\">Back to A-Z Home Inventory</a></h2>";
-			die();
-		}
-	}
+	 }
 
 abstract class AzObject { // Abstract base class to parse JSON and put it into an inherited object class
 	public function __construct($json = "") {
         if ($json != "") $this->set($json);
     }
 
+	public function types () { // Return an array of the data types, null on abstract class
+		return null;
+	}
+	
     public function set($json) {
 		$data = json_decode($json, true);
         foreach ($data AS $key=>$value) {
@@ -261,7 +242,7 @@ abstract class AzObject { // Abstract base class to parse JSON and put it into a
 	
 	public function write($con) {
 		$vars = array_keys(get_object_vars($this)); // Get just the var names
-		if ($this->ID > 0) { // ID supplied, do an update
+		if ($this->id > 0) { // ID supplied, do an update
 			$sql = 'UPDATE ' . get_class($this) . ' SET ';
 			foreach ($vars AS $key) {
 				$sql .= "`$key` = ?,";
@@ -280,15 +261,24 @@ abstract class AzObject { // Abstract base class to parse JSON and put it into a
 
 		try {
 			$unsafe = true;
+			$debug = false;
 			//echo sqlparms($sql, $vars);
 			//echo_r($vars);
 			if ($unsafe) {
 				$sql = sqlparms($sql, $vars); // Completely unsafe, PHP's type handling is so completely fucked up!
-				writeRecordset($con, $sql, array());
+				$stmt = writeRecordset($con, $sql, array());
 			} else {
-				writeRecordset($con, $sql, $vars);  // Correct way to handle it if PHP's typing can be figured out.
+				$stmt = writeRecordset($con, $sql, $vars);  // Correct way to handle it if PHP's typing can be figured out.
 			}
-			return ('{"errorobj":{"error":"0","text":"Write successful."}}');
+			if ($debug) {
+				echo_r($stmt);
+				echo_r($stmt->errorCode());
+				echo_r($stmt->errorInfo());
+				echo $stmt->errorInfo()[2];
+			}
+			
+			if (intval($stmt->errorInfo()[0]) == 0) return ('{"errorobj":{"error":"0","text":"' . get_class($this) . ' saved successfully."}}');
+			else return ('{"errorobj":{"error":"0","text":"' . $stmt->errorInfo()[2] .'"}}');
 		} catch (Exception $e) {
 			return ('{"error":"' . $e->getCode() . '","text":"' . $e->getMessage() . '"}');
 		}
@@ -323,30 +313,29 @@ class Property extends AzObject { // object to hold property record
 }
 
 class Section extends AzObject { // object to hold section record
-	var $ID;
-	var $name;
-	var $propertyID;
-	var $roomID;
-	var $description;
-	var $notes;
-	var $categoryID;
-}
-
-/*
-class Room extends AzObject { // object to hold room record
-	var $ID;
+	var $ID = 0;
+	var $name = "";
 	var $propertyid = 0;
-	var $name;
-	var $description;
+	var $roomid = 0;
+	var $description = "";
+	var $notes = "";
 	var $categoryid = 0;
-}*/
+}
 
 class Room extends AzObject { // object to hold room record
 	var $ID = 0;
 	var $propertyid = 0;
-	var $name = null;
-	var $description = null;
+	var $name = "";
+	var $description = "";
 	var $categoryid = 0;
+	
+	public function values () {
+		return array((int) $ID,
+		(int) $propertyid,
+		(string) $name,
+		(string) $description,
+		(int) $categoryid);
+	}
 }
 
 class Item extends AzObject { // object to hold item record
