@@ -11,7 +11,7 @@ if (isset($_SESSION["user_id"])) $userid = (int) $_SESSION["user_id"];
 	<title><?php echo $page_title; ?></title>
 	<link rel="shortcut icon" href="images/az-icon.ico">
 	<link rel="stylesheet" type="text/css" href="css/style.css">
-	<link rel="stylesheet" type="text/css" href="./jquery/jquery.dataTables.css">
+	<link rel="stylesheet" type="text/css" href="jquery/jquery.dataTables.css">
 	<link rel="stylesheet" href="jquery/themes/default/style.min.css" />
 	<link rel="stylesheet" href="font-awesome-4.3.0/css/font-awesome.min.css">
 	<link href='http://fonts.googleapis.com/css?family=Lato:400,700,900,400italic,700italic' rel='stylesheet' type='text/css'>

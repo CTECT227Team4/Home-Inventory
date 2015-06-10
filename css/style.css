@@ -525,6 +525,7 @@ margin-top: -10px;
 
 #treemain {
 	position: relative;
+	top: -35px; // Lines the treeview buttons up with the grid view
 }
 
 #toggle_view_buttons {
