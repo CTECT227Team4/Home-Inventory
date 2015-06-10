@@ -325,9 +325,16 @@ nav {
 .forgot {
 	font-size: 1.2rem;
 	font-family: 'Lato', sans-serif;
-	font-style: italic;
 	color: #ad102a;     /*   Dark Red color for :link  */;
 	text-align: center;
+}
+
+.forgot .forgotten {
+	padding: 5px 20px;
+	background-color: #D7FE8B;            /* Light Green   */;
+	color: #333333;
+	font-size: 1rem;
+	border: 2px solid #90C32E;
 }
 
 .registration_wrapper {
@@ -715,6 +722,10 @@ margin-top: -10px;
 	border: 2px solid #90C32E;
 }
 
+.centered_button input {
+	display: inline-block;
+}
+
 .simple_tooltip i{
 	width: 6px;
 	color: red;
@@ -854,6 +865,9 @@ span img {
 	margin: 0 auto;
 }
 
+.report_content p{
+	font-size: 1rem;
+}
 .report_content h3 {
 	color: #004800;
 }
@@ -873,6 +887,30 @@ span img {
 	width: 5%;
 }
 
+.report_form_dropdown label {
+	width: 35%;
+	float: left;
+	margin-right: 20px;
+	text-align: right;
+
+}
+
+.report_form_dropdown input {
+	width: 55%;
+	float: left;
+	text-align: left;
+}
+
+.report_content button {
+	font-size: 1rem;
+	padding: 5px;
+	background-color: #D7FE8B;          /*Light Green */
+	color: #333333;
+	font-size: 1rem;
+	outline: 2px solid #90C32E;
+	border: none;
+
+}
 
 /*  ---------------------------  ADMIN ------------------------  */
 
