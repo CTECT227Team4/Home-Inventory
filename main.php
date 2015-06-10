@@ -216,6 +216,7 @@ try {
 				redirect_to("landing.php");
 				break;
 			case 10: // WriteItem
+			//$json = '{"id":"41","name":"Test Thing","propertyid":"1","sectionid":"1","roomid":"1","manufacturer":"Sony","brand":"Sony","modelnumber":"ABC123","serialnumber":"123456","condition":"1","beneficiary":"None","description1":"Some testing.","purchasedate":"2015-01-01","purchaseprice":"200","purchasedfrom":"store","paymentmethod":"VISA","estimated_value":"","appraised_value":"","appraisal_date":"","appraiser":"","description2":"","warrantyexpirationdate":"2017-01-01","warrantytype":"good type","repaired_by":"","repair_date":"","repair_cost":"","repair_description3":"","general_notes":""}';
 				$item = new Item($json);
 				echo $item->write($con);
 				break;

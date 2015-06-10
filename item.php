@@ -19,7 +19,9 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 						alert ("Error\nStatus:" + status + "\nError Msg: " + errormsg);
 					},
 					success: function (data, status) {
-						alert("Data: " + data + "\nStatus: " + status); 
+						obj = JSON.parse(data);
+						if (obj.errorobj.error == 0) alert(obj.errorobj.text);
+						else alert(obj.errorobj.error + ' - ' + obj.errorobj.text);
 					}
 				})
 			}
@@ -116,7 +118,7 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 
 		<div id="tabs">
 			<form method="Post" action="process_add_property.php" id="add_item">
-				<input id="ID" type="hidden" name="ID" value="<?=$itemid?>">
+				<input id="id" type="hidden" name="id" value="<?=$itemid?>">
 			  	<ul>
 				    <li><a href="#tabs-1">Item</a></li>
 				    <li><a href="#tabs-2">Value</a></li>
