@@ -14,7 +14,9 @@ function packform() {
 			alert ("Error\nStatus:" + status + "\nError Msg: " + errormsg);
 		},
 		success: function (data, status) {
-			alert("Data: " + data + "\nStatus: " + status);
+			obj = JSON.parse(data);
+			if (obj.errorobj.error == 0) alert(obj.errorobj.text);
+			else alert(obj.errorobj.error + ' - ' + obj.errorobj.text);
 		}
 	})
 }
@@ -69,7 +71,7 @@ $(document).ready(function() {
 
 		<div id="tabs">
 			<form method="Post" action="main.php?F=8" id="add_room">
-			<input id="ID" type="hidden" name="ID" value="<?=$roomid?>">
+			<input id="id" type="hidden" name="id" value="<?=$roomid?>">
 			  	<ul>
 				    <li><a href="#tabs-1">Room</a></li>
 				    <li><a href="#tabs-2">Multimedia</a></li>

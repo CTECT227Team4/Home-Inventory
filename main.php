@@ -286,7 +286,7 @@ try {
 				break;
 			case 20: // GetEditProperty
 				$property = new Property();
-				$property->ID = $propertyid;
+				$property->id = $propertyid;
 				echo $property->getjson($con);			
 				break;
 			case 21: // WriteRoom

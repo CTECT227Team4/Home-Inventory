@@ -248,7 +248,7 @@ abstract class AzObject { // Abstract base class to parse JSON and put it into a
 				$sql .= "`$key` = ?,";
 			}
 			$sql = rtrim($sql, ","); // Remove trailing comma
-			$sql .= " WHERE ID=" . $this->ID;
+			$sql .= " WHERE ID=" . $this->id;
 			$vars = array_values(get_object_vars($this)); // Get just the var values
 		} else { // No ID supplied, do an insert
 			array_splice($vars, 0, 1); // Delete the first element (Will be 'ID')
@@ -271,14 +271,17 @@ abstract class AzObject { // Abstract base class to parse JSON and put it into a
 				$stmt = writeRecordset($con, $sql, $vars);  // Correct way to handle it if PHP's typing can be figured out.
 			}
 			if ($debug) {
+				echo "id: " . $this->id . "\n\n";
+				echo_r($this);
+				echo "\n\n";
 				echo_r($stmt);
 				echo_r($stmt->errorCode());
 				echo_r($stmt->errorInfo());
 				echo $stmt->errorInfo()[2];
 			}
 			
-			if (intval($stmt->errorInfo()[0]) == 0) return ('{"errorobj":{"error":"0","text":"' . get_class($this) . ' saved successfully."}}');
-			else return ('{"errorobj":{"error":"0","text":"' . $stmt->errorInfo()[2] .'"}}');
+			if (intval($stmt->errorInfo()[1]) == 0) return ('{"errorobj":{"error":"0","text":"' . get_class($this) . ' saved successfully."}}');
+			else return ('{"errorobj":{"error":"' . $stmt->errorInfo()[1] . '","text":"' . $stmt->errorInfo()[2] .'"}}');
 		} catch (Exception $e) {
 			return ('{"error":"' . $e->getCode() . '","text":"' . $e->getMessage() . '"}');
 		}
@@ -304,16 +307,16 @@ class Property extends AzObject { // object to hold property record
 	var $general_notes
 */
 	// All the vars from the DB
-	var $ID;
+	var $id;
 	var $name;
 	var $address;
 	var $zip;
 	var $description;
-	var $categoryID;
+	var $categoryid;
 }
 
 class Section extends AzObject { // object to hold section record
-	var $ID = 0;
+	var $id = 0;
 	var $name = "";
 	var $propertyid = 0;
 	var $roomid = 0;
@@ -323,7 +326,7 @@ class Section extends AzObject { // object to hold section record
 }
 
 class Room extends AzObject { // object to hold room record
-	var $ID = 0;
+	var $id = 0;
 	var $propertyid = 0;
 	var $name = "";
 	var $description = "";
@@ -339,7 +342,7 @@ class Room extends AzObject { // object to hold room record
 }
 
 class Item extends AzObject { // object to hold item record
-	var $ID;
+	var $id;
 	var $propertyid = 0;
 	var $roomid = 0;
 	var $sectionid = 0;

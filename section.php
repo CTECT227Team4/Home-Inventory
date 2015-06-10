@@ -9,7 +9,19 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 	 <link rel="stylesheet" type="text/css" href="jquery/tipped.css"/> 
 	   	<script>
 			function packform() {
-				return $('form#add_section').serializeJSON();
+				var json = $('form#add_section').serializeJSON();
+				//alert (json);
+				$.ajax ({type: "POST", dataType: "text", url: 'main.php?F=22', 
+					data: 'json=' + json,
+					error: function (jqXHR, status, errormsg) {
+						alert ("Error\nStatus:" + status + "\nError Msg: " + errormsg);
+					},
+					success: function (data, status) {
+						obj = JSON.parse(data);
+						if (obj.errorobj.error == 0) alert(obj.errorobj.text);
+						else alert(obj.errorobj.error + ' - ' + obj.errorobj.text);
+					}
+				})
 			}
 		
 	   		$(document).ready(function() {
@@ -137,7 +149,7 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 				</div>	  <!-- end of tabs4 -->	
 
 					<p class="centered_button">
-						<button type="button" onclick="alert(packform())" id="add_item_submit">Save</button>
+						<button type="button" onclick="packform()" id="add_item_submit">Save</button>
 					</p>		
 			</form>   <!--  end of form -->
 		</div>	<!-- end of tabs -->	
