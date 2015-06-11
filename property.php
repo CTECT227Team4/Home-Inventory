@@ -35,10 +35,25 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 				}
 			}
 			
+			function getpics () {
+				$.ajax({
+					type: "GET",
+					url: "main.php?F=29&propertyid=" + propertyid,
+					dataType: 'html',
+					success: function(data){
+						$("#photos").html(data);
+					}
+				}).fail(function() {
+					alert("Some error");
+				});
+			}
+			
 	   		$(document).ready(function() {
 				$("#zip").blur(function() {
 					getazip(this.value);
 				});
+				
+				getpics();
 				
 	 	  		$.getJSON("main.php?F=16&parenttype=1", function(obj) { // Fill in categegories, 1 is property
 					$("#categoryid").empty(); // Clear the list each call
@@ -135,7 +150,7 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 
 		<div id="tabs-3" class="multimedia_tab tabs_nav">
 				<h3>Current Photos Attached To This Property:</h3>
-				<p> Add the multimedia grid </p>
+				<p><div id="photos"></div></p>
 				<p><a href="upload.php?ID=<?=$propertyid?>&parentType=1" target="_blank"><button type="button" class="add_file">Add File</button></a></p>
 				<p><button class="scan_file"><a href="#">Scan Photo</a></button></p>
 				<p><button class="scan_file" type="button"><a href="#">Scan Photo</a></button></p>
@@ -158,7 +173,7 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 		</div>		<!-- end tab 5 -->
 		
 				<p class="centered_button">
-					<button type="button" onclick="alert(packform())" id="add_property_submit">Save</button>
+					<button type="button" onclick="packform()" id="add_property_submit">Save</button>
 				</p>
 		</form>    <!-- end of form -->		
 	</div>   <!-- end of tabs -->

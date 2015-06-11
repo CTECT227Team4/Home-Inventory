@@ -959,3 +959,21 @@ span img {
 	background-color: #e7ffb8;    /*  Light-light Green  */
 }
 
+div.thumb {
+  float: left;
+  border: thin silver solid;
+  margin: 0.1em;
+  padding: 0.25em;
+}
+div.thumb p {
+  position: relative;
+  top: -60px;
+  text-align: center;
+  font-style: italic;
+  font-size: smaller;
+  text-indent: 0;
+}
+div.thumb img {
+	position: relative;
+	top: -11px;
+}

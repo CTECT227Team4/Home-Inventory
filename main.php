@@ -319,7 +319,6 @@ try {
 				echo "]}";
 				break;
 			case 27: // DataTables Items
-				//$sql = "SELECT CONCAT('<a href=\"item.php?itemid=', i.ID, '\">', i.`name`, '</a>') AS Name, CONCAT('<a href=\"property.php?propertyid=', p.ID, '\">', p.Name, '</a>') AS Property, CONCAT('<a href=\"room.php?roomid=', r.ID, '\">', r.Name, '</a>') AS Room,sectionID,c.Description AS Category,i.Description1 AS Description,manufacturer,Brand,modelNumber AS 'Model Number',serialNumber,`condition`,beneficiary,purchaseDate,purchasePrice,purchasedFrom,paymentMethod,warrantyExpirationDate,warrantyType,warranty_attached,repaired_by,repair_date,repair_cost,repair_attached,repair_description3,general_notes,estimated_value,appraised_value,appraisal_date,appraiser,appraisal_attached,description2,warranty_question FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN item i ON i.propertyID = p.ID INNER JOIN room r ON r.id = i.roomid INNER JOIN category c ON i.categoryID = c.id WHERE up.userid = ?";
 				$sql = "SELECT CONCAT('<a href=\"item.php?itemid=', i.ID, '\">', i.`name`, '</a>') AS Name, CONCAT('<a href=\"property.php?propertyid=', p.ID, '\">', p.Name, '</a>') AS Property, CONCAT('<a href=\"room.php?roomid=', r.ID, '\">', r.Name, '</a>') AS Room,CONCAT('<a href=\"section.php?sectionid=', s.ID, '\">', s.Name, '</a>') AS Section,c.Description AS Category,i.Description1 AS Description,manufacturer,Brand,modelNumber AS 'Model Number',serialNumber,`condition`,beneficiary,purchaseDate,purchasePrice,purchasedFrom,paymentMethod,warrantyExpirationDate,warrantyType,warranty_attached,repaired_by,repair_date,repair_cost,repair_attached,repair_description3,general_notes,estimated_value,appraised_value,appraisal_date,appraiser,appraisal_attached,description2,warranty_question FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN item i ON i.propertyID = p.ID INNER JOIN room r ON r.id = i.roomid INNER JOIN category c ON i.categoryID = c.id LEFT JOIN section s ON s.id = i.sectionid WHERE up.userid = ?";
 				echo '{"data":[';
 				jsonspew($con, $sql, array($userid));
@@ -327,6 +326,18 @@ try {
 				break;
 			case 28: // Set session tree/grid state
 				$_SESSION["viewstate"] = $viewstate;
+				break;
+			case 29: // List of pictures for something
+				$sql = "SELECT thumbWidth,thumbHeight,ID,item,name FROM attachment WHERE id = ? AND parentType = 1";
+				$rs = getRecordset($con, $sql, array($propertyid));
+				echo "<table><tr>";
+				foreach ($rs as $row) {
+					//echo '<div class="thumb" style="width: '.$row['thumbWidth'].'px; height: '.$row['thumbHeight'].'px;"><p><a href="showfile.php?parentType=1&ID='.$row['ID'].'&item='.$row['item'].'"><img src="showfile.php?parentType=1&ID='.$row['ID'].'&item='.$row['item'].'&thumbnail=1" alt="'.$row['name'].' /"></a></p><p>'.$row['name'].'</p></div>';
+					//echo '<div class="thumb" style="width: 128px; height: 128px;"><p><a href="showfile.php?parentType=1&ID='.$row['ID'].'&item='.$row['item'].'"><img src="showfile.php?parentType=1&ID='.$row['ID'].'&item='.$row['item'].'&thumbnail=0" alt="'.$row['name'].' /"></a></p><p>'.$row['name'].'</p></div>';
+					
+					echo '<td><a href="showfile.php?parentType=1&ID='.$row['ID'].'&item='.$row['item'].'"><img style="width: 128px; height: 128px;" src="showfile.php?parentType=1&ID='.$row['ID'].'&item='.$row['item'].'&thumbnail=0" alt="'.$row['name'].' /"></a><br>'.$row['name'].'</td>';
+				}
+				echo "</tr></table>";
 				break;
 			default: 
 				echo '{"error":"1","text":"Unknown function."}';

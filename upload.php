@@ -6,7 +6,7 @@
 </head>
 <body>
 <div class="page_wrapper">
-	<form method="post" action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data">
+	<form method="post" action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" name="attach">
 		<h1 id="pop-up_header">A-Z Upload File</h1>
 			<fieldset>
 				<legend> 
@@ -14,7 +14,7 @@
 						srcset="images/logo.png 900w" sizes="30vw"> 
 				</legend>
 				<p class="pop-up_table">
-					<label for="userfile">Select Image File</label>
+					<label for="userfile">Select File</label>
 					<input type="file" name="userfile"  size="40">
 				</p>
 	<?php
@@ -26,18 +26,17 @@
 		if (isset($_GET['ID'])) $id = $_GET['ID'];
 		if (isset($_GET['parentType'])) $parentType = $_GET['parentType'];
 	?>
-
 				<input type="hidden" name="ID" value="<?=$id?>">
 				<input type="hidden" name="parentType" value="<?=$parentType?>">
 
 				<p class="pop-up_table">
 					<label for="description">Description</label>
-					<textarea name="description"></textarea>
+					<input type=text name="description">
 				</p>
 
 				<p class="centered_button">
-					<input type="submit" value="Submit" id="add_item_submit"><button onclick="self.close()">Close</button>
-				</p>
+				<button class="gridMainButton" type="button" onclick="document.forms['attach'].submit()" id="add_item_submit">Submit</button></p>
+				<button class="gridMainButton" type="button" onclick="self.close()">Close</button></p>
 			</fieldset>
 		</form>
 	</div>    <!-- end page_wrapper -->
