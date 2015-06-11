@@ -207,6 +207,27 @@
 		}
 	 }
 
+	function check_access($userID, $min_type) {
+		/* $min_type levels:
+			--- 1 = user
+			--- 2 = tech support
+			--- 3 = agent
+				--- 4 = admin*/
+		global $con;
+		//Use userID to check user's type
+		$sql = "SELECT usertypeID FROM user WHERE ID={$userID} LIMIT 1";
+		$parameters = [$userID];
+		$result = getRecordset($con, $sql, $parameters);
+		$row = $result->fetch();
+		$type = (int) $row["usertypeID"];
+		//If the user's type is lower than the type required, echo an error message and kill the page
+		if ($type < $min_type) {
+			echo "<h1>You are not authorized to view this page.</h1>";
+			echo "<h2><a href=\"index.php\">Back to A-Z Home Inventory</a></h2>";
+			die();
+		}
+	}
+
 abstract class AzObject { // Abstract base class to parse JSON and put it into an inherited object class
 	public function __construct($json = "") {
         if ($json != "") $this->set($json);
