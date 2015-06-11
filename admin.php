@@ -23,11 +23,11 @@ require_once "inc/header.inc.php";
 				<th>Last Name</th>
 				<th>Email Address</th>
 				<th>User Type</th>
-				<th>Insurance Agent</th>
+				<th>Action</th>
 			</tr>
 
 			<?php
-				$sql = "SELECT user.id, user.userName, user.firstName, user.lastName, user.email, user.usertypeID, insurance.agent FROM user LEFT JOIN insurance ON user.id=insurance.userID ORDER BY user.id ASC";
+				$sql = "SELECT id, userName, firstName, lastName, email, usertypeID FROM user";
 				$parameters = [];
 
 				$users = getRecordset($con,$sql,$parameters);

@@ -61,11 +61,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 				<th>Last Name</th>
 				<th>Email Address</th>
 				<th>User Type</th>
-				<th>Insurance Agent</th>
 			</tr>
 			<?php
 				/* ==== Get/output information about this user ==== */
-				$sql = "SELECT user.id, user.userName, user.firstName, user.lastName, user.email, user.usertypeID, insurance.agent FROM user LEFT JOIN insurance ON user.id=insurance.userID WHERE user.id=$userID";
+				$sql = "SELECT id, userName, firstName, lastName, email, usertypeID FROM user WHERE id=$userID";
 				$parameters = [$userID];
 
 				$users = getRecordset($con,$sql,$parameters);
@@ -147,20 +146,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 					 ?>
 				</div>
 				<br>
-				<div class="radioButtons">
-					<label for="agents">Update Agent:</label><br>
-					<?php
-					/* ==== Echo all other properties as check boxes.  Check to add user to this property. ====*/
-					$sql = "SELECT ID, userName, firstName, lastName, email FROM user WHERE usertypeID = 3";
-
-					$all_agents = getRecordset($con,$sql,$parameters);
-					foreach ($all_agents as $agent) {
-							echo "<input type=\"radio\" name=\"agents\" value=\"" . $agent['ID'] . "\">" . $agent["firstName"] . " " . $agent["lastName"];
-						echo "<br>";
-					}
-
-					 ?>
-				</div>
 
 				<input type="submit" name="submit" value="Update User">
 
