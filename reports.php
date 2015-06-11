@@ -32,7 +32,7 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 <!-- END HEADER CONTENT -->
 	<div class="report_content">
 		<h3>Reports Available</h3>
-			<p>Full Inventory by Property</p>
+			<p class="report_name">Full Inventory by Property</p>
 			<form method="Post" action="reports.php" id="property_reports">
 				<p class="report_form_dropdown">
 					<label for="propertyid">Please Choose a Property:  <span class="simple-tooltip" title="The property whose inventory you would like to print."><img src="images/info.png"></span></label>
@@ -56,15 +56,16 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 
 
 			</form>
-			<li>
-			<a href="print1.php">Inventory By Property</a></li>
-				<p>
-					
+
+				<p class="report_name">	
+					<a href="print1.php">Inventory By Property</a>
 				</p>
-			<li><a href="print2.php">Inventory By Category</a></li>	
-
-
-			<li><a href="print3.php">Inventory By Room</a></li>	
+				<p class="report_name">
+					<a href="print2.php">Inventory By Category</a>
+				</p>
+				<p class="report_name">
+					<a href="print3.php">Inventory By Room</a>
+				</p>
 				<p class="tab_one_wide">
 					<label for="propertyid">Property:  <span class="simple-tooltip" title="The property that as the rooms you would like to print."><img src="images/info.png"></span></label>
 					<select name="propertyid" id="propertyid"></select>

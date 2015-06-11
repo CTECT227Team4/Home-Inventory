@@ -868,6 +868,10 @@ span img {
 .report_content p{
 	font-size: 1rem;
 }
+
+.report_name {
+	font-weight: bold;
+}
 .report_content h3 {
 	color: #004800;
 }
@@ -892,11 +896,10 @@ span img {
 	float: left;
 	margin-right: 20px;
 	text-align: right;
-
 }
 
 .report_form_dropdown input {
-	width: 55%;
+	width: 65%;
 	float: left;
 	text-align: left;
 }
@@ -909,6 +912,23 @@ span img {
 	font-size: 1rem;
 	outline: 2px solid #90C32E;
 	border: none;
+
+}
+
+.report_content input {
+	margin-top: 10px;
+	padding: 5px;
+	background-color: #D7FE8B;          /*Light Green */
+	color: #333333;
+	font-size: 1rem;
+	outline: 2px solid #90C32E;
+	border: none;
+
+}
+
+.report_content input:hover {
+	background-color: #90C32E;     /* Medium Green */
+	color: #FFFFFF;
 
 }
 
