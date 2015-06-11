@@ -237,18 +237,18 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 
 				<div id="tabs-3" class="multimedia_tab tabs_nav">
 					<h3>Current Photos Attached To This Item:</h3>
-					<p><div id="photos"></div></p>
-					<p><a href="upload.php?ID=<?=$itemid?>&parentType=4" target="_blank"><button type="button" class="add_file">Add File</button></a></p>
-					<p><a href="#"><button class="add_file">Scan Photo</button></a></p>
-					<p class="scan_under_construction"><img src="images/under-construction.png" alt="under construction icon"> Under Construction </p>
+				<p><div id="photos"></div></p>
+				<p><a href="upload.php?ID=<?=$propertyid?>&parentType=1" target="_blank"><button type="button" class="add_file">Add File</button></a></p>
+				<p><button class="scan_file" type="button"><a href="#">Scan Photo</a></button></p>
+				<p class="scan_under_construction"><img src="images/under-construction.png" alt="under construction icon"> Under Construction </p>
 				</div>   <!-- end of tabs3 -->
 
 				<div id="tabs-4" class="documents_tab tabs_nav">
 			 		<h3>Current Documents Attached To This Item:</h3>
-					<p> Add the multimedia grid </p>
-					<p><a href="upload.php?ID=<?=$itemid?>&parentType=4" target="_blank"><button type="button" class="add_file">Add File</button></a></p>
-					<p><a href="#"><button class="add_file">Scan Photo</button></a></p>
-					<p class="scan_under_construction"><img src="images/under-construction.png" alt="under construction icon"> Under Construction </p>
+				<p><div id="photos"></div></p>
+				<p><a href="upload.php?ID=<?=$propertyid?>&parentType=1" target="_blank"><button type="button" class="add_file">Add File</button></a></p>
+				<p><button class="scan_file" type="button"><a href="#">Scan</a></button></p>
+				<p class="scan_under_construction"><img src="images/under-construction.png" alt="under construction icon"> Under Construction </p>
 				</div>    <!-- end of tabs4 -->
 
 				<div id="tabs-5" class="warranty_tab tabs_nav">
