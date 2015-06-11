@@ -3,6 +3,12 @@
 <head>
 	<title>A-Z Upload File</title>
 	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<script>
+	function upload (f) {
+		f.submit();
+		window.close();
+	}
+	</script>
 </head>
 <body>
 <div class="page_wrapper">
@@ -36,7 +42,7 @@
 
 				<p class="centered_button">
 				<button class="gridMainButton" type="button" onclick="document.forms['attach'].submit()" id="add_item_submit">Submit</button></p>
-				<button class="gridMainButton" type="button" onclick="self.close()">Close</button></p>
+				<button class="gridMainButton" type="button" onclick="upload(this)" id="add_item_submit">Close</button></p>
 			</fieldset>
 		</form>
 	</div>    <!-- end page_wrapper -->
