@@ -3,6 +3,7 @@
 <head>
 	<title>A-Z Upload File</title>
 	<link rel="stylesheet" type="text/css" href="css/style.css">
+
 	<script>
 	function upload (f) {
 		f.submit();
@@ -12,13 +13,11 @@
 </head>
 <body>
 <div class="page_wrapper">
-	<form method="post" action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" name="attach">
-		<h1 id="pop-up_header">A-Z Upload File</h1>
-			<fieldset>
-				<legend> 
-					<img src="images/logo.png"
-						srcset="images/logo.png 900w" sizes="30vw"> 
-				</legend>
+	<div class="pop-up_wrapper">
+		<h1 id="pop-up_header">A-Z Photo Upload</h1>
+		<img src="images/logo.png"
+				srcset="images/logo.png 900w" sizes="30vw"> 
+			<form class="photo_load" method="post" action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" name="attach">
 				<p class="pop-up_table">
 					<label for="userfile">Select File</label>
 					<input type="file" name="userfile"  size="40">
@@ -41,16 +40,17 @@
 				</p>
 
 				<p class="centered_button">
-				<button class="gridMainButton" type="button" onclick="document.forms['attach'].submit()" id="add_item_submit">Submit</button></p>
-				<button class="gridMainButton" type="button" onclick="upload(this)" id="add_item_submit">Close</button></p>
-			</fieldset>
+				<button class="gridMainButton" type="button" onclick="document.forms['attach'].submit()" id="add_item_submit">Submit</button>
+				<button class="gridMainButton" type="button" onclick="upload(this)"  >Close</button></p>
+
 		</form>
+		</div>   <!-- end of pop-up_wrapper -->
 	</div>    <!-- end page_wrapper -->
 	<?php
 		$description = "";
 
 		if(!isset($_FILES['userfile'])) { // check if a file was submitted
-			echo '<p>Please select a file to upload.</p>';
+			echo '<p class="php_message">Please select a file to upload.</p>';
 		} else if(!isset($_POST['ID'], $_POST['parentType'])) { // check if enough info was submitted
 			echo "<p>Error, not enough information about file.</p>";
 		} else {
@@ -60,11 +60,11 @@
 
 			try {
 				if ($id == 0 || $parentType == 0 ) {
-					echo "You must supply the ID and parentType of the file.";
+					echo "<p class=\"php_message\">You must supply the ID and parentType of the file.</p>";
 					exit;
 				}
 				upload($driver, $db, $server, $user, $pwd, $id, $parentType, $description);
-				echo '<p>Thank you for submitting</p>';
+				echo '<p class="php_message">Thank you for submitting</p>';
 			} catch(Exception $e) {
 				echo '<h4>' . $e->getMessage() . '</h4>';
 			}

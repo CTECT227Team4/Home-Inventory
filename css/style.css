@@ -783,12 +783,35 @@ span img {
 
 /*             ----------------------------------   POP-UP PHOTO  -----------------------------------         */
 
-#pop-up_header {
-
+#pop-up_wrapper {
+	position: relative;
 }
 
+.pop-up_wrapper img {
+	margin-left: 10%;
+}
 
+.photo_load {
+	width: 80%;
+	margin: 0 auto;
+	outline:4px solid #90C32E;	
+	padding:  10px;
+}
 
+.photo_load p {
+	font-size: 1rem;
+	padding: 10px 0;
+}
+
+.photo_load input {
+	font-size: 1rem;
+}
+
+.php_message {
+	font-size: 1rem;
+	text-align: center;
+
+}
 /*             ---------------------   USER PROFILE  -----------------------         */
 
 .coverage {
