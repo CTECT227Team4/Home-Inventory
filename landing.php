@@ -4,7 +4,9 @@ $page_heading = "Home Inventory";
 $nav_context = "inventory";
 // $nav_context sets the first nav item to be the grid/tree view toggler
 // This value is *case sensitive*
-require_once "inc/header.inc.php";
+require_once ("inc/header.inc.php");
+$viewstate = 0;
+if (isset($_SESSION["viewstate"])) $viewstate = (int) $_SESSION["viewstate"];
 ?>
 	<div id="data_wrapper">
 		<div id="toggle_view_buttons">
@@ -36,6 +38,8 @@ require_once "inc/header.inc.php";
 	</div> <!-- End of data_wrapper -->
 </div> <!-- End of page_wrapper -->
 <script>
+var viewstate = <?php echo $viewstate?>;
+
 function toggleView(viewstate) { // Toggle tree vs grid views
 	var treeview = document.getElementById('treemain');
 	var gridview = document.getElementById('gridmain');
@@ -98,7 +102,7 @@ $(function () {
 	$('#gridmain').hide();
 
 	initprop(false);
-	toggleView(<?=$viewstate?>);
+	toggleView(viewstate);
 	
 	$('#treeview').jstree({
 		'core' : {
