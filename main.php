@@ -141,20 +141,17 @@ try {
 				echo '{"error":"1","text":"Rosemary hasn\'t finished coding this yet."}';
 				break;
 			case 7: // WriteProperty
-
 				if (isset($_POST["name"])) $name = addslashes($_POST["name"]);
 				if (isset($_POST["address"])) $address = addslashes($_POST["address"]);
-				if (isset($_POST["zip"])) $zip = $_POST["zip"];
+				if (isset($_POST["zip"])) $zip = (int) $_POST["zip"];
 				if (isset($_POST["description"])) $description = addslashes($_POST["description"]);
-				$categoryID = 1;
-				$userid = $_SESSION["user_id"];
+				if (isset($_POST["categoryid"])) $categoryid =  (int) $_POST["categoryid"];
 
 				try {
 					$con->beginTransaction();
 
-					$sql = "INSERT INTO property (name, address, zip, description, categoryID) VALUES ('{$name}', '{$address}', $zip, '{$description}', $categoryID)";
-
-					$parameters = [$name, $address, $zip, $description, $categoryID];
+					$sql = "INSERT INTO property (name, address, zip, description, categoryID) VALUES ('{$name}', '{$address}', $zip, '{$description}', $categoryid)";
+					$parameters = [$name, $address, $zip, $description, $categoryid];
 
 					//adds new property to property table
 					$stmt = writeRecordset($con, $sql, $parameters);

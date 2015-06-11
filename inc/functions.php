@@ -236,7 +236,7 @@ abstract class AzObject { // Abstract base class to parse JSON and put it into a
 		$vars = array_keys(get_object_vars($this)); // Get just the var names
 		$sql = strtolower("SELECT `" . implode('`,`', $vars) . "` FROM " . get_class($this) . " WHERE ID = ?");
 		echo '{"' . get_class($this) . '":';
-		jsonspew($con, $sql, array($this->ID));
+		jsonspew($con, $sql, array($this->id));
 		echo "}";
 	}
 	

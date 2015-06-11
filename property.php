@@ -10,16 +10,43 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 			var propertyid = <?=$propertyid?>;
 				
 			function packform() {
-				return $('form#add_property').serializeJSON();
+				$("#json").val("");
+				
+				var json = "{";
+				json += '"id":"' + $("#id").val() + '",';
+				json += '"name":"' + $("#name").val() + '",';
+				json += '"address":"' + $("#address").val() + '",';
+				json += '"zip":"' + $("#zip").val() + '",';
+				json += '"description":"' + $("#description").val() + '",';
+				json += '"categoryid":"' + $("#categoryid").val() + '"';
+				json += "}";
+				//var json = $('form#add_property').serializeJSON();
+				//json = json.replace('"json":"",',''); // Stupid hack to pass JSON in, I'm stashing it into the hidden "json" input and then removing it from the serialize JSON so it all works
+				
+				
+				$("#json").val(json);
+				if ($("#id").val() > 0) { // Property ID defined, use AJAX call
+				//alert (json);
+					$.ajax ({type: "POST", dataType: "text", url: 'main.php?F=23', 
+						data: 'json=' + json,
+						error: function (jqXHR, status, errormsg) {
+							alert ("Error\nStatus:" + status + "\nError Msg: " + errormsg);
+						},
+						success: function (data, status) {
+							obj = JSON.parse(data);
+							if (obj.errorobj.error == 0) alert(obj.errorobj.text);
+							else alert(obj.errorobj.error + ' - ' + obj.errorobj.text);
+						}
+					})
+				} else $("#add_property").submit(); // Otherwise, submit the form
 			}
 			
 			function getazip(zipcode) {
 				if (zipcode > 0) {
-					$.getJSON("main.php?F=15&zipcode=" + zipcode, function(obj) { // Fill in categegories, 1 is property
+					$.getJSON("main.php?F=15&zipcode=" + zipcode, function(obj) { // Fill in zip code
 						$("#county").val(obj.zipcode.county);
 						$("#city").val(obj.zipcode.city);
 						$("#state").val(obj.zipcode.state);
-						// more filling in stuff
 					});
 				}
 			}
@@ -34,6 +61,7 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 					});
 				}
 			}
+			
 			function uploadpics() {
 				var newWindow = window.open('upload.php?ID=' + propertyid + '&parentType=1', 'name', 'height=500,width=600')			
 			}
@@ -47,7 +75,7 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 						$("#photos").html(data);
 					}
 				}).fail(function() {
-					alert("Some error");
+					alert("Error getting pics.");
 				});
 			}
 			
@@ -90,6 +118,8 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 	  	</ul>
 	  	<div id="tabs-1" class="property_tab tabs_nav">
 			<form method="Post" action="main.php?F=7" id="add_property">
+			<input type="hidden" id="id" name="id" value="<?=$propertyid?>">
+			<input type="hidden" id="json" name="json" value="">
 				<p class="tab_one_wide">
 					<label for="name">Property Name:  <span class="simple-tooltip" title="This can be anything that is a meaningful name to you."><img src="images/info.png"></span></label>
 					<input id="name" type="text" name="name">
@@ -136,7 +166,7 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 				</p>
 				<p class="tab_one_wide_text">     
 					<label for="description">Description:</label>
-					<textarea id="resizable_description" class="wide_textarea" name="description" rows="5" cols="80"></textarea>   
+					<textarea id="description" class="wide_textarea" name="description" rows="5" cols="80"></textarea>   
 				</p>				
 		</div>    <!-- end tab 1 -->
 
