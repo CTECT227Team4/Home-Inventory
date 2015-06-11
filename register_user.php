@@ -7,16 +7,14 @@
 	if (logged_in()) redirect_to("landing.php");
 	
 	if ($_SERVER['REQUEST_METHOD'] == "POST") {
-
-			$username = $_POST["userName"];
-			// create new password hash - PHP 5.5
+			$userName = $_POST["userName"];
 			$password = password_hash($_POST["password"], PASSWORD_DEFAULT);
 			$firstName = $_POST["firstName"];
 			$lastName = $_POST["lastName"];
 			$email = $_POST["email"];
 
 				try {
-					$sql = "INSERT INTO user (userName, password, firstName, lastName, email, usertypeID) VALUES ('{$username}', '{$password}', '{$firstName}', '{$lastName}', '{$email}', 1)";
+					$sql = "INSERT INTO user (userName, password, firstName, lastName, email, usertypeID) VALUES ('{$userName}', '{$password}', '{$firstName}', '{$lastName}', '{$email}', 1)";
 					$stmt = $con->prepare($sql);
 					$stmt->execute();
 					$_SESSION["message"] = "New User was successfully created."; // inserts into the login heading
@@ -67,13 +65,31 @@
 				<p class="one_wide">
 					<label for="email">Email:</label>
 					<input id="email" type="text" name="email">
-					<label for="email" class="error" id="emailError">Please enter your email.</label>  
+					<label for="email" class="error" id="emailError">Please enter your email.</label>
+					<span id="email_result"></span>
 				</p>
+				<script>
+					$("#email").keyup(function(e) {
+						var email = $(this).val();
+						$.post('check_username.php', {'email':email}, function(data) {
+							$("#email_result").html(data);
+						});
+					});
+				</script>
 				<p class="one_wide">
 					<label for="userName">Username:</label>
 					<input id="userName" type="text" name="userName">
-					<label for="userName" class="error" id="userError">Please enter a Username.</label> 					
+					<label for="userName" class="error" id="userError">Please enter a Username.</label>
+					<span id="userName_result"></span>
 				</p>
+				<script>
+					$("#userName").keyup(function(e) {
+						var userName = $(this).val();
+						$.post('check_username.php', {'userName':userName}, function(data) {
+							$("#userName_result").html(data);
+						});
+					});
+				</script>
 				<p class="one_wide">          
 					<label for="password">Password:  <span class="simple-tooltip" title="Please choose a password that is at least 8 characters and includes a special character."><img src="images/info.png"></span></label>
 					<input id="password" type="password" name="password">
