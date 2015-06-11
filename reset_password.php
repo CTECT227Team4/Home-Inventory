@@ -15,7 +15,6 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
 		if ($found_token && $unexpired_token) {
 			$_SESSION["user_id"] = $found_token["ID"];
 			$_SESSION["userName"] = $found_token["userName"];
-			echo "<h2>Token found<h2>";
 		} else {
 			//failure
 			redirect_to("login.php");
@@ -41,6 +40,9 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
 
 			unset($_SESSION["user_id"]);
 			unset($_SESSION["userName"]);
+
+			$_SESSION["message"] = "Password Reset Successful";
+			redirect_to("login.php");
 	}
 }
 ?>
@@ -67,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
 	<section class="content">
 		<div class="login_wrapper">
 			<h1>Welcome to A-Z Home Inventory</h1>
-			<h2>Request Password Reset:</h2>
+			<h2>Password Reset:</h2>
 			<form action="reset_password.php" method="post">
 				<p>
 					<label for="userName">Current Username:</label>

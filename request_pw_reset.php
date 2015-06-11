@@ -30,7 +30,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
 				writeRecordSet($con, $sql, $parameters);
 
-				// redirect_to("login.php");
+				$_SESSION["message"] = "Password Reset Sent";
+
+				redirect_to("login.php");
 			} else{
 				//failure
 				$_SESSION["message"] = "Username/email not found";

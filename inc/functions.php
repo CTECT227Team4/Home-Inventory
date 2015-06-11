@@ -133,7 +133,9 @@
 		$sql .= "WHERE userName = '{$userName}' ";
 		$sql .= "LIMIT 1";
 
-		$user_set = getRecordset($con, $sql, $userName);
+		$parameters = [$userName];
+
+		$user_set = getRecordset($con, $sql, $parameters);
 		if ($user = $user_set->fetch(PDO::FETCH_ASSOC)) {
 			return $user;
 		} else {
