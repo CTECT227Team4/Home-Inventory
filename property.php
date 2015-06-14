@@ -23,10 +23,9 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 				//var json = $('form#add_property').serializeJSON();
 				//json = json.replace('"json":"",',''); // Stupid hack to pass JSON in, I'm stashing it into the hidden "json" input and then removing it from the serialize JSON so it all works
 				
-				
 				$("#json").val(json);
 				if ($("#id").val() > 0) { // Property ID defined, use AJAX call
-				//alert (json);
+				alert (json);
 					$.ajax ({type: "POST", dataType: "text", url: 'main.php?F=23', 
 						data: 'json=' + json,
 						error: function (jqXHR, status, errormsg) {
@@ -185,6 +184,7 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 				<h3>Current Photos Attached To This Property:</h3>
 				<p><div id="photos"></div></p>
 				<p><a href="upload.php?ID=<?=$propertyid?>&parentType=1" target="_blank"><button type="button" class="add_file">Add File</button></a></p>
+				<p><button class="scan_file"><a href="#">Scan Photo</a></button></p>
 				<p><button class="scan_file" type="button"><a href="#">Scan Photo</a></button></p>
 				<p class="scan_under_construction"><img src="images/under-construction.png" alt="under construction icon"> Under Construction </p>
 		</div>    <!-- end tab 3 -->
@@ -193,6 +193,7 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 				<h3>Current Documents Attached To This Property:</h3>
 				<p> Add the multimedia grid </p>
 				<p><button type="button" class="add_file" onclick="uploadpics">Add File</button></p>
+				<p><button class="scan_file"><a href="#">Scan Photo</a></button></p>
 				<p><button class="scan_file" type="button"><a href="#">Scan Photo</a></button></p>
 				<p class="scan_under_construction"><img src="images/under-construction.png" alt="under construction icon"> Under Construction </p> 
 		</div>     <!-- end tab 4 -->

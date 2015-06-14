@@ -50,7 +50,7 @@ require_once "inc/header.inc.php"; //starts session, includes general functions,
 				if (userid != 0 && sectionid != 0) {
 					$.getJSON(url, function(obj) {
 						var propertyid = 0; // Default to 0, cache for later
-						$.each(obj.Item, function(key, value) {
+							$.each(obj.Item, function(key, value) {
 							if (key == "propertyid") propertyid = value; // Cache the propertyid value for the following line
 							if (key == "roomid") getaroom("main.php?F=14&propertyid=" + propertyid, value);
 							if (key == "sectionid") getasection("main.php?F=13&propertyid=" + propertyid, value);

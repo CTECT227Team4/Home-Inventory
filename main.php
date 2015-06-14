@@ -28,7 +28,7 @@ if (isset($_GET['parenttype'])) $parenttype = (int) $_GET['parenttype'];
 if (isset($_GET['zipcode'])) $zipcode = (int) $_GET['zipcode'];
 if (isset($_GET['view'])) $viewstate = (int) $_GET['view'];  // Used to set the grid/tree view last state
 
-header('Content-Type: application/json');
+//header('Content-Type: application/json');
 // Moved $firstTime initialization to the top
 $firstTime = true;
 
@@ -72,14 +72,14 @@ try {
 					echo "]}";
 				}
 				
-				//jsonspew ($con, $sql, array($userid));
+				//echo jsonspew ($con, $sql, array($userid));
 				echo "]}]"; // End the array, then end the whole tree
 				break;
 			case 2: // GetRooms for treeview
 				// locahost/az/main.php?F=2&propertyid=1
 				echo '[{"id":"P' . $propertyid . '","text": "Main House","icon": "./images/appraisal.png","state": {"opened" : "true"},"children":['; // The recordset is being returned as an array, so start the array
 				$sql = "SELECT CONCAT('R', r.id) AS id, name AS text, CONCAT ('$imageslocation', icon) AS icon FROM room r LEFT OUTER JOIN category c ON c.ID = r.CategoryID WHERE r.propertyID = ?";
-				jsonspew($con, $sql, array($propertyid));
+				echo jsonspew($con, $sql, array($propertyid));
 				echo "]}]"; // End the array, then end the whole tree
 				break;
 			case 3: // GetSections
@@ -171,7 +171,7 @@ try {
 					echo "Failed: " . $e->getMessage();
 				}
 
-				redirect_to("landing.php");
+				//redirect_to("landing.php");
 				$_SESSION["message"] = "Property created";
 				break;
 			case 8: // WriteRoom
@@ -213,7 +213,8 @@ try {
 				redirect_to("landing.php");
 				break;
 			case 10: // WriteItem
-			//$json = '{"id":"41","name":"Test Thing","propertyid":"1","sectionid":"1","roomid":"1","manufacturer":"Sony","brand":"Sony","modelnumber":"ABC123","serialnumber":"123456","condition":"1","beneficiary":"None","description1":"Some testing.","purchasedate":"2015-01-01","purchaseprice":"200","purchasedfrom":"store","paymentmethod":"VISA","estimated_value":"","appraised_value":"","appraisal_date":"","appraiser":"","description2":"","warrantyexpirationdate":"2017-01-01","warrantytype":"good type","repaired_by":"","repair_date":"","repair_cost":"","repair_description3":"","general_notes":""}';
+$json = '{"id":"0","name":"Item Name","propertyid":"1","categoryid":"295","manufacturer":"","brand":"","modelnumber":"","serialnumber":"","condition":"1","beneficiary":"","description1":"","purchasedate":"","purchaseprice":"","purchasedfrom":"","paymentmethod":"","estimated_value":"","appraised_value":"","appraisal_date":"","appraiser":"","appraisal_attached":"0","description2":"","warranty_question":"0","warrantyexpirationdate":"","warrantytype":"","warranty_attached":"0","repaired_by":"","repair_date":"","repair_cost":"","repair_attached":"0","repair_description3":" ","general_notes":""}';
+$json = '{"id":"0","name":"Item Name","propertyid":"1","categoryid":"295","manufacturer":"Sony","brand":"Japan","modelnumber":"ModelNum#1","serialnumber":"SerNumBlah","condition":"1","beneficiary":"","description1":"","purchasedate":"","purchaseprice":"","purchasedfrom":"","paymentmethod":"","estimated_value":"","appraised_value":"","appraisal_date":"","appraiser":"","appraisal_attached":"0","description2":"","warranty_question":"0","warrantyexpirationdate":"","warrantytype":"","warranty_attached":"0","repaired_by":"","repair_date":"","repair_cost":"","repair_attached":"0","repair_description3":" ","general_notes":""}';
 				$item = new Item($json);
 				echo $item->write($con);
 				break;
@@ -240,46 +241,48 @@ try {
 				break;
 			case 12: // Get list of properties for drop down
 				echo '{"properties":[{"ID":"0","name":"-Select a Property-"},';
-				jsonspew ($con, "SELECT ID, name FROM property p INNER JOIN user_property up ON p.ID = up.propertyID WHERE name <> '' AND name IS NOT NULL AND up.userID = ?", array($userid));
-				echo ',{"ID":"99999","name":"-Add a Property-"}]}';
+				$json = jsonspew ($con, "SELECT ID, name FROM property p INNER JOIN user_property up ON p.ID = up.propertyID WHERE name <> '' AND name IS NOT NULL AND up.userID = ?", array($userid));
+				echo $json;
+				if ($json != "") echo ",";
+				echo '{"ID":"99999","name":"-Add a Property-"}]}';
 				break;
 			case 13: // Get list of sections for drop down
 				echo '{"sections":[{"ID":"0","name":"-Select a Section-"},';
 				// No idea why this line doesn't work, no time to figure it out.
-				//jsonspew ($con, "SELECT s.ID AS ID, s.name AS name FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN section s ON p.ID = s.propertyID WHERE  up.userID = ? AND p.ID = ?", array($userid, $propertyid));
-				jsonspew ($con, "SELECT s.ID AS ID, s.name AS name FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN section s ON p.ID = s.propertyID WHERE  up.userID = ? AND p.ID = " . $propertyid, array($userid));
-				echo ',{"ID":"99999","name":"-Add a Section-"}]}';
+				//echo jsonspew ($con, "SELECT s.ID AS ID, s.name AS name FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN section s ON p.ID = s.propertyID WHERE  up.userID = ? AND p.ID = ?", array($userid, $propertyid));
+				$json = jsonspew ($con, "SELECT s.ID AS ID, s.name AS name FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN section s ON p.ID = s.propertyID WHERE up.userID = ? AND p.ID = " . $propertyid, array($userid));
+				if ($json != "") echo ",";
+				echo '{"ID":"99999","name":"-Add a Section-"}]}';
 				break;
 			case 14: //getRooms for dropdown
 				echo '{"rooms":[{"ID":"0","name":"-Select a Room-"},';
 				// No idea why this line doesn't work, no time to figure it out.
-				//jsonspew ($con, "SELECT r.ID, r.name FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN room r ON r.propertyID = p.ID WHERE up.userID = ? AND p.ID = ? ORDER BY r.ID ASC", array($userid, $propertyid));
-				jsonspew ($con, "SELECT r.ID, r.name FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN room r ON r.propertyID = p.ID WHERE up.userID = ? AND p.ID = " . $propertyid, array($userid));
-				echo ',{"ID":"99999","name":"-Add a Room-"}]}';
+				//echo jsonspew ($con, "SELECT r.ID, r.name FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN room r ON r.propertyID = p.ID WHERE up.userID = ? AND p.ID = ? ORDER BY r.ID ASC", array($userid, $propertyid));
+				$json = jsonspew ($con, "SELECT r.ID, r.name FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN room r ON r.propertyID = p.ID WHERE up.userID = ? AND p.ID = " . $propertyid, array($userid));
+				if ($json != "") echo ",";
+				echo '{"ID":"99999","name":"-Add a Room-"}]}';
 				break;
 			case 15: // get City/State/County from zip code
-				echo '{"zipcode":';
-				jsonspew($con, "SELECT city, state, county FROM zip z WHERE z.zipcode = ? LIMIT 1", array($zipcode));
-				echo "}";
+				echo '{"zipcode":' . jsonspew($con, "SELECT city, state, county FROM zip z WHERE z.zipcode = ? LIMIT 1", array($zipcode)) . "}";
 				break;
 			case 16: // Get categories for dropdown
 				echo '{"categories":[{"ID":"0","name":"-Select a Category-"},';
-				jsonspew ($con, "SELECT ID, description AS name FROM category WHERE parenttype = ? AND userid IN (1," . $userid . ")", array($parenttype));
+				echo jsonspew ($con, "SELECT ID, description AS name FROM category WHERE parenttype = ? AND userid IN (1," . $userid . ")", array($parenttype));
 				echo ',{"ID":"99999","name":"-Add a Category-"}]}';
 				break;
 			case 17: // GetEditSection
 				$section = new Section();
-				$section->ID = $sectionid;
+				$section->id = $sectionid;
 				echo $section->getjson($con);
 				break;
 			case 18: // GetEditRoom
 				$room = new Room();
-				$room->ID = $roomid;
+				$room->id = $roomid;
 				echo $room->getjson($con);
 				break;
 			case 19: // GetEditItem
 				$item = new Item();
-				$item->ID = $itemid;
+				$item->id = $itemid;
 				echo $item->getjson($con);
 				break;
 			case 20: // GetEditProperty
@@ -288,31 +291,34 @@ try {
 				echo $property->getjson($con);			
 				break;
 			case 21: // WriteRoom
+$json='{"id":"5","name":"Test room still testing","propertyid":"1","categoryid":"10","description":"Testing 1234.  This is an update.","notes":""}';
 				$room = new Room($json);
 				echo $room->write($con);
 				break;
 			case 22: // WriteSection
+				//$json = '{"id":"0","name":"new one","propertyid":"1","roomid":"1","categoryid":"5","description":"test","notes":""}';
 				$section = new Section($json);
 				echo $section->write($con);
 				break;
 			case 23: // WriteProperty
+				//$json = '{"id":"1","name":"Main House","address":"12345 NE Main St","zip":"90210","description":"Adams main house.","categoryid":"1"}';
 				$property = new Property($json);
 				echo $property->write($con);
 				break;
 			case 24: // DataTables Properties
 				echo '{"data":[';
-				jsonspew($con, "SELECT CONCAT('<a href=\"property.php?propertyid=', ID, '\">', Name, '</a>') AS Name, Address, City, State, Zip, Description FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN zip z ON z.zipcode = p.zip WHERE up.userID = ?", array($userid));
+				echo jsonspew($con, "SELECT CONCAT('<a href=\"property.php?propertyid=', ID, '\">', Name, '</a>') AS Name, Address, City, State, Zip, Description FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN zip z ON z.zipcode = p.zip WHERE up.userID = ?", array($userid));
 				echo "]}";
 				break;
 			case 25: // DataTables Rooms
 				echo '{"data":[';
-				jsonspew($con, "SELECT CONCAT('<a href=\"property.php?propertyid=', p.ID, '\">', p.name, '</a>') AS Property, CONCAT('<a href=\"room.php?roomid=', r.ID, '\">', r.name, '</a>') AS Room, r.Description, c.description AS Category, r.Notes FROM property p INNER JOIN user_property up ON p.ID = up.propertyID	INNER JOIN room r ON r.propertyID = p.ID LEFT JOIN category c ON c.ID = r.categoryID	WHERE c.parentType = 2 AND up.userid = ?", array($userid));
+				echo jsonspew($con, "SELECT CONCAT('<a href=\"property.php?propertyid=', p.ID, '\">', p.name, '</a>') AS Property, CONCAT('<a href=\"room.php?roomid=', r.ID, '\">', r.name, '</a>') AS Room, r.Description, c.description AS Category, r.Notes FROM property p INNER JOIN user_property up ON p.ID = up.propertyID	INNER JOIN room r ON r.propertyID = p.ID LEFT JOIN category c ON c.ID = r.categoryID	WHERE c.parentType = 2 AND up.userid = ?", array($userid));
 				echo "]}";
 				break;
 			case 26: // DataTables Sections
 				$sql = "SELECT CONCAT('<a href=\"property.php?propertyid=', p.ID, '\">', p.name, '</a>') AS Property, CONCAT('<a href=\"section.php?sectionid=', s.ID, '\">', s.name, '</a>') AS Section, CONCAT('<a href=\"room.php?roomid=', r.ID, '\">', r.name, '</a>') AS Room, s.Description, c.Description AS Category, s.Notes FROM property p INNER JOIN user_property up ON p.ID = up.propertyID INNER JOIN section s ON s.propertyID = p.ID INNER JOIN room r ON r.ID = s.roomID INNER JOIN category c ON c.ID = s.categoryID WHERE up.userid = ?";
 				echo '{"data":[';
-				jsonspew($con, $sql, array($userid));
+				echo jsonspew($con, $sql, array($userid));
 				echo "]}";
 				break;
 			case 27: // DataTables Items

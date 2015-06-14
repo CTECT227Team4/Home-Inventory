@@ -18,17 +18,16 @@
 		return $string;
 	}
 	
-	function jsonspew ($con, $sql, $parameters, $name = "") {
-		// Optional parameter $name, if you want to name each row a datatype.  Used for datatables grid
+	function jsonspew ($con, $sql, $parameters) {
 		$firstTime = true;
 		$rs = getRecordset($con, $sql, $parameters);
+		$json = "";
 		foreach ($rs as $row) {
 			if ($firstTime) $firstTime = !$firstTime;
-			else echo ",";
-			if ($name != "") echo '{"' . $name . '":';
-			echo json_encode($row, JSON_UNESCAPED_SLASHES);
-			if ($name != "") echo '}';
+			else $json .= ",";
+			$json .= json_encode($row, JSON_UNESCAPED_SLASHES);
 		}
+		return $json;
 	}
 
 	function echo_r($data) {
@@ -59,22 +58,20 @@
 
     
     function writeRecordset($con, $sql, $parameters) {
+		$stmt = $con->prepare($sql); 
+
     	try {
-    		$paramcount = 1;
-			//echo sqlparms($sql, array_values($parameters));
-    		// $parameters is passed in as an array, go through it and add them all
-			$stmt = $con->prepare($sql);
-			foreach ($parameters as $parameter) {
+    		$paramcount = 1;			
+			foreach ($parameters as $parameter) { // $parameters is passed in as an array, go through it and add them all
 				$parameter = $parameter . '';
 				$stmt->bindParam($paramcount++, $parameter);
     		}
     		$stmt->execute();
-			//print_r($con->errorInfo());
-    		return $stmt;
     	} catch (Exception $e) { // Echo the message in JSON and exit
-    		echo '"error":"' . $e->getCode() . '","text":"' . $e->getMessage() . '"';
-    		exit;
+			$stmt->errorInfo()[1] = $e->getCode();
+			$stmt->errorInfo()[2] = $e->getMessage();
     	}
+		return $stmt;
     } //end writeRecordset
 
 	function form_errors($errors) {
@@ -133,9 +130,7 @@
 		$sql .= "WHERE userName = '{$userName}' ";
 		$sql .= "LIMIT 1";
 
-		$parameters = [$userName];
-
-		$user_set = getRecordset($con, $sql, $parameters);
+		$user_set = getRecordset($con, $sql, $userName);
 		if ($user = $user_set->fetch(PDO::FETCH_ASSOC)) {
 			return $user;
 		} else {
@@ -209,34 +204,44 @@
 		}
 	 }
 
-	function check_access($userID, $min_type) {
-		/* $min_type levels:
-			--- 1 = user
-			--- 2 = tech support
-			--- 3 = agent
-				--- 4 = admin*/
-		global $con;
-		//Use userID to check user's type
-		$sql = "SELECT usertypeID FROM user WHERE ID={$userID} LIMIT 1";
-		$parameters = [$userID];
-		$result = getRecordset($con, $sql, $parameters);
-		$row = $result->fetch();
-		$type = (int) $row["usertypeID"];
-		//If the user's type is lower than the type required, echo an error message and kill the page
-		if ($type < $min_type) {
-			echo "<h1>You are not authorized to view this page.</h1>";
-			echo "<h2><a href=\"index.php\">Back to A-Z Home Inventory</a></h2>";
-			die();
-		}
-	}
+function scope_wtf($that) { // Holy convoluted syntax, Batman!  This is here just to be out of scope of a class, to get just the public vars
+	return get_object_vars($that);
+}
 
 abstract class AzObject { // Abstract base class to parse JSON and put it into an inherited object class
+	private $types; // Private so it's only changed once in the constructor
+	private $autovars;  // Generated during sql() method
+	private $autotypes; // Generated during sql() method (Why this weirdness?  PHP passes arrays in function parameters oddly.  I couldn't find a way to pass 2 arrays, so this is the work around, for now.)
+	
 	public function __construct($json = "") {
+		$this->typecheck();  // Call this once (and only once) to generate the default types (before JSON is parsed, messing up the defaults)
         if ($json != "") $this->set($json);
     }
 
-	public function types () { // Return an array of the data types, null on abstract class
-		return null;
+	public function get_object_vars() { // Syntax gyration to get only public scope vars
+		return scope_wtf($this);
+	}
+
+	public function getTypes() { // Public method to get the default types
+		return $this->types;
+	}
+	
+	private function typecheck () { // Get the types, private so it's not called more than once in the constructor
+		$types = array();
+		$vars = array_values($this->get_object_vars());
+		/* Maybe set the vars to default PDO consts instead of trying to detect them?
+		PDO::PARAM_BOOL (integer) // Represents a boolean data type. 
+		PDO::PARAM_NULL (integer) // Represents the SQL NULL data type. 
+		PDO::PARAM_INT (integer) // Represents the SQL INTEGER data type. 
+		PDO::PARAM_STR (integer) // Represents the SQL CHAR, VARCHAR, or other string data type. 
+		PDO::PARAM_LOB // BLOB
+		// Floats are apparently problematic and need to not be specified?!?
+		*/
+		foreach ($vars AS $var) {
+			if (is_int($var)) $types[] = PDO::PARAM_INT;  // var is an int, assign PDO int
+			else $types[] = PDO::PARAM_STR; // Default to string
+		}
+		$this->types = $types;
 	}
 	
     public function set($json) {
@@ -246,68 +251,79 @@ abstract class AzObject { // Abstract base class to parse JSON and put it into a
         }
     }
 	
-	public function delete($con) {
-		$sql = "DELETE FROM " . get_class($this) . " WHERE ID = ?";
-		try {
-			writeRecordset($con, $sql, array($this->ID));
-		} catch (Exception $e) {
-			echo "Failed: " . $e->getMessage();
-		}
-	}
-	
 	public function getjson($con) {
-		$vars = array_keys(get_object_vars($this)); // Get just the var names
+		$vars = array_keys(scope_wtf($this)); // Get just the var names
 		$sql = strtolower("SELECT `" . implode('`,`', $vars) . "` FROM " . get_class($this) . " WHERE ID = ?");
 		echo '{"' . get_class($this) . '":';
-		jsonspew($con, $sql, array($this->id));
+		echo jsonspew($con, $sql, array($this->id));
 		echo "}";
 	}
 	
-	public function write($con) {
-		$vars = array_keys(get_object_vars($this)); // Get just the var names
+	function write($con) {
+		$debug = false;
+		$con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$stmt = $con->prepare($this->sql());
+
+		if ($debug) {
+			echo_r($this->autovars);
+			echo_r($this->autotypes);
+		}
+		
+		if (count($this->autovars) != count($this->autotypes)) { // Check that parameters and types match up
+			return ('{"errorobj":{"error":"911","text":"' . get_class($this) . '->: parameters count must match types count, check class definition vs table definition."}}');
+		}
+
+    	try {
+    		$paramcount = 1;	
+			$parameters = $this->autovars; // Get just the var names
+			foreach ($parameters as $parameter) { // $parameters is passed in as an array, go through it and add them all
+				$stmt->bindParam($paramcount, $parameter, $this->autotypes[$paramcount - 1]); // Bind with type
+//				$stmt->bindParam($paramcount, $parameter); // Bind without type
+				if ($debug) {
+					if ($this->autotypes[$paramcount - 1] == PDO::PARAM_INT) echo "(INT) " . $paramcount . ":" .  $parameter . ":" . $this->autotypes[$paramcount - 1] . "<br>\n";
+					if ($this->autotypes[$paramcount - 1] == PDO::PARAM_STR) echo "(STR) " . $paramcount . ":" .  $parameter . ":" . $this->autotypes[$paramcount - 1] . "<br>\n";
+				} 
+				$paramcount++;
+    		}
+			
+			if ($debug) {
+				echo_r(explode( " Key:", $stmt->debugDumpParams()));
+				echo sqlparms($this->sql(), $parameters);
+			}
+			
+    		$stmt->execute();
+			return ('{"errorobj":{"error":"0","text":"' . get_class($this) . ' saved successfully."}}');
+		} catch (Exception $e) {
+			return ('{"errorobj":{"error":"' . $e->getCode() . '","text":"' . $e->getMessage() . '"}}');
+		}
+	}
+	
+	public function sql() {
+		$vars = array_keys($this->get_object_vars()); // Get just the var names
+		array_splice($vars, 0, 1); // Delete the first var name element (Will be 'ID')
+		
 		if ($this->id > 0) { // ID supplied, do an update
 			$sql = 'UPDATE ' . get_class($this) . ' SET ';
 			foreach ($vars AS $key) {
-				$sql .= "`$key` = ?,";
+				$sql .= "`$key` = ?,";  // The ` are in here to escape out the column names, in case there's a MySQL reserved word in the column name
 			}
 			$sql = rtrim($sql, ","); // Remove trailing comma
 			$sql .= " WHERE ID=" . $this->id;
-			$vars = array_values(get_object_vars($this)); // Get just the var values
+			$vars = array_values($this->get_object_vars()); // Get just the var values
+			$types = $this->types; // Get the default var types
 		} else { // No ID supplied, do an insert
-			array_splice($vars, 0, 1); // Delete the first element (Will be 'ID')
 			$sql = 'INSERT INTO ' . get_class($this) . ' (`' . implode('`,`', $vars) . '`) VALUES (' . str_repeat("?,", count($vars)) . ")";
 			$sql = str_replace("?,)", "?)", $sql); // Remove trailing ',' from str_repeat above
-			$this->brand = "";
-			$vars = array_values(get_object_vars($this)); // Get just the var values
-			array_splice($vars, 0, 1); // Delete the first element, just a blank ID field
 		}
-
-		try {
-			$unsafe = true;
-			$debug = false;
-			//echo sqlparms($sql, $vars);
-			//echo_r($vars);
-			if ($unsafe) {
-				$sql = sqlparms($sql, $vars); // Completely unsafe, PHP's type handling is so completely fucked up!
-				$stmt = writeRecordset($con, $sql, array());
-			} else {
-				$stmt = writeRecordset($con, $sql, $vars);  // Correct way to handle it if PHP's typing can be figured out.
-			}
-			if ($debug) {
-				echo "id: " . $this->id . "\n\n";
-				echo_r($this);
-				echo "\n\n";
-				echo_r($stmt);
-				echo_r($stmt->errorCode());
-				echo_r($stmt->errorInfo());
-				echo $stmt->errorInfo()[2];
-			}
-			
-			if (intval($stmt->errorInfo()[1]) == 0) return ('{"errorobj":{"error":"0","text":"' . get_class($this) . ' saved successfully."}}');
-			else return ('{"errorobj":{"error":"' . $stmt->errorInfo()[1] . '","text":"' . $stmt->errorInfo()[2] .'"}}');
-		} catch (Exception $e) {
-			return ('{"error":"' . $e->getCode() . '","text":"' . $e->getMessage() . '"}');
-		}
+		$vars = array_values($this->get_object_vars()); // Get just the var values
+		array_splice($vars, 0, 1); // Delete the first value element, just ID field (either blank for insert, or specified in the where on update)
+		$types = $this->types;
+		array_splice($types, 0, 1); // Delete the first type element, the type of the ID field
+	
+		$this->autovars = $vars; // Stashing these in private vars to avoid array passing weirdness in PHP
+		$this->autotypes = $types;
+		
+		return $sql;
 	}
 }
 
@@ -330,22 +346,22 @@ class Property extends AzObject { // object to hold property record
 	var $general_notes
 */
 	// All the vars from the DB
-	var $id;
-	var $name;
-	var $address;
-	var $zip;
-	var $description;
-	var $categoryid;
+	var $id = 0;
+	var $name = "";
+	var $address = "";
+	var $zip = 0;
+	var $description = "";
+	var $categoryid = 0;
 }
 
 class Section extends AzObject { // object to hold section record
 	var $id = 0;
-	var $name = "";
 	var $propertyid = 0;
 	var $roomid = 0;
+	var $name = "";
 	var $description = "";
-	var $notes = "";
 	var $categoryid = 0;
+	var $notes = "";
 }
 
 class Room extends AzObject { // object to hold room record
@@ -354,18 +370,11 @@ class Room extends AzObject { // object to hold room record
 	var $name = "";
 	var $description = "";
 	var $categoryid = 0;
-	
-	public function values () {
-		return array((int) $ID,
-		(int) $propertyid,
-		(string) $name,
-		(string) $description,
-		(int) $categoryid);
-	}
+	var $notes = "";
 }
 
 class Item extends AzObject { // object to hold item record
-	var $id;
+	var $id = 0;
 	var $propertyid = 0;
 	var $roomid = 0;
 	var $sectionid = 0;
